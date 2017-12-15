@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="home_layout">
+<head>
+  <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+  这是个学生主页
+  <div th:replace="message_modal :: message_modal"></div>
+</div>
+</body>
+<th:block layout:fragment="scripts">
+  <script src="/js/message.js" th:src="@{/js/message.js}"></script>
+</th:block>
+</html>
+
+

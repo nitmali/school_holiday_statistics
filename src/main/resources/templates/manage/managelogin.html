@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="home_layout">
+<head>
+  <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6">
+        <div class="form-horizontal">
+          <span class="heading">
+            管理员登录
+          </span>
+          <div class="form-group">
+            <input type="text" class="form-control" id="inputUsername" onclick="agin()" placeholder="用户名" />
+            <i class="fa fa-user"></i>
+          </div>
+          <div class="form-group help">
+            <input type="password" class="form-control" id="inputPassword" onclick="agin()" placeholder="密　码" />
+            <i class="fa fa-lock"></i>
+            <a href="#" class="fa fa-question-circle"></a>
+          </div>
+          <div class="form-group help">
+            <span class="text-danger" id="loginmessage"></span>
+          </div>
+          <div class="form-group">
+            <div class="main-checkbox">
+              <input type="checkbox" value="None" id="checkbox1" name="check"/>
+              <label for="checkbox1"></label>
+            </div>
+            <span class="text">Remember me</span>
+            <button class="btn btn-primary"  style="width: 120px" onclick="loginin()">登录</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="home_layout">
+<head>
+
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="frame">
+            <div class="col-lg-10 col-lg-offset-1 text-center">
+                <h1>成功完成调查</h1>
+                <a href="/finished" th:href="@{finished}">查看已完成的调查</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

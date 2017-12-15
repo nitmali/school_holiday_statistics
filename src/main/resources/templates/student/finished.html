@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="home_layout">
+<head>
+    <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <caption>已完成的调查</caption>
+                    <thead>
+                    <tr>
+                        <th>假期</th>
+                        <th>学号</th>
+                        <th>姓名</th>
+                        <th>去向</th>
+                        <th>离校时间</th>
+                        <th>回校时间</th>
+                        <th>提交IP</th>
+                        <th>提交时间</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="holidayPlan : ${holidayPlan}">
+                        <th th:text="${holidayPlan.holidayInfo.holidayName}">假期</th>
+                        <th th:text="${holidayPlan.student.studentId}">学号</th>
+                        <th th:text="${holidayPlan.student.username}">姓名</th>
+                        <th th:text="${holidayPlan.whereToGo}">去向</th>
+                        <th th:text="${holidayPlan.leaveTime}">离校时间</th>
+                        <th th:text="${holidayPlan.backTime}">回校时间</th>
+                        <th th:text="${holidayPlan.ip}">提交IP</th>
+                        <th th:text="${holidayPlan.submitTime}">提交时间</th>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div th:replace="message_modal :: message_modal"></div>
+</div>
+</body>
+<th:block layout:fragment="scripts">
+    <script src="/js/message.js" th:src="@{/js/message.js}"></script>
+</th:block>
+
+</html>
