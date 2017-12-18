@@ -32,15 +32,15 @@ function loginofenter() {
 }
 
 function loginin() {
-    var str_studentId = $("#inputUsername").val();
+    var str_userId = $("#inputUsername").val();
     var str_password = $("#inputPassword").val();
     var str_userType = null;
     var str_userName = null;
     // Remember Me
     if ($('#checkbox1').is(':checked')) {
         $.cookie("rmbUser", "true", {expires: 7});
-        $.cookie("studentid", str_studentId, {expires: 7});
-        if (str_password.length < 16) {
+        $.cookie("studentid", str_userId, {expires: 7});
+        if (str_password.length <= 16) {
             $.cookie("df151bf2egf2hjl", md5(str_password), {expires: 7});
         }else
         {
@@ -49,7 +49,7 @@ function loginin() {
     } else {
         $.cookie("studentid", "", {expires: -1});
     }
-    if (str_password.length < 16) {
+    if (str_password.length <= 16) {
         str_password = md5(str_password);
     }
 
@@ -57,22 +57,22 @@ function loginin() {
     if ($("#inputUsername").val() !== "" && $("#inputPassword").val() !== "") {
         $.post("/api/login",
             {
-                userId: str_studentId,
+                userId: str_userId,
                 password: str_password,
                 userType: str_userType,
                 userName:str_userName
             },
             function (userFromModel) {
-                if (userFromModel.userName !== "") {
 
+                if (userFromModel.userName !== "") {
                     $.cookie("UserType", userFromModel.userType, {expires: 7});
                     $.cookie("Token", userFromModel.userId, {expires: 7});
                     $.cookie("UserName", userFromModel.userName, {expires: 7});
                     if (userFromModel.userType === "student") {
 
-                        window.location.href = "/home"
+                        window.location.href = "/student_home"
                     } else {
-                        window.location.href = "/admin"
+                        window.location.href = "/admin_home"
                     }
                 }else {
                     $("#loginmessage").html("账号或者密码错误");
@@ -114,7 +114,7 @@ function initnav() {
             student.css("display", "list-item");
         }
 
-        if ($.cookie("UserType") === "andmin") {
+        if ($.cookie("UserType") === "admin") {
             admin.css("display", "list-item");
         }
     }

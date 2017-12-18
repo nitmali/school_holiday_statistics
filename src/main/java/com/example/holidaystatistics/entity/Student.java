@@ -14,7 +14,7 @@ public class Student {
     private String studentId;
 
     @Column(nullable = false,unique = true)
-    private String username;
+    private String studentName;
 
     @Column(nullable = false)
     private String password;
@@ -27,12 +27,12 @@ public class Student {
         this.studentId = studentId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getStudentName() {
+        return studentName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
     }
 
     public String getPassword() {

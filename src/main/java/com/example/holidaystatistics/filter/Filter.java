@@ -32,6 +32,7 @@ public class Filter implements javax.servlet.Filter {
         String webjars = "webjars";
         String css = "css";
         String js = "js";
+        String admin = "admin";
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         String userType = (String) request.getSession().getAttribute("usertype");
@@ -39,13 +40,21 @@ public class Filter implements javax.servlet.Filter {
 
         if (userType != null) {
             flag = false;
+            if(Objects.equals(uri, root))
+            {
+                if(Objects.equals(userType, admin))
+                {
+                    response.sendRedirect("/admin_home");
+                }else {
+                    response.sendRedirect("/student_home");
+                }
+            }
         }
 
         if (uri.contains(login) || Objects.equals(uri, root) || uri.contains(webjars)
                 || uri.contains(css) || uri.contains(js)) {
             flag = false;
         }
-
         if (flag) {
             response.sendRedirect("/");
         } else {

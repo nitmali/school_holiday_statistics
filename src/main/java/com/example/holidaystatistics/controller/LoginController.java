@@ -5,7 +5,9 @@ import com.example.holidaystatistics.model.UserFromModel;
 import com.example.holidaystatistics.repository.StudentRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +28,7 @@ public class LoginController {
         HttpSession session = request.getSession();
         String adminUserName = "907777849";
         if (Objects.equals(userFromModel.getUserId(), adminUserName)) {
-            String adminPassword = "maliloveqlt1314+";
+            String adminPassword = "86fe9e821fb48f55a9ca0f33c1e27d88";
             if (Objects.equals(userFromModel.getPassword(), adminPassword)) {
                 session.setAttribute("usertype", "admin");
                 userFromModel.setUserType("admin");
@@ -38,18 +40,12 @@ public class LoginController {
         }
 
         Student student = studentRepository.findBystudentId(userFromModel.getUserId());
-        if (Objects.equals(userFromModel.getPassword(), student.getPassword())) {
-            if (Objects.equals(student.getPassword(),
-                    userFromModel.getPassword())) {
-                System.out.println("getuser");
-                session.setAttribute("usertype", "student");
-                session.setAttribute("studentid", userFromModel.getUserId());
-                userFromModel.setUserType("student");
-                userFromModel.setUserName(student.getUsername());
-                return userFromModel;
-            } else {
-                return userFromModel;
-            }
+        if (Objects.equals(student.getPassword(), userFromModel.getPassword())) {
+            session.setAttribute("usertype", "student");
+            session.setAttribute("studentid", userFromModel.getUserId());
+            userFromModel.setUserType("student");
+            userFromModel.setUserName(student.getStudentName());
+            return userFromModel;
         } else {
             return userFromModel;
         }
@@ -69,6 +65,13 @@ public class LoginController {
         } else {
             return "error";
         }
+    }
+
+    @RequestMapping(value = "/logout")
+    public ModelAndView logout(ModelAndView modelAndView, HttpServletRequest request) {
+        request.getSession().invalidate();
+        modelAndView.setViewName("student/studentlogin");
+        return modelAndView;
     }
 
 }
