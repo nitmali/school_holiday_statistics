@@ -92,6 +92,7 @@ public class HomeController {
             messageFromModel.setGetmessage(true);
             messageFromModel.setWarning("当前无假期");
             modelAndView.setViewName("student/home");
+            System.out.println("holiday start time :"+holidayPlanFormModel.getLeaveTime());
             modelAndView.addObject("nationalDayPlanFormModel", holidayPlanFormModel);
             modelAndView.addObject("message", messageFromModel);
             return modelAndView;
@@ -100,18 +101,15 @@ public class HomeController {
 
     @PostMapping("/holiday_plan")
     public ModelAndView holidayPlan(ModelAndView modelAndView,
-                                    @Valid HolidayPlanFormModel holidayPlanFormModel, BindingResult bindingResult,
-                                    HttpServletRequest httpServletRequest) {
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("student/holiday_plan");
-            return modelAndView.addObject("nationalDayPlanFormModel", holidayPlanFormModel);
-        }
+                                    @Valid HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
+
 
         String studentid = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentid);
         HolidayInfo holidayInfo = holidayInfoRepository.findByholiStatus(HolidayInfo.holiStatus.START);
-
+        System.out.println("come in ");
         if (holidayInfo == null) {
+            System.out.println("undefind holiday info!");
             MessageFromModel messageFromModel = new MessageFromModel();
             messageFromModel.setGetmessage(true);
             modelAndView.setViewName("student/holiday_plan");
@@ -127,8 +125,9 @@ public class HomeController {
             holidayPlan.setIp(httpServletRequest.getRemoteAddr());
             holidayPlan.setSubmitTime(new Timestamp(System.currentTimeMillis()));
             holidayPlan.setHolidayInfo(holidayInfo);
-            holidayPlan.setStudent(student);
+            holidayPlan.setHolidayPlanFormModel(holidayPlanFormModel);
 
+            System.out.println("get holidayplan success!");
             holidayPlanRepository.save(holidayPlan);
             modelAndView.setViewName("student/success");
             return modelAndView;

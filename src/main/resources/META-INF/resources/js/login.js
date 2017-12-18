@@ -3,7 +3,6 @@ $(document).ready(function () {
     remember();
     loginofenter();
     focus();
-
 });
 
 function remember() {
@@ -33,12 +32,14 @@ function loginofenter() {
 }
 
 function loginin() {
-    var str_studentid = $("#inputUsername").val();
+    var str_studentId = $("#inputUsername").val();
     var str_password = $("#inputPassword").val();
+    var str_userType = null;
+    var str_userName = null;
     // Remember Me
     if ($('#checkbox1').is(':checked')) {
         $.cookie("rmbUser", "true", {expires: 7});
-        $.cookie("studentid", str_studentid, {expires: 7});
+        $.cookie("studentid", str_studentId, {expires: 7});
         if (str_password.length < 16) {
             $.cookie("df151bf2egf2hjl", md5(str_password), {expires: 7});
         }else
@@ -56,22 +57,25 @@ function loginin() {
     if ($("#inputUsername").val() !== "" && $("#inputPassword").val() !== "") {
         $.post("/api/login",
             {
-                studentId: str_studentid,
-                password: str_password
+                userId: str_studentId,
+                password: str_password,
+                userType: str_userType,
+                userName:str_userName
             },
-            function (data) {
-                if (data.msg === "success") {
-                    $.cookie("UserType", "student", {expires: 7});
-                    $.cookie("Token", str_studentid, {expires: 7});
-                    window.location.href = "/home"
-                } else if (data.msg === "admin") {
-                    $.cookie("UserType", "andmin", {expires: 7});
-                    $.cookie("Token", str_studentid, {expires: 7});
-                    window.location.href = "/admin"
-                } else if (data.msg === "password error") {
+            function (userFromModel) {
+                if (userFromModel.userName !== "") {
+
+                    $.cookie("UserType", userFromModel.userType, {expires: 7});
+                    $.cookie("Token", userFromModel.userId, {expires: 7});
+                    $.cookie("UserName", userFromModel.userName, {expires: 7});
+                    if (userFromModel.userType === "student") {
+
+                        window.location.href = "/home"
+                    } else {
+                        window.location.href = "/admin"
+                    }
+                }else {
                     $("#loginmessage").html("账号或者密码错误");
-                } else if (data.msg === "not find student") {
-                    $("#loginmessage").html("用户不存在");
                 }
             }, "json"
         );
@@ -94,6 +98,7 @@ function initnav() {
     var admin = $("#admin");
     var entrance = $("#entrance");
     var personal = $("#personal");
+    var userName = $("#userName");
 
     student.css("display", "none");
     admin.css("display", "none");
@@ -103,6 +108,7 @@ function initnav() {
         entrance.css("display", "list-item");
     }
     else {
+        userName.html($.cookie("UserName"));
         personal.css("display", "list-item");
         if ($.cookie("UserType") === "student") {
             student.css("display", "list-item");

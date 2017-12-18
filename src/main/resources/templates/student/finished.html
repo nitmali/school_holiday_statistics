@@ -27,7 +27,7 @@
                     <tbody>
                     <tr th:each="holidayPlan : ${holidayPlan}">
                         <th th:text="${holidayPlan.holidayInfo.holidayName}">假期</th>
-                        <th th:text="${holidayPlan.student.studentId}">学号</th>
+                        <th th:text="${holidayPlan.student.userId}">学号</th>
                         <th th:text="${holidayPlan.student.username}">姓名</th>
                         <th th:text="${holidayPlan.whereToGo}">去向</th>
                         <th th:text="${holidayPlan.leaveTime}">离校时间</th>

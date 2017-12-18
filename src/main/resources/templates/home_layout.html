@@ -41,7 +41,19 @@
         <li><a href="/managelogin" th:href="@{/managelogin}">管理员入口</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right" id="personal" style="display: none">
-        <li><a>个人中心</a></li>
+        <li>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+             aria-expanded="false">用户：<span id="userName"></span></a>
+          <ul class="dropdown-menu">
+            <li>
+              <a>个人中心</a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
+              <a>修改密码</a>
+            </li>
+          </ul>
+        </li>
         <li><a href="/logout" th:href="@{/logout}" onclick="logout()">退出</a></li>
       </ul>
     </div>

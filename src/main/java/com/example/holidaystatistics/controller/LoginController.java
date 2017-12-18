@@ -1,6 +1,7 @@
 package com.example.holidaystatistics.controller;
 
-import com.example.holidaystatistics.model.StudentFromModel;
+import com.example.holidaystatistics.entity.Student;
+import com.example.holidaystatistics.model.UserFromModel;
 import com.example.holidaystatistics.repository.StudentRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,30 +22,36 @@ public class LoginController {
     private StudentRepository studentRepository;
 
     @PostMapping("/api/login")
-    public String login(StudentFromModel studentFromModel, HttpServletRequest request) {
+    public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String adminUserName = "907777849";
-        if (Objects.equals(studentFromModel.getStudentId(), adminUserName)) {
+        if (Objects.equals(userFromModel.getUserId(), adminUserName)) {
             String adminPassword = "maliloveqlt1314+";
-            if (Objects.equals(studentFromModel.getPassword(), adminPassword)) {
+            if (Objects.equals(userFromModel.getPassword(), adminPassword)) {
                 session.setAttribute("usertype", "admin");
-                return "{\"msg\":\"admin\"}";
+                userFromModel.setUserType("admin");
+                userFromModel.setUserName("管理员");
+                return userFromModel;
             } else {
-                return "{\"msg\":\"password error\"}";
+                return userFromModel;
             }
         }
 
-        if (studentRepository.findBystudentId(studentFromModel.getStudentId()) != null) {
-            if (Objects.equals(studentRepository.findBystudentId(studentFromModel.getStudentId()).getPassword(),
-                    studentFromModel.getPassword())) {
+        Student student = studentRepository.findBystudentId(userFromModel.getUserId());
+        if (Objects.equals(userFromModel.getPassword(), student.getPassword())) {
+            if (Objects.equals(student.getPassword(),
+                    userFromModel.getPassword())) {
+                System.out.println("getuser");
                 session.setAttribute("usertype", "student");
-                session.setAttribute("studentid", studentFromModel.getStudentId());
-                return "{\"msg\":\"success\"}";
+                session.setAttribute("studentid", userFromModel.getUserId());
+                userFromModel.setUserType("student");
+                userFromModel.setUserName(student.getUsername());
+                return userFromModel;
             } else {
-                return "{\"msg\":\"password error\"}";
+                return userFromModel;
             }
         } else {
-            return "{\"msg\":\"not find student\"}";
+            return userFromModel;
         }
     }
 

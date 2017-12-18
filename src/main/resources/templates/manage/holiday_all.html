@@ -21,7 +21,7 @@
         </thead>
         <tbody>
         <div th:each="holiday : ${nationalDayInfoFormModel}">
-          <tr>
+          <tr th:id="${holiday.holidayId}" onclick="changeHolidayInfo(this.id)">
             <th th:text="${holiday.holidayId}">假期编号</th>
             <th th:text="${holiday.holidayName}">假期名称</th>
             <th th:text="${holiday.holidayStartTime}">假期开始时间</th>
