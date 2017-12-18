@@ -12,11 +12,22 @@ import java.sql.Date;
 public class HolidayPlanFormModel {
 
     @NotNull
+    private  String holidayName;
+
+    @NotNull
     private String whereToGo;
 
     private Date leaveTime;
 
     private Date backTime;
+
+    public String getHolidayName() {
+        return holidayName;
+    }
+
+    public void setHolidayName(String holidayName) {
+        this.holidayName = holidayName;
+    }
 
     public String getWhereToGo() {
         return whereToGo;

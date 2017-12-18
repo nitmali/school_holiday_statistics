@@ -1,5 +1,5 @@
 .form-bg {
-    background: #00b4ef;
+    background: #337ab7;
 }
 
 .form-horizontal {
@@ -50,7 +50,7 @@
 }
 
 .form-horizontal .form-control:focus + i {
-    color: #00b4ef;
+    color: #337ab7;
 }
 
 .form-horizontal .fa-question-circle {
@@ -125,7 +125,7 @@
     float: right;
     font-size: 14px;
     color: #fff;
-    background: #00b4ef;
+    background: #337ab7;
     border-radius: 30px;
     padding: 10px 25px;
     border: none;

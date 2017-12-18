@@ -16,7 +16,7 @@
       <form class="national-day-plan-form" method="post" th:object="${nationalDayPlanFormModel}">
         <div style="width: 70%;margin: auto;">
           <div class="form-group">
-            <label for="whereToGo">假期去向</label>
+            <label for="whereToGo">假期去向  (<lable th:text="*{holidayName}"></lable>)</label>
             <select class="form-control" id="whereToGo" required="required">
               <option value="STAY_IN_SCHOOL" selected="selected">留校</option>
               <option value="">离校</option>

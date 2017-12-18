@@ -82,6 +82,7 @@ public class HomeController {
         if (holidayInfo != null) {
             Date starttime = holidayInfo.getHolidayStartTime();
             Date endtime = holidayInfo.getHolidayEndTime();
+            holidayPlanFormModel.setHolidayName(holidayInfo.getHolidayName());
             holidayPlanFormModel.setLeaveTime(starttime);
             holidayPlanFormModel.setBackTime(endtime);
             modelAndView.setViewName("student/holiday_plan");
