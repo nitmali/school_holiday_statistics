@@ -1,5 +1,6 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="home_layout">
+      xmlns:v-if="http://www.w3.org/1999/xhtml"
+      layout:decorator="public/home_layout">
 <head>
   <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
 </head>
@@ -7,12 +8,26 @@
 <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div layout:fragment="content">
-  这是个学生主页
-  <div th:replace="message_modal :: message_modal"></div>
+
+  <div class="jumbotron" id="holidayInfo">
+    <div v-if = "holidayInfo.holiStatus == 'START'">
+      <h1>{{holidayInfo.holidayName}}</h1>
+      <p>节日时间：</p>
+      <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
+      <p>{{holidayInfo.moreInfo}}</p>
+      <div>
+       <p> <a class="btn btn-primary" href="/holiday_plan" th:href="@{/holiday_plan}">现在就去填写离校信息</a></p>
+      </div>
+    </div>
+    <div v-else="">
+      <h2>当前无节假日，同学们不要着急哦</h2>
+    </div>
+  </div>
+
 </div>
 </body>
 <th:block layout:fragment="scripts">
-  <script src="/js/message.js" th:src="@{/js/message.js}"></script>
+  <script src="/js/student_home.js" th:src="@{/js/student_home.js}"></script>
 </th:block>
 </html>
 

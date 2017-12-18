@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="home_layout">
+      layout:decorator="public/home_layout">
 <head>
 
 </head>
@@ -11,6 +11,7 @@
         <div class="frame">
             <div class="col-lg-10 col-lg-offset-1 text-center">
                 <h1>成功完成调查</h1>
+                <p>(再次提交可修改信息)</p>
                 <a href="/finished" th:href="@{finished}">查看已完成的调查</a>
             </div>
         </div>

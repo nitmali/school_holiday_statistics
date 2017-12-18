@@ -55,7 +55,7 @@ function loginin() {
 
     //登录验证
     if ($("#inputUsername").val() !== "" && $("#inputPassword").val() !== "") {
-        $.post("/api/login",
+        $.post("/login",
             {
                 userId: str_userId,
                 password: str_password,
@@ -63,16 +63,16 @@ function loginin() {
                 userName:str_userName
             },
             function (userFromModel) {
-
                 if (userFromModel.userName !== "") {
                     $.cookie("UserType", userFromModel.userType, {expires: 7});
                     $.cookie("Token", userFromModel.userId, {expires: 7});
                     $.cookie("UserName", userFromModel.userName, {expires: 7});
                     if (userFromModel.userType === "student") {
-
-                        window.location.href = "/student_home"
+                        $.cookie("UserType", "student", {expires: 7});
+                        window.location.href = "/student_home";
                     } else {
-                        window.location.href = "/admin_home"
+                        window.location.href = "/admin_home";
+                        $.cookie("UserType", "admin", {expires: 7});
                     }
                 }else {
                     $("#loginmessage").html("账号或者密码错误");
@@ -83,7 +83,7 @@ function loginin() {
 }
 
 function getlogin() {
-    $.get("/api/getlogin",
+    $.get("/getlogin",
         function (data) {
             if (data === "error" && $.cookie("UserType") === "student") {
                 logout();
@@ -104,7 +104,7 @@ function initnav() {
     admin.css("display", "none");
     personal.css("display", "none");
 
-    if ($.cookie("UserType") === "") {
+    if (document.cookie.indexOf("UserType") === -1) {
         entrance.css("display", "list-item");
     }
     else {
@@ -121,7 +121,8 @@ function initnav() {
 }
 
 function logout() {
-    $.cookie("UserType", "", {expires: 7});
+    $.cookie("UserType", "", {expires: -1});
+    $.cookie("UserName", "", {expires: -1});
     $.cookie("Token", "", {expires: -1});
     initnav();
 }

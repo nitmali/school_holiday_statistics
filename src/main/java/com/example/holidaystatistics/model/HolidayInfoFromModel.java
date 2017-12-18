@@ -24,6 +24,17 @@ public class HolidayInfoFromModel {
     @NotNull
     private HolidayInfo.holiStatus holiStatus;
 
+    public HolidayInfoFromModel(){}
+
+    public HolidayInfoFromModel(HolidayInfo holidayInfo)
+    {
+        holidayName = holidayInfo.getHolidayName();
+        holidayStartTime = holidayInfo.getHolidayStartTime();
+        holidayEndTime = holidayInfo.getHolidayEndTime();
+        moreInfo = holidayInfo.getMoreInfo();
+        holiStatus = holidayInfo.getHoliStatus();
+    }
+
     public String getHolidayName() {
         return holidayName;
     }

@@ -23,7 +23,7 @@ public class LoginController {
     @Resource
     private StudentRepository studentRepository;
 
-    @PostMapping("/api/login")
+    @PostMapping("/login")
     public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String adminUserName = "907777849";
@@ -40,7 +40,7 @@ public class LoginController {
         }
 
         Student student = studentRepository.findBystudentId(userFromModel.getUserId());
-        if (Objects.equals(student.getPassword(), userFromModel.getPassword())) {
+        if (student != null && Objects.equals(student.getPassword(), userFromModel.getPassword())) {
             session.setAttribute("usertype", "student");
             session.setAttribute("studentid", userFromModel.getUserId());
             userFromModel.setUserType("student");
@@ -51,7 +51,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/api/getlogin")
+    @GetMapping("/getlogin")
     public String login(HttpServletRequest request) {
         String student = "student";
         String admin = "admin";
@@ -72,6 +72,21 @@ public class LoginController {
         request.getSession().invalidate();
         modelAndView.setViewName("student/studentlogin");
         return modelAndView;
+    }
+
+    @PostMapping("/change_password")
+    public String change( String oldPassword,String newPassword,HttpServletRequest request) {
+        String studentId = (String) request.getSession().getAttribute("studentid");
+        Student student = studentRepository.findBystudentId(studentId);
+        if(!Objects.equals(student.getPassword(), oldPassword))
+        {
+            return "old error";
+        }else
+        {
+            student.setPassword(newPassword);
+            studentRepository.save(student);
+            return "success";
+        }
     }
 
 }

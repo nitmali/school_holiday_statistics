@@ -1,5 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorator="home_layout">
+      layout:decorator="public/home_layout">
 <head>
     <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
 </head>
@@ -40,7 +40,7 @@
             </div>
         </div>
     </div>
-    <div th:replace="message_modal :: message_modal"></div>
+    <div th:replace="public/message_modal :: message_modal"></div>
 </div>
 </body>
 <th:block layout:fragment="scripts">

@@ -32,7 +32,6 @@ public class HomeController {
     @GetMapping("/admin_home")
     public ModelAndView admin(ModelAndView modelAndView) {
         modelAndView.setViewName("manage/admin_home");
-
         return modelAndView;
     }
 
@@ -47,5 +46,12 @@ public class HomeController {
         modelAndView.setViewName("manage/managelogin");
         return modelAndView;
     }
+
+    @GetMapping("/change_password")
+    public ModelAndView change(ModelAndView modelAndView) {
+        modelAndView.setViewName("public/change_password");
+        return modelAndView;
+    }
+
 }
 
