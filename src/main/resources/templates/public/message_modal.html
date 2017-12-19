@@ -1,24 +1,24 @@
 <div th:fragment="message_modal">
-  <div th:object="${message}">
-    <div class="modal fade" id="messagemodal" th:if="${message.getmessage}==true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-              &times;
-            </button>
-            <h4 class="modal-title" id="myModalLabel">
-              温馨提示
-            </h4>
-          </div>
-          <div class="modal-body" th:text="${message.warning}">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭
-            </button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal -->
-    </div>
+<div th:object="${message}">
+  <div class="modal fade" id="messagemodal" th:if="${message.getmessage}==true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+          </button>
+          <h4 class="modal-title" id="myModalLabel">
+            温馨提示
+          </h4>
+        </div>
+        <div class="modal-body" th:text="${message.warning}">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+          </button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
   </div>
+</div>
 </div>

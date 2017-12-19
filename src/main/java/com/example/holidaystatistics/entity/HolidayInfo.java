@@ -30,7 +30,7 @@ public class HolidayInfo {
 
     @Column(nullable = false, length = 32)
     @Enumerated(EnumType.STRING)
-    private holiStatus holiStatus;
+    private holidayStatus holidayStatus;
 
     public HolidayInfo() {
     }
@@ -41,7 +41,16 @@ public class HolidayInfo {
         holidayStartTime = holidayInfoFromModel.getHolidayStartTime();
         holidayEndTime = holidayInfoFromModel.getHolidayEndTime();
         moreInfo = holidayInfoFromModel.getMoreInfo();
-        holiStatus = holidayInfoFromModel.getHoliStatus();
+        holidayStatus = holidayInfoFromModel.getHolidayStatus();
+    }
+
+    public void setholidayInfoFromModel(HolidayInfoFromModel holidayInfoFromModel)
+    {
+        holidayName = holidayInfoFromModel.getHolidayName();
+        holidayStartTime = holidayInfoFromModel.getHolidayStartTime();
+        holidayEndTime = holidayInfoFromModel.getHolidayEndTime();
+        moreInfo = holidayInfoFromModel.getMoreInfo();
+        holidayStatus = holidayInfoFromModel.getHolidayStatus();
     }
 
     public Long getHolidayId() {
@@ -84,18 +93,20 @@ public class HolidayInfo {
         this.moreInfo = moreInfo;
     }
 
-    public holiStatus getHoliStatus() {
-        return holiStatus;
+    public holidayStatus getHolidayStatus() {
+        return holidayStatus;
     }
 
-    public void setHoliStatus(holiStatus holiStatus) {
-        this.holiStatus = holiStatus;
+    public void setHolidayStatus(holidayStatus holidayStatus) {
+        this.holidayStatus = holidayStatus;
     }
 
-    public enum holiStatus {
+    public enum holidayStatus {
         //假期开始
         START,
         //假期结束
-        OVER
+        OVER,
+        //假期激活
+        ACTIVATION
     }
 }

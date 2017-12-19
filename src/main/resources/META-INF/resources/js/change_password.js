@@ -16,7 +16,7 @@ function changePassword() {
 
     if (inputFlag) {
         if (newPassWord.val() === newPassWordAgin.val()) {
-            if (newPassWordAgin.val().length > 6 && newPassWordAgin.val().length < 16) {
+            if (newPassWordAgin.val().length >= 6 && newPassWordAgin.val().length <= 16) {
                 $.post("/change_password",
                     {
                         oldPassword: md5(oldPassword.val()),
@@ -34,7 +34,6 @@ function changePassword() {
             } else {
                 newPassWordAginSpan.html("请输入6至16位密码！")
             }
-
         }
         else {
             newPassWordAginSpan.html("两次密码输入不一致！")

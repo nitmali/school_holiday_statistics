@@ -1,5 +1,4 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:v-if="http://www.w3.org/1999/xhtml"
       layout:decorator="public/home_layout">
 <head>
   <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
@@ -9,25 +8,27 @@
 
 <div layout:fragment="content">
 
-  <div class="jumbotron" id="holidayInfo">
-    <div v-if = "holidayInfo.holiStatus == 'START'">
+  <div class="jumbotron" id="studentHolidayInfo">
+    <div v-if = "holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
       <h1>{{holidayInfo.holidayName}}</h1>
       <p>节日时间：</p>
       <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
       <p>{{holidayInfo.moreInfo}}</p>
-      <div>
+      <div v-if="holidayInfo.holidayStatus == 'START'">
        <p> <a class="btn btn-primary" href="/holiday_plan" th:href="@{/holiday_plan}">现在就去填写离校信息</a></p>
+      </div>
+      <div v-else="">
+        <p> <a class="btn btn-primary">现在提交为何我不能及时到校</a></p>
       </div>
     </div>
     <div v-else="">
-      <h2>当前无节假日，同学们不要着急哦</h2>
+      <h2>当前无节假日，请关注学工部和班级通知</h2>
     </div>
   </div>
-
 </div>
 </body>
 <th:block layout:fragment="scripts">
-  <script src="/js/student_home.js" th:src="@{/js/student_home.js}"></script>
+  <script src="/js/vue-app/student/student_home_app.js" th:src="@{/js/vue-app/student/student_home_app.js}"></script>
 </th:block>
 </html>
 

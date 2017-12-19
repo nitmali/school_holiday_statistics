@@ -10,6 +10,8 @@ import java.sql.Date;
  */
 public class HolidayInfoFromModel {
 
+    private Long holidayId;
+
     @NotNull
     private String holidayName;
 
@@ -22,17 +24,26 @@ public class HolidayInfoFromModel {
     private String moreInfo;
 
     @NotNull
-    private HolidayInfo.holiStatus holiStatus;
+    private HolidayInfo.holidayStatus holidayStatus;
 
     public HolidayInfoFromModel(){}
 
     public HolidayInfoFromModel(HolidayInfo holidayInfo)
     {
+        holidayId = holidayInfo.getHolidayId();
         holidayName = holidayInfo.getHolidayName();
         holidayStartTime = holidayInfo.getHolidayStartTime();
         holidayEndTime = holidayInfo.getHolidayEndTime();
         moreInfo = holidayInfo.getMoreInfo();
-        holiStatus = holidayInfo.getHoliStatus();
+        holidayStatus = holidayInfo.getHolidayStatus();
+    }
+
+    public Long getHolidayId() {
+        return holidayId;
+    }
+
+    public void setHolidayId(Long holidayId) {
+        this.holidayId = holidayId;
     }
 
     public String getHolidayName() {
@@ -67,11 +78,11 @@ public class HolidayInfoFromModel {
         this.moreInfo = moreInfo;
     }
 
-    public HolidayInfo.holiStatus getHoliStatus() {
-        return holiStatus;
+    public HolidayInfo.holidayStatus getHolidayStatus() {
+        return holidayStatus;
     }
 
-    public void setHoliStatus(HolidayInfo.holiStatus holiStatus) {
-        this.holiStatus = holiStatus;
+    public void setHolidayStatus(HolidayInfo.holidayStatus holidayStatus) {
+        this.holidayStatus = holidayStatus;
     }
 }

@@ -26,26 +26,20 @@ public class LoginController {
     @PostMapping("/login")
     public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String adminUserName = "907777849";
-        if (Objects.equals(userFromModel.getUserId(), adminUserName)) {
-            String adminPassword = "86fe9e821fb48f55a9ca0f33c1e27d88";
-            if (Objects.equals(userFromModel.getPassword(), adminPassword)) {
-                session.setAttribute("usertype", "admin");
-                userFromModel.setUserType("admin");
-                userFromModel.setUserName("管理员");
-                return userFromModel;
-            } else {
-                return userFromModel;
-            }
-        }
-
+        String adminUserId = "907777849";
         Student student = studentRepository.findBystudentId(userFromModel.getUserId());
         if (student != null && Objects.equals(student.getPassword(), userFromModel.getPassword())) {
-            session.setAttribute("usertype", "student");
+            if (Objects.equals(userFromModel.getUserId(), adminUserId)) {
+                userFromModel.setUserType("admin");
+                session.setAttribute("usertype", "admin");
+            } else {
+                userFromModel.setUserType("student");
+                session.setAttribute("usertype", "student");
+            }
             session.setAttribute("studentid", userFromModel.getUserId());
-            userFromModel.setUserType("student");
             userFromModel.setUserName(student.getStudentName());
             return userFromModel;
+
         } else {
             return userFromModel;
         }

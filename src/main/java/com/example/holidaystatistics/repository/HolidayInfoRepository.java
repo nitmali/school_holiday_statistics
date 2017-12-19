@@ -13,8 +13,8 @@ public interface HolidayInfoRepository extends CrudRepository<HolidayInfo,Long> 
     /**
      * 根据假期的状态查询
      *
-     * @param holiStatus
+     * @param holidayStatus
      * @return HolidayInfo
      */
-    HolidayInfo findByholiStatus(HolidayInfo.holiStatus holiStatus);
+    HolidayInfo findByholidayStatus(HolidayInfo.holidayStatus holidayStatus);
 }

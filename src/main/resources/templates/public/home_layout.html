@@ -2,17 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
   <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
 
   <title>软件工程151假期去向统计</title>
 
   <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"
         th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
-  <link href="/META-INF/resources/css/site.css"
+  <link href="/css/site.css"
         th:href="@{/css/site.css}" rel="stylesheet"/>
 </head>
 
 <body>
+
+<div class="plash">
+  <div class="loading">Loading...</div>
+</div>
 
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
@@ -50,9 +54,6 @@
             <span class="glyphicon glyphicon-menu-down"></span>
           </a>
           <ul class="dropdown-menu" style="left: 0px">
-            <li>
-              <a><span class="glyphicon glyphicon-user"></span> &nbsp;个人中心</a>
-            </li>
             <li role="separator"></li>
             <li>
               <a href="/change_password" th:href="@{/change_password}"><span class="glyphicon glyphicon-cog"></span> &nbsp;修改密码</a>
@@ -111,6 +112,10 @@
 <script src="/META-INF/resources/js/js-md5/md5.js"
         th:src="@{/js/js-md5/md5.js}"></script>
 <script src="/META-INF/resources/js/login.js" th:src="@{/js/login.js}"></script>
+
+<script>
+  $(".plash").hide();
+</script>
 <th:block layout:fragment="scripts">
 
 </th:block>

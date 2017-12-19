@@ -1,5 +1,5 @@
-var holidayInfoApp = new Vue({
-    el: '#holidayInfo',
+new Vue({
+    el: '#studentHolidayInfo',
     data: {
         holidayInfo: ''
     },

@@ -122,12 +122,15 @@ function initnav() {
 
 function logout() {
     $.cookie("UserType", "", {expires: -1});
-    $.cookie("UserName", "", {expires: -1});
     $.cookie("Token", "", {expires: -1});
     initnav();
 }
 
-function agin() {
+function again() {
     $("#loginmessage").html("");
-    initnav();
+}
+
+function initing(id)
+{
+    $("#"+id).val("");
 }
