@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * @author 马小生
@@ -53,16 +54,16 @@ public class HolidayController {
     @GetMapping("/holiday_all")
     public ModelAndView holidayAll(ModelAndView modelAndView) {
         modelAndView.setViewName("manage/holiday_all");
-        return modelAndView.addObject("nationalDayInfoFormModel",holidayInfoRepository.findAll());
+        return modelAndView;
     }
 
     @GetMapping("/holiday_plan")
     public ModelAndView holidayPlan(ModelAndView modelAndView, HolidayPlanFormModel holidayPlanFormModel) {
        HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.START);
+        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         if(holidayInfo == null)
         {
-            holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
+            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
         }
         if (holidayInfo != null) {
             Date startTime = holidayInfo.getHolidayStartTime();
@@ -92,10 +93,10 @@ public class HolidayController {
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentId);
        HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.START);
+        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         if(holidayInfo == null)
         {
-            holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
+            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
         }
         if (holidayInfo == null) {
             MessageFromModel messageFromModel = new MessageFromModel();
@@ -126,15 +127,15 @@ public class HolidayController {
     public ModelAndView finished(ModelAndView modelAndView, HttpServletRequest httpServletRequest) {
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.START);
+        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         if(holidayInfo == null)
         {
-            holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
+            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
         }
         Student student = studentRepository.findBystudentId(studentId);
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
         MessageFromModel messageFromModel = new MessageFromModel();
-        modelAndView.setViewName("/student/finished");
+        modelAndView.setViewName("student/finished");
 
         if (holidayPlan == null) {
             messageFromModel.setGetmessage(true);
@@ -146,22 +147,21 @@ public class HolidayController {
         return modelAndView;
     }
 
-    @GetMapping("/get_stat_holiday_info")
-    public HolidayInfoFromModel holidayInfoFromModel() {
-        HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.START);
-        if(holidayInfo == null)
-        {
-            holidayInfo = holidayInfoRepository.findByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
-        }
-        if (holidayInfo != null) {
-            return new HolidayInfoFromModel(holidayInfo);
-        } else{
-            return new HolidayInfoFromModel();
+    @GetMapping("/get_holidayInfo_of_Status")
+    public HolidayInfo holidayInfo(HolidayInfo.holidayStatus holidayStatus) {
+        return holidayInfoRepository.findAllByholidayStatus(holidayStatus);
+    }
+
+    @GetMapping("get_holidayInfo_all")
+    public List<HolidayInfo> holidayInfoList(HolidayInfo.holidayStatus holidayStatus) {
+        if (holidayStatus == null) {
+            return (List<HolidayInfo>) holidayInfoRepository.findAll();
+        } else {
+            return holidayInfoRepository.findAllByHolidayStatus(holidayStatus);
         }
     }
 
-    @PostMapping("/updated_stat_holiday_info")
+    @PostMapping("/updated_holidayInfo")
     public void updatedHolidayInfo(HolidayInfoFromModel holidayInfoFromModel)
     {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayInfoFromModel.getHolidayId());

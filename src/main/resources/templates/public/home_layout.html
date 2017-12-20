@@ -114,7 +114,8 @@
 <script src="/META-INF/resources/js/login.js" th:src="@{/js/login.js}"></script>
 
 <script>
-  $(".plash").hide();
+    //    setTimeout("$('.plash').hide()", 500);
+    $('.plash').fadeOut(2000);
 </script>
 <th:block layout:fragment="scripts">
 
