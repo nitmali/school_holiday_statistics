@@ -19,7 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author 马小生
@@ -37,6 +39,9 @@ public class HolidayController {
 
     @GetMapping("/holiday_info")
     public ModelAndView holidayInfo(ModelAndView modelAndView,HolidayInfoFromModel holidayInfoFromModel) {
+        HolidayInfo holidayInfo;
+        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
+        holidayInfoFromModel = new HolidayInfoFromModel(holidayInfo);
         modelAndView.setViewName("manage/holiday_info");
         modelAndView.addObject("nationalDayInfoFormModel", holidayInfoFromModel);
         return modelAndView;
@@ -45,7 +50,12 @@ public class HolidayController {
     @PostMapping("/holiday_info")
     public ModelAndView setholidayInfo(ModelAndView modelAndView, @Valid HolidayInfoFromModel holidayInfoFromModel) {
 
-        HolidayInfo holidayInfo = new HolidayInfo(holidayInfoFromModel);
+        HolidayInfo holidayInfo = holidayInfoRepository.findByHolidayName(holidayInfoFromModel.getHolidayName());
+        if (holidayInfo == null) {
+            holidayInfo = new HolidayInfo(holidayInfoFromModel);
+        } else {
+            holidayInfo.setholidayInfoFromModel(holidayInfoFromModel);
+        }
         holidayInfoRepository.save(holidayInfo);
         modelAndView.setViewName("manage/success");
         return modelAndView;
@@ -59,7 +69,7 @@ public class HolidayController {
 
     @GetMapping("/holiday_plan")
     public ModelAndView holidayPlan(ModelAndView modelAndView, HolidayPlanFormModel holidayPlanFormModel) {
-       HolidayInfo holidayInfo;
+        HolidayInfo holidayInfo;
         holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         if(holidayInfo == null)
         {
@@ -113,6 +123,8 @@ public class HolidayController {
             }
 
             holidayPlan.setIp(httpServletRequest.getRemoteAddr());
+            SimpleDateFormat sdf = new SimpleDateFormat("", Locale.SIMPLIFIED_CHINESE);
+            sdf.applyPattern("yyyy-MM-dd HH:mm:ss秒");
             holidayPlan.setSubmitTime(new Timestamp(System.currentTimeMillis()));
             holidayPlan.setHolidayInfo(holidayInfo);
             holidayPlan.setHolidayPlanFormModel(holidayPlanFormModel);

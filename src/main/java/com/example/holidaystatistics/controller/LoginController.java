@@ -26,10 +26,10 @@ public class LoginController {
     @PostMapping("/login")
     public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
-        String adminUserId = "907777849";
+        String adminUserName = "管理员";
         Student student = studentRepository.findBystudentId(userFromModel.getUserId());
-        if (student != null && Objects.equals(student.getPassword(), userFromModel.getPassword())) {
-            if (Objects.equals(userFromModel.getUserId(), adminUserId)) {
+        if (Objects.equals(student.getPassword(), userFromModel.getPassword())) {
+            if (Objects.equals(student.getStudentName(), adminUserName)) {
                 userFromModel.setUserType("admin");
                 session.setAttribute("usertype", "admin");
             } else {

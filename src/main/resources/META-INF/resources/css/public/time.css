@@ -1,0 +1,24 @@
+
+.center {
+    height: 100%;
+    width: 100%;
+}
+
+.center table {
+    height: 40px;
+    border: 320px;
+    border-collapse: separate;
+}
+
+.center table td {
+    height: 5px;
+    width: 40px;
+}
+
+.num0 {
+    color: #c8c8c8 !important;
+}
+
+.td_time{
+    color: black;
+}

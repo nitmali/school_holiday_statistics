@@ -1,35 +1,74 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="public/home_layout">
 <head>
-  <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
+  <link href="/css/public/home.css" th:href="@{/css/public/home.css}" rel="stylesheet"/>
 </head>
 <body>
 <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div layout:fragment="content">
 
-  <div class="jumbotron" id="studentHolidayInfo">
-    <div v-if = "holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
-      <h1>{{holidayInfo.holidayName}}</h1>
-      <p>节日时间：</p>
-      <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
-      <p>{{holidayInfo.moreInfo}}</p>
-      <div v-if="holidayInfo.holidayStatus == 'START'">
-       <p> <a class="btn btn-primary" href="/holiday_plan" th:href="@{/holiday_plan}">现在就去填写离校信息</a></p>
+  <div id="studentHolidayInfo">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="holidayinfo jumbotron  col-xs-12 col-lg-6 ">
+          <div class="col-xs-offset-1 col-xs-11">
+            <div v-if="holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
+              <h1>{{holidayInfo.holidayName}}</h1>
+              <p>节日时间：</p>
+              <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
+              <p>{{holidayInfo.moreInfo}}</p>
+              <div v-if="holidayInfo.holidayStatus == 'START'">
+                <p><a class="btn btn-primary" href="/holiday_plan" th:href="@{/holiday_plan}">现在就去填写离校信息</a></p>
+              </div>
+              <div v-else="">
+                <p>正在假期中...</p>
+                <p><a class="btn btn-primary">现在提交为何我不能及时到校</a></p>
+              </div>
+            </div>
+            <div v-else="">
+              <h2>当前无节假日，请关注学工部和班级通知</h2>
+            </div>
+          </div>
+        </div>
+        <div class="jumbotron day col-xs-12 col-lg-5 col-lg-offset-1">
+          <div>
+            <div class="calendar">
+              <div class="title">
+                <h1 class="green" id="calendar-title">Month</h1>
+                <h2 class="green small" id="calendar-year">Year</h2>
+                <a href="" id="prev">Prev Month</a>
+                <a href="" id="next">Next Month</a>
+              </div>
+              <div class="body">
+                <div class="lightgrey body-list">
+                  <ul>
+                    <li>MON</li>
+                    <li>TUE</li>
+                    <li>WED</li>
+                    <li>THU</li>
+                    <li>FRI</li>
+                    <li>SAT</li>
+                    <li>SUN</li>
+                  </ul>
+                </div>
+                <div class="darkgrey body-list">
+                  <ul id="days">
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div v-else="">
-        <p>正在假期中...</p>
-        <p> <a class="btn btn-primary">现在提交为何我不能及时到校</a></p>
-      </div>
-    </div>
-    <div v-else="">
-      <h2>当前无节假日，请关注学工部和班级通知</h2>
     </div>
   </div>
 </div>
 </body>
 <th:block layout:fragment="scripts">
   <script src="/js/vue-app/student/student_home_app.js" th:src="@{/js/vue-app/student/student_home_app.js}"></script>
+  <script src="/js/home.js" th:src="@{/js/home.js}"></script>
+  <script src="/js/time.js" th:src="@{/js/time.js}"></script>
 </th:block>
 </html>
 

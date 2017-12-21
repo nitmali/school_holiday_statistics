@@ -8,8 +8,12 @@
 
   <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"
         th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
-  <link href="/css/site.css"
-        th:href="@{/css/site.css}" rel="stylesheet"/>
+  <link href="/css/public/site.css"
+        th:href="@{/css/public/site.css}" rel="stylesheet"/>
+  <link href="/css/public/timeapi.css"
+        th:href="@{/css/public/timeapi.css}" rel="stylesheet"/>
+  <link href="/css/public/time.css"
+        th:href="@{/css/public/time.css}" rel="stylesheet"/>
 </head>
 
 <body>
@@ -18,9 +22,9 @@
   <div class="loading">Loading...</div>
 </div>
 
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-
+<nav class="navbar  navbar-fixed-top">
+  <div class="navbar-inverse">
+    <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
         <span class="sr-only">Toggle navigation</span>
@@ -30,7 +34,6 @@
       </button>
       <a class="navbar-brand" href="/" th:href="@{/}">假期去向</a>
     </div>
-
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav" id="student" style="display: none">
         <li><a href="/student_home" th:href="@{/student_home}">首页</a></li>
@@ -68,9 +71,49 @@
 
       </ul>
     </div>
+    </div>
 
   </div>
+  <div class="time_01 col-xs-10  col-xs-offset-1 col-lg-12 col-lg-offset-3">
+    <div class='center' align="center">
+      <table>
+        <tr class='hours'>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td class="td_time" id = "hours"></td>
+          <td class="td_time">hours</td>
+        </tr>
+        <tr class='minutes'>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td class="td_time" id="minutes"></td>
+          <td class="td_time">minutes</td>
+
+        </tr>
+        <tr class='seconds'>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+          <td class="td_time" id = "seconds"></td>
+          <td class="td_time">seconds</td>
+
+        </tr>
+      </table>
+    </div>
+  </div>
 </nav>
+
 
 <div class="container frame">
   <div layout:fragment="content">
@@ -79,23 +122,25 @@
 </div>
 
 <footer>
-  <nav class="navbar navbar-inverse navbar-fixed-bottom">
-    <div class="container ">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
-          <span class="glyphicon glyphicon-option-horizontal" style="color: #e0e0e0"></span>
-        </button>
-        <p class="navbar-text" style="font-size: 13px">2017 © 假期管理系统（测试版） by nitmali</p>
-      </div>
-      <div id="footer" class="collapse navbar-collapse">
-        <ul class="nav navbar-nav center-block">
-          <li>
-            <a>关于</a>
-          </li>
-          <li>
-            <a>联系我</a>
-          </li>
-        </ul>
+  <nav class="navbar  navbar-fixed-bottom">
+    <div class="navbar-inverse">
+      <div class="container ">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
+            <span class="glyphicon glyphicon-option-horizontal" style="color: #e0e0e0"></span>
+          </button>
+          <p class="navbar-text" style="font-size: 13px">2017 © 假期管理系统（测试版） by nitmali</p>
+        </div>
+        <div id="footer" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav center-block">
+            <li>
+              <a>关于此系统</a>
+            </li>
+            <li>
+              <a>联系我</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>
@@ -111,11 +156,12 @@
         th:src="@{/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js}"></script>
 <script src="/META-INF/resources/js/js-md5/md5.js"
         th:src="@{/js/js-md5/md5.js}"></script>
+<script src="/META-INF/resources/js/time.js" th:src="@{/js/time.js}"></script>
 <script src="/META-INF/resources/js/login.js" th:src="@{/js/login.js}"></script>
 
 <script>
-    //    setTimeout("$('.plash').hide()", 500);
-    $('.plash').fadeOut(2000);
+    setTimeout("$('.plash').fadeOut(300)", 300);
+
 </script>
 <th:block layout:fragment="scripts">
 

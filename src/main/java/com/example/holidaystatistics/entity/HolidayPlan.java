@@ -102,8 +102,8 @@ public class HolidayPlan {
         this.ip = ip;
     }
 
-    public Timestamp getSubmitTime() {
-        return submitTime;
+    public String getSubmitTime() {
+        return submitTime.toString().substring(0,19);
     }
 
     public void setSubmitTime(Timestamp submitTime) {

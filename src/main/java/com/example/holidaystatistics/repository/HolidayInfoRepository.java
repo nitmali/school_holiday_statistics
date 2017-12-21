@@ -27,4 +27,12 @@ public interface HolidayInfoRepository extends CrudRepository<HolidayInfo,Long> 
      * @return HolidayInfo
      */
     List<HolidayInfo> findAllByHolidayStatus(HolidayInfo.holidayStatus holidayStatus);
+
+    /**
+     * 假期名查询
+     *
+     * @param holidayName
+     * @return HolidayInfo
+     */
+    HolidayInfo findByHolidayName(String holidayName);
 }
