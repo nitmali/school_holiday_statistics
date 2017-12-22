@@ -16,9 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 马小生
@@ -70,25 +70,33 @@ public class HolidayController {
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentId);
         holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
+        if (holidayInfo == null) {
+            return null;
+        }
+
         HolidayPlanFormModel holidayPlanFormModel = new HolidayPlanFormModel(holidayInfo);
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
+        if (holidayPlan == null)
+        {
+            return holidayPlanFormModel;
+        }
         //        Date startTime = holidayInfo.getHolidayStartTime();
 //        Date endTime = holidayInfo.getHolidayEndTime();
 //        holidayPlanFormModel.setHolidayName(holidayInfo.getHolidayName());
 //        holidayPlanFormModel.setLeaveTime(startTime);
 //        holidayPlanFormModel.setBackTime(endTime);
-        if(holidayPlan != null){
-            holidayPlanFormModel.setHolidayPlan(holidayPlan);
-            return holidayPlanFormModel;
-        }else {
-            return holidayPlanFormModel;
-        }
+
+        holidayPlanFormModel.setHolidayPlan(holidayPlan);
+        return holidayPlanFormModel;
     }
 
 
     @PostMapping("/set_holiday_plan")
     public String holidayPlan(HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
-        
+        String stayAtSchool = "留校";
+        if (Objects.equals(holidayPlanFormModel.getWhereToGo(), "")) {
+            return "error";
+        }
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentId);
         HolidayInfo  holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
@@ -98,22 +106,18 @@ public class HolidayController {
 //        }
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
 
-        System.out.println("离开时间:"+holidayPlanFormModel.getLeaveTime().getTime());
-        System.out.println("回来时间:"+holidayPlanFormModel.getBackTime().getTime());
-        System.out.println("差值："+(holidayPlanFormModel.getBackTime().getTime() - holidayPlanFormModel.getLeaveTime().getTime()));
-
-        if (holidayPlanFormModel.getBackTime().getTime() - holidayPlanFormModel.getLeaveTime().getTime() < 0
-                || holidayPlanFormModel.getBackTime().getTime() > holidayPlanFormModel.getHolidayEndTime().getTime()
-                || holidayPlanFormModel.getLeaveTime().getTime() < holidayPlanFormModel.getHolidayStartTime().getTime()) {
-            return "Time Error";
+        if (!Objects.equals(holidayPlanFormModel.getWhereToGo(), stayAtSchool)) {
+            if (holidayPlanFormModel.getBackTime().getTime() - holidayPlanFormModel.getLeaveTime().getTime() < 0
+                    || holidayPlanFormModel.getBackTime().getTime() > holidayInfo.getHolidayEndTime().getTime()
+                    || holidayPlanFormModel.getLeaveTime().getTime() < holidayInfo.getHolidayStartTime().getTime()) {
+                return "Time Error";
+            }
         }
+
         if (holidayPlan == null) {
-            System.out.println("离开时间:"+holidayPlanFormModel.getLeaveTime().getTime());
-            System.out.println("回来时间:"+holidayPlanFormModel.getBackTime().getTime());
             holidayPlan = new HolidayPlan(holidayPlanFormModel);
             holidayPlan.setStudent(student);
         }
-
         holidayPlan.setIp(httpServletRequest.getRemoteAddr());
         holidayPlan.setSubmitTime(new Timestamp(System.currentTimeMillis()));
         holidayPlan.setHolidayInfo(holidayInfo);
