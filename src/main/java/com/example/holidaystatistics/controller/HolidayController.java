@@ -153,7 +153,7 @@ public class HolidayController {
         }
     }
 
-    @PostMapping("/updated_holidayInfo")
+    @PostMapping("/updated_holiday_info")
     public void updatedHolidayInfo(HolidayInfoFromModel holidayInfoFromModel)
     {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayInfoFromModel.getHolidayId());

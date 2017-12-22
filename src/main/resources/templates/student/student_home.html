@@ -13,20 +13,20 @@
       <div class="row">
         <div class="holidayinfo jumbotron  col-xs-12 col-lg-6 ">
           <div class="col-xs-offset-1 col-xs-11">
-            <div v-if="holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
+            <div v-show="holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
               <h1>{{holidayInfo.holidayName}}</h1>
               <p>节日时间：</p>
               <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
               <p>{{holidayInfo.moreInfo}}</p>
-              <div v-if="holidayInfo.holidayStatus == 'START'">
+              <div v-show="holidayInfo.holidayStatus == 'START'">
                 <p><a class="btn btn-primary" href="/holiday_plan" th:href="@{/holiday_plan}">现在就去填写离校信息</a></p>
               </div>
-              <div v-else="">
+              <div v-show="!(holidayInfo.holidayStatus == 'START')">
                 <p>正在假期中...</p>
                 <p><a class="btn btn-primary">现在提交为何我不能及时到校</a></p>
               </div>
             </div>
-            <div v-else="">
+            <div v-show="!(holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION')">
               <h2>当前无节假日，请关注学工部和班级通知</h2>
             </div>
           </div>

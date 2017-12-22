@@ -8,23 +8,23 @@
 <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
 <div layout:fragment="content">
   <div class="jumbotron" id="adminHolidayInfo">
-    <div v-if="holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
+    <div v-show="holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION'">
       <h1>{{holidayInfo.holidayName}}</h1>
       <p>节日时间：</p>
       <p>{{holidayInfo.holidayStartTime}} 到 {{holidayInfo.holidayEndTime}}</p>
       <div class="form-group">
         <textarea class="form-control" v-model="holidayInfo.moreInfo" v-on:change="updated_more_info()"></textarea>
       </div>
-      <p v-if="holidayInfo.holidayStatus == 'START'">
+      <p v-show="holidayInfo.holidayStatus == 'START'">
         <a class="btn btn-primary" v-on:click="updated_holiday_status_ACTIVATION()">&emsp;激&nbsp;活&nbsp;假&nbsp;期&emsp;</a>
         <a class="btn btn-primary" v-on:click="updated_holiday_status_DELETE()">&emsp;销&nbsp;毁&nbsp;假&nbsp;期&emsp;</a>
       </p>
-      <p v-else="">
+      <p v-show="!(holidayInfo.holidayStatus == 'START')">
         <a class="btn btn-primary" v-on:click="updated_holiday_status_OVER()">&emsp;结&nbsp;束&nbsp;假&nbsp;期&emsp;</a>
         <a class="btn btn-primary" v-on:click="updated_holiday_status_START()">START（开发项）</a>
       </p>
     </div>
-    <div v-else="">
+    <div v-show="!(holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION')">
       <h1>当前无节假日</h1>
       <div>
         <P>请关注学工部通知</P>
