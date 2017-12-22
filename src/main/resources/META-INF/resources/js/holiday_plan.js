@@ -3,9 +3,9 @@ var leaveTime = jQuery("#leaveTime");
 var backTime = jQuery("#backTime");
 var goAway = jQuery("#goAway");
 
+
 function changeStatus() {
-    if (whereToGo.val() === "STAY_IN_SCHOOL") {
-        goAway.val("留校");
+    if (whereToGo.val() === "留校") {
         goAway.attr("type","hidden");
         leaveTime.prop("disabled", true);
         backTime.prop("disabled", true);

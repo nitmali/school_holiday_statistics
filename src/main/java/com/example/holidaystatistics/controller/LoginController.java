@@ -28,6 +28,10 @@ public class LoginController {
         HttpSession session = request.getSession();
         String adminUserName = "管理员";
         Student student = studentRepository.findBystudentId(userFromModel.getUserId());
+        if(student == null)
+        {
+            return userFromModel;
+        }
         if (Objects.equals(student.getPassword(), userFromModel.getPassword())) {
             if (Objects.equals(student.getStudentName(), adminUserName)) {
                 userFromModel.setUserType("admin");

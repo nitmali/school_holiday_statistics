@@ -5,35 +5,35 @@ var adminHolidayInfoApp =new Vue({
         getIt:false
     },
     created: function () {
-        this.getHolidayInfo_of_Status(this, "START");
-        this.getHolidayInfo_of_Status(this, "ACTIVATION");
+        this.get_holiday_info_of_status(this, "START");
+        this.get_holiday_info_of_status(this, "ACTIVATION");
     },
     methods: {
-        updated_moreInfo: function () {
-            this.post_to_api();
+        updated_more_info: function () {
+            this.updated_holiday_info();
             alert("更新公告成功");
         },
-        updated_holidayStatus_OVER: function () {
+        updated_holiday_status_OVER: function () {
             this.holidayInfo.holidayStatus = "OVER";
-            this.post_to_api();
+            this.updated_holiday_info();
             alert("更新假期状态成功");
         },
-        updated_holidayStatus_ACTIVATION: function () {
+        updated_holiday_status_ACTIVATION: function () {
             this.holidayInfo.holidayStatus = "ACTIVATION";
-            this.post_to_api();
+            this.updated_holiday_info();
             alert("更新假期状态成功");
         },
-        updated_holidayStatus_DELETE: function () {
+        updated_holiday_status_DELETE: function () {
             alert("暂不支持销毁假期");
         },
-        updated_holidayStatus_START: function () {
+        updated_holiday_status_START: function () {
             this.holidayInfo.holidayStatus = "START";
-            this.post_to_api();
+            this.updated_holiday_info();
             alert("假期初始为开实状态");
         },
-        post_to_api: function () {
+        updated_holiday_info: function () {
             var that = this;
-            $.post("/updated_holidayInfo",
+            $.post("/updated_holiday_info",
                 {
                     holidayId: that.holidayInfo.holidayId,
                     holidayName: that.holidayInfo.holidayName,
@@ -44,7 +44,7 @@ var adminHolidayInfoApp =new Vue({
                 }
             );
         },
-        getHolidayInfo_of_Status: function (that, holidayStatus) {
+        get_holiday_info_of_status: function (that, holidayStatus) {
             $.get("/get_holidayInfo_of_Status",
                 {
                     holidayStatus: holidayStatus

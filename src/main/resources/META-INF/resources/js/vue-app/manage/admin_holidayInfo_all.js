@@ -4,17 +4,17 @@ var adminHolidayInfoAllApp = new Vue({
         holidayInfo_list: null
     },
     created: function () {
-        this.getHolidayInfo_all();
+        this.get_holiday_info_all();
     },
     methods: {
-        setStat: function (holidayStatus) {
-            this.getHolidayInfo_of_Status(holidayStatus);
+        set_stat: function (holidayStatus) {
+            this.get_holiday_info_of_status(holidayStatus);
 
         },
-        getAll: function (holidayStatus) {
-            this.getHolidayInfo_all(holidayStatus);
+        get_all: function (holidayStatus) {
+            this.get_holiday_info_all(holidayStatus);
         },
-        getHolidayInfo_all:function () {
+        get_holiday_info_all:function () {
             $.get("/get_holidayInfo_all",
                 {
                     holidayStatus: "START"
@@ -23,7 +23,7 @@ var adminHolidayInfoAllApp = new Vue({
                     adminHolidayInfoAllApp.holidayInfo_list = data;
                 });
         },
-        getHolidayInfo_of_Status: function (holidayStatus) {
+        get_holiday_info_of_status: function (holidayStatus) {
                 $.get("/get_holidayInfo_all",
                     {
                         holidayStatus: holidayStatus

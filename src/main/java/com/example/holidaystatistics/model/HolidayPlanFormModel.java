@@ -1,5 +1,7 @@
 package com.example.holidaystatistics.model;
 
+import com.example.holidaystatistics.entity.HolidayInfo;
+import com.example.holidaystatistics.entity.HolidayPlan;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -15,11 +17,31 @@ public class HolidayPlanFormModel {
     private  String holidayName;
 
     @NotNull
-    private String whereToGo;
+    private Date holidayStartTime;
+
+    @NotNull
+    private Date holidayEndTime;
 
     private Date leaveTime;
 
     private Date backTime;
+
+    @NotNull
+    private String whereToGo;
+
+    public HolidayPlanFormModel(){}
+
+    public HolidayPlanFormModel (HolidayInfo holidayInfo){
+        holidayName = holidayInfo.getHolidayName();
+        holidayStartTime = holidayInfo.getHolidayStartTime();
+        holidayEndTime = holidayInfo.getHolidayEndTime();
+    }
+
+    public void setHolidayPlan (HolidayPlan holidayPlan){
+        leaveTime = holidayPlan.getLeaveTime();
+        backTime = holidayPlan.getBackTime();
+        whereToGo = holidayPlan.getWhereToGo();
+    }
 
     public String getHolidayName() {
         return holidayName;
@@ -27,6 +49,22 @@ public class HolidayPlanFormModel {
 
     public void setHolidayName(String holidayName) {
         this.holidayName = holidayName;
+    }
+
+    public Date getHolidayStartTime() {
+        return holidayStartTime;
+    }
+
+    public void setHolidayStartTime(Date holidaystartTime) {
+        this.holidayStartTime = holidaystartTime;
+    }
+
+    public Date getHolidayEndTime() {
+        return holidayEndTime;
+    }
+
+    public void setHolidayEndTime(Date holidayEndTime) {
+        this.holidayEndTime = holidayEndTime;
     }
 
     public String getWhereToGo() {

@@ -5,7 +5,6 @@ import com.example.holidaystatistics.entity.HolidayPlan;
 import com.example.holidaystatistics.entity.Student;
 import com.example.holidaystatistics.model.HolidayInfoFromModel;
 import com.example.holidaystatistics.model.HolidayPlanFormModel;
-import com.example.holidaystatistics.model.MessageFromModel;
 import com.example.holidaystatistics.repository.HolidayInfoRepository;
 import com.example.holidaystatistics.repository.HolidayPlanRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
@@ -19,9 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * @author 马小生
@@ -67,72 +64,63 @@ public class HolidayController {
         return modelAndView;
     }
 
-    @GetMapping("/holiday_plan")
-    public ModelAndView holidayPlan(ModelAndView modelAndView, HolidayPlanFormModel holidayPlanFormModel) {
+    @GetMapping("/get_holiday_plan")
+    public HolidayPlanFormModel holidayPlan(HttpServletRequest httpServletRequest) {
         HolidayInfo holidayInfo;
+        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        Student student = studentRepository.findBystudentId(studentId);
         holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-        if(holidayInfo == null)
-        {
-            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
-        }
-        if (holidayInfo != null) {
-            Date startTime = holidayInfo.getHolidayStartTime();
-            Date endTime = holidayInfo.getHolidayEndTime();
-            holidayPlanFormModel.setHolidayName(holidayInfo.getHolidayName());
-            holidayPlanFormModel.setLeaveTime(startTime);
-            holidayPlanFormModel.setBackTime(endTime);
-            modelAndView.setViewName("student/holiday_plan");
-            modelAndView.addObject("nationalDayPlanFormModel", holidayPlanFormModel);
-            return modelAndView;
-        } else {
-            MessageFromModel messageFromModel = new MessageFromModel();
-            messageFromModel.setGetmessage(true);
-            messageFromModel.setWarning("当前无假期");
-            modelAndView.setViewName("student/home");
-            System.out.println("holiday start time :"+holidayPlanFormModel.getLeaveTime());
-            modelAndView.addObject("nationalDayPlanFormModel", holidayPlanFormModel);
-            modelAndView.addObject("message", messageFromModel);
-            return modelAndView;
+        HolidayPlanFormModel holidayPlanFormModel = new HolidayPlanFormModel(holidayInfo);
+        HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
+        //        Date startTime = holidayInfo.getHolidayStartTime();
+//        Date endTime = holidayInfo.getHolidayEndTime();
+//        holidayPlanFormModel.setHolidayName(holidayInfo.getHolidayName());
+//        holidayPlanFormModel.setLeaveTime(startTime);
+//        holidayPlanFormModel.setBackTime(endTime);
+        if(holidayPlan != null){
+            holidayPlanFormModel.setHolidayPlan(holidayPlan);
+            return holidayPlanFormModel;
+        }else {
+            return holidayPlanFormModel;
         }
     }
 
-    @PostMapping("/holiday_plan")
-    public ModelAndView holidayPlan(ModelAndView modelAndView,
-                                    @Valid HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
+
+    @PostMapping("/set_holiday_plan")
+    public String holidayPlan(HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
         
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentId);
-       HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-        if(holidayInfo == null)
-        {
-            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
-        }
-        if (holidayInfo == null) {
-            MessageFromModel messageFromModel = new MessageFromModel();
-            messageFromModel.setGetmessage(true);
-            modelAndView.setViewName("student/holiday_plan");
-            modelAndView.addObject("message", messageFromModel);
-            return modelAndView;
-        } else {
-            HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
+        HolidayInfo  holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
+//        if(holidayInfo == null)
+//        {
+//            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
+//        }
+        HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
 
-            if (holidayPlan == null) {
-                holidayPlan = new HolidayPlan(holidayPlanFormModel);
-                holidayPlan.setStudent(student);
-            }
+        System.out.println("离开时间:"+holidayPlanFormModel.getLeaveTime().getTime());
+        System.out.println("回来时间:"+holidayPlanFormModel.getBackTime().getTime());
+        System.out.println("差值："+(holidayPlanFormModel.getBackTime().getTime() - holidayPlanFormModel.getLeaveTime().getTime()));
 
-            holidayPlan.setIp(httpServletRequest.getRemoteAddr());
-            SimpleDateFormat sdf = new SimpleDateFormat("", Locale.SIMPLIFIED_CHINESE);
-            sdf.applyPattern("yyyy-MM-dd HH:mm:ss秒");
-            holidayPlan.setSubmitTime(new Timestamp(System.currentTimeMillis()));
-            holidayPlan.setHolidayInfo(holidayInfo);
-            holidayPlan.setHolidayPlanFormModel(holidayPlanFormModel);
-            
-            holidayPlanRepository.save(holidayPlan);
-            modelAndView.setViewName("student/success");
-            return modelAndView;
+        if (holidayPlanFormModel.getBackTime().getTime() - holidayPlanFormModel.getLeaveTime().getTime() < 0
+                || holidayPlanFormModel.getBackTime().getTime() > holidayPlanFormModel.getHolidayEndTime().getTime()
+                || holidayPlanFormModel.getLeaveTime().getTime() < holidayPlanFormModel.getHolidayStartTime().getTime()) {
+            return "Time Error";
         }
+        if (holidayPlan == null) {
+            System.out.println("离开时间:"+holidayPlanFormModel.getLeaveTime().getTime());
+            System.out.println("回来时间:"+holidayPlanFormModel.getBackTime().getTime());
+            holidayPlan = new HolidayPlan(holidayPlanFormModel);
+            holidayPlan.setStudent(student);
+        }
+
+        holidayPlan.setIp(httpServletRequest.getRemoteAddr());
+        holidayPlan.setSubmitTime(new Timestamp(System.currentTimeMillis()));
+        holidayPlan.setHolidayInfo(holidayInfo);
+        holidayPlan.setHolidayPlanFormModel(holidayPlanFormModel);
+
+        holidayPlanRepository.save(holidayPlan);
+        return "success";
     }
 
     @GetMapping("/finished")
@@ -146,16 +134,8 @@ public class HolidayController {
         }
         Student student = studentRepository.findBystudentId(studentId);
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
-        MessageFromModel messageFromModel = new MessageFromModel();
         modelAndView.setViewName("student/finished");
-
-        if (holidayPlan == null) {
-            messageFromModel.setGetmessage(true);
-        }else {
-            modelAndView.addObject("holidayPlan",holidayPlan);
-        }
-        messageFromModel.setWarning("没有提交记录");
-        modelAndView.addObject("message", messageFromModel);
+        modelAndView.addObject("holidayPlan", holidayPlan);
         return modelAndView;
     }
 

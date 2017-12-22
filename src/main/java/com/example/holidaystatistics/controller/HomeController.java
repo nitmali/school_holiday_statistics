@@ -1,7 +1,6 @@
 package com.example.holidaystatistics.controller;
 
 
-import com.example.holidaystatistics.model.MessageFromModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -15,16 +14,12 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView) {
-        MessageFromModel messageFromModel = new MessageFromModel();
         modelAndView.setViewName("student/studentlogin");
-        modelAndView.addObject("message", messageFromModel);
         return modelAndView;
     }
 
     @GetMapping("/student_home")
     public ModelAndView home(ModelAndView modelAndView) {
-        MessageFromModel messageFromModel = new MessageFromModel();
-        modelAndView.addObject("message", messageFromModel);
         modelAndView.setViewName("student/student_home");
         return modelAndView;
     }
@@ -32,6 +27,12 @@ public class HomeController {
     @GetMapping("/admin_home")
     public ModelAndView admin(ModelAndView modelAndView) {
         modelAndView.setViewName("manage/admin_home");
+        return modelAndView;
+    }
+
+    @GetMapping("/holiday_plan")
+    public ModelAndView holidayplan(ModelAndView modelAndView) {
+        modelAndView.setViewName("student/holiday_plan");
         return modelAndView;
     }
 
@@ -50,6 +51,12 @@ public class HomeController {
     @GetMapping("/change_password")
     public ModelAndView change(ModelAndView modelAndView) {
         modelAndView.setViewName("public/change_password");
+        return modelAndView;
+    }
+
+    @GetMapping("/success")
+    public ModelAndView success(ModelAndView modelAndView) {
+        modelAndView.setViewName("student/success");
         return modelAndView;
     }
 

@@ -5,11 +5,11 @@ new Vue({
         getIt:false
     },
     created: function () {
-        this.getHolidayInfo_of_Status(this, "START");
-        this.getHolidayInfo_of_Status(this, "ACTIVATION");
+        this.get_holiday_info_of_status(this, "START");
+        this.get_holiday_info_of_status(this, "ACTIVATION");
     },
     methods:{
-        getHolidayInfo_of_Status: function (that, holidayStatus) {
+        get_holiday_info_of_status: function (that, holidayStatus) {
             $.get("/get_holidayInfo_of_Status",
                 {
                     holidayStatus: holidayStatus
