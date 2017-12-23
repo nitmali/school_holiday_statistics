@@ -100,10 +100,6 @@ public class HolidayController {
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
         Student student = studentRepository.findBystudentId(studentId);
         HolidayInfo  holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-//        if(holidayInfo == null)
-//        {
-//            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
-//        }
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
 
         if (!Objects.equals(holidayPlanFormModel.getWhereToGo(), stayAtSchool)) {
