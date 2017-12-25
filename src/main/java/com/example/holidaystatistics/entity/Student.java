@@ -21,6 +21,9 @@ public class Student {
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 11)
+    private String phone;
+
     public String getStudentId() {
         return studentId;
     }
@@ -43,5 +46,13 @@ public class Student {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }

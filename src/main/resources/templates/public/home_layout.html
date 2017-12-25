@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
 
-  <title>软件工程151假期去向统计</title>
+  <title>软件工程151假期管理</title>
 
   <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"
         th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
@@ -32,7 +32,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/" th:href="@{/}">假期去向</a>
+      <a class="navbar-brand" href="/" th:href="@{/}">假期管理</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav" id="student" style="display: none">
@@ -135,10 +135,10 @@
         <div id="footer" class="collapse navbar-collapse">
           <ul class="nav navbar-nav center-block">
             <li>
-              <a>关于此系统</a>
+              <a data-toggle="modal" data-target="#aboutModal">关于此系统</a>
             </li>
             <li>
-              <a>联系我</a>
+              <a data-toggle="modal" data-target="#helpModal">帮助中心</a>
             </li>
           </ul>
         </div>
@@ -146,6 +146,60 @@
     </div>
   </nav>
 </footer>
+
+<div class="modal fade" id="aboutModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">关于</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+        <p>1、此网站为方便同学们的离校信息而设立管理和统计</p>
+        <p>2、使用此网站并提交信息则视为亲自填写《数据学院学生假期去向统计》表。</p>
+        <p>3、此网站不会泄露任何用户信息，请妥善保管个人密码及信息。</p>
+        <p>4、此系统处于测试阶段，若有BUG或意见请到反馈给开发者。</p>
+      </div>
+
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="helpModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- 模态框头部 -->
+      <div class="modal-header">
+        <h4 class="modal-title">帮助</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- 模态框主体 -->
+      <div class="modal-body">
+        <p>1、初次登录此网站请及时修改密码<span class="text text-info">（手机端导航栏请点击右上角三条白杠）</span></p>
+        <p>2、请在节假日开始前到<a href="/holiday_plan">“去向调查”</a>页面及时填写离校信息。</p>
+        <p>3、在假期中，若有不能及示返校的同学请到<a href="/holiday_addition">“未能及时返校”</a>界面填写相关信息。</p>
+        <p>4、“去向调查”和“未能及时返校”再次提交便是修改。</p>
+      </div>
+
+      <!-- 模态框底部 -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <script src="/webjars/jquery/3.2.1/dist/jquery.min.js"
         th:src="@{/webjars/jquery/dist/jquery.min.js}"></script>
