@@ -49,7 +49,7 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/getlogin")
+    @GetMapping("/get_login")
     public String login(HttpServletRequest request) {
         String student = "student";
         String admin = "admin";
@@ -68,7 +68,7 @@ public class LoginController {
     @RequestMapping(value = "/logout")
     public ModelAndView logout(ModelAndView modelAndView, HttpServletRequest request) {
         request.getSession().invalidate();
-        modelAndView.setViewName("student/studentlogin");
+        modelAndView.setViewName("student/student_login");
         return modelAndView;
     }
 

@@ -1,0 +1,37 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.springframework.org/schema/jdbc"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      layout:decorator="public/home_layout">
+<head>
+
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+  <div class="jumbotron" id="studentHolidayAddition" style="height: 150%">
+    <div>
+      <div class="form-group">
+        <label for="addition_text">为什么不能及时到校：</label>
+        <textarea class="form-control" id="addition_text" v-model="set_holidayAddition.addition"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="addition_back_tome">预计返校时间：</label>
+        <input type="date" class="form-control" id="addition_back_tome"
+               v-bind:min="set_holidayAddition.expectedBackTime"
+               v-model="set_holidayAddition.expectedBackTime"/>
+      </div>
+      <div class="form-group">
+        <span>&nbsp;</span>
+        <button type="button" class="btn btn-primary col-lg-2 col-xs-6" v-on:click="set_holiday_addition_api()"
+                v-bind:disabled="!(set_holidayAddition.addition)">提交
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<th:block layout:fragment="scripts">
+  <script src="/js/vue-app/student/holiday_addition_app.js"
+          th:src="@{/js/vue-app/student/holiday_addition_app.js}"></script>
+</th:block>
+</html>

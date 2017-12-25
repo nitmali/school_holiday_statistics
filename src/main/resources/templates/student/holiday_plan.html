@@ -26,7 +26,7 @@
           <select class="form-control" id="whereToGo" v-model="get_holidayPlan.whereToGo"
                   v-on:change="change_whereToGo()"
                   v-bind:disabled="get_holidayInfo" required="required">
-            <option value="留校" selected="selected" >留校</option>
+            <option value="留校">留校</option>
             <option value="离校">离校</option>
           </select>
         </div>
@@ -51,7 +51,7 @@
                  v-bind:min="get_holidayPlan.leaveTime" v-bind:max="get_holidayPlan.holidayEndTime"
                  required="required"/>
         </div>
-        <button type="button" class="btn btn-primary col-xs-6 col-lg-3" v-on:click="set_holiday_plan"
+        <button type="button" class="btn btn-primary col-xs-6 col-lg-3" v-on:click="set_holiday_plan_api"
                 v-bind:disabled="get_holidayPlan.holidayName == null">提交
         </button>
       </div>

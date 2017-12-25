@@ -14,7 +14,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index(ModelAndView modelAndView) {
-        modelAndView.setViewName("student/studentlogin");
+        modelAndView.setViewName("student/student_login");
         return modelAndView;
     }
 
@@ -31,20 +31,20 @@ public class HomeController {
     }
 
     @GetMapping("/holiday_plan")
-    public ModelAndView holidayplan(ModelAndView modelAndView) {
+    public ModelAndView holidayPlan(ModelAndView modelAndView) {
         modelAndView.setViewName("student/holiday_plan");
         return modelAndView;
     }
 
-    @GetMapping("/studenlogin")
-    public ModelAndView studenlogin(ModelAndView modelAndView) {
-        modelAndView.setViewName("student/studentlogin");
+    @GetMapping("/student_login")
+    public ModelAndView studentLogin(ModelAndView modelAndView) {
+        modelAndView.setViewName("student/student_login");
         return modelAndView;
     }
 
-    @GetMapping("/managelogin")
-    public ModelAndView managelogin(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/managelogin");
+    @GetMapping("/admin_login")
+    public ModelAndView adminLogin(ModelAndView modelAndView) {
+        modelAndView.setViewName("manage/admin_login");
         return modelAndView;
     }
 
@@ -60,5 +60,10 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/holiday_addition")
+    public ModelAndView holidayAddition(ModelAndView modelAndView) {
+        modelAndView.setViewName("student/holiday_addition");
+        return modelAndView;
+    }
 }
 

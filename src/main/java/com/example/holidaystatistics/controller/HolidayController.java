@@ -1,10 +1,13 @@
 package com.example.holidaystatistics.controller;
 
+import com.example.holidaystatistics.entity.HolidayAddition;
 import com.example.holidaystatistics.entity.HolidayInfo;
 import com.example.holidaystatistics.entity.HolidayPlan;
 import com.example.holidaystatistics.entity.Student;
+import com.example.holidaystatistics.model.HolidayAdditionFromModel;
 import com.example.holidaystatistics.model.HolidayInfoFromModel;
 import com.example.holidaystatistics.model.HolidayPlanFormModel;
+import com.example.holidaystatistics.repository.HolidayAdditionRepository;
 import com.example.holidaystatistics.repository.HolidayInfoRepository;
 import com.example.holidaystatistics.repository.HolidayPlanRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
@@ -34,18 +37,11 @@ public class HolidayController {
     @Resource
     private HolidayInfoRepository holidayInfoRepository;
 
-    @GetMapping("/holiday_info")
-    public ModelAndView holidayInfo(ModelAndView modelAndView,HolidayInfoFromModel holidayInfoFromModel) {
-        HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-        holidayInfoFromModel = new HolidayInfoFromModel(holidayInfo);
-        modelAndView.setViewName("manage/holiday_info");
-        modelAndView.addObject("nationalDayInfoFormModel", holidayInfoFromModel);
-        return modelAndView;
-    }
+    @Resource
+    private HolidayAdditionRepository holidayAdditionRepository;
 
     @PostMapping("/holiday_info")
-    public ModelAndView setholidayInfo(ModelAndView modelAndView, @Valid HolidayInfoFromModel holidayInfoFromModel) {
+    public ModelAndView setHolidayInfo(ModelAndView modelAndView, @Valid HolidayInfoFromModel holidayInfoFromModel) {
 
         HolidayInfo holidayInfo = holidayInfoRepository.findByHolidayName(holidayInfoFromModel.getHolidayName());
         if (holidayInfo == null) {
@@ -89,7 +85,6 @@ public class HolidayController {
         holidayPlanFormModel.setHolidayPlan(holidayPlan);
         return holidayPlanFormModel;
     }
-
 
     @PostMapping("/set_holiday_plan")
     public String holidayPlan(HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
@@ -154,10 +149,32 @@ public class HolidayController {
     }
 
     @PostMapping("/updated_holiday_info")
-    public void updatedHolidayInfo(HolidayInfoFromModel holidayInfoFromModel)
-    {
+    public void updatedHolidayInfo(HolidayInfoFromModel holidayInfoFromModel) {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayInfoFromModel.getHolidayId());
         holidayInfo.setholidayInfoFromModel(holidayInfoFromModel);
         holidayInfoRepository.save(holidayInfo);
+    }
+
+    @PostMapping("/set_holiday_addition")
+    public String holidayAddition(HolidayAdditionFromModel holidayAdditionFromModel, HttpServletRequest httpServletRequest){
+        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        Student student = studentRepository.findBystudentId(studentId);
+        HolidayInfo  holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
+        HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
+        if (holidayPlan == null)
+        {
+            return "undefine holiday";
+        }else {
+            holidayAdditionFromModel.setHolidayPlan(holidayPlan);
+            HolidayAddition holidayAddition;
+            holidayAddition = holidayAdditionRepository.findByHolidayPlan(holidayPlan);
+            if(holidayAddition == null)
+            {
+                holidayAddition = new HolidayAddition();
+            }
+            holidayAddition.setHolidayAdditionFromModel(holidayAdditionFromModel);
+            holidayAdditionRepository.save(holidayAddition);
+            return "success";
+        }
     }
 }

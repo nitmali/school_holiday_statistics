@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    getlogin();
+    get_login();
     remember();
     loginofenter();
     focus();
@@ -75,25 +75,25 @@ function loginin() {
                         $.cookie("UserType", "admin", {expires: 7});
                     }
                 }else {
-                    $("#loginmessage").html("账号或者密码错误");
+                    $("#login_message").html("账号或者密码错误");
                 }
             }, "json"
         );
     }
 }
 
-function getlogin() {
-    $.get("/getlogin",
+function get_login() {
+    $.get("/get_login",
         function (data) {
             if (data === "error" && $.cookie("UserType") === "student") {
                 logout();
             }
         }
     );
-    initnav();
+    init_nav();
 }
 
-function initnav() {
+function init_nav() {
     var student = $("#student");
     var admin = $("#admin");
     var entrance = $("#entrance");
@@ -123,14 +123,14 @@ function initnav() {
 function logout() {
     $.cookie("UserType", "", {expires: -1});
     $.cookie("Token", "", {expires: -1});
-    initnav();
+    init_nav();
 }
 
 function again() {
-    $("#loginmessage").html("");
+    $("#login_message").html("");
 }
 
-function initing(id)
+function clean(id)
 {
     $("#"+id).val("");
 }

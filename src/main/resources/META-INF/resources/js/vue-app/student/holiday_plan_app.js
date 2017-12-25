@@ -7,20 +7,20 @@ var that = new Vue({
             backTime: undefined,
             whereToGo: undefined
         },
-        get_holidayInfo: true
+        get_holidayInfo: true,
+        watchWork:0
     },
     created: function () {
-        var that = this;
-        that.get_holiday_plan(that);
-
-
+        this.get_holiday_plan_api();
     },
     watch: {
         get_holidayPlan: {
             handler: function () {
+                that.watchWork++;
                 that.get_holidayInfo = false;
                 if(!that.get_holidayPlan.leaveTime)
                 {
+                    that.get_holidayPlan.whereToGo = "留校";
                     that.get_holidayPlan.leaveTime = that.get_holidayPlan.holidayStartTime;
                     that.get_holidayPlan.backTime = that.get_holidayPlan.holidayEndTime;
                 }
@@ -52,7 +52,7 @@ var that = new Vue({
                 that.get_holidayPlan.backTime = that.get_holidayPlan.holidayEndTime;
             }
         },
-        set_holiday_plan:function () {
+        set_holiday_plan_api:function () {
             $.post("/set_holiday_plan",
                 {
                     whereToGo: that.set_holidayPlan.whereToGo,
@@ -71,7 +71,7 @@ var that = new Vue({
                 }
             );
         },
-        get_holiday_plan: function () {
+        get_holiday_plan_api: function () {
             $.get("/get_holiday_plan",
                 function (get_holidayPlanFormModel) {
                     that.get_holidayPlan = get_holidayPlanFormModel;
