@@ -177,4 +177,9 @@ public class HolidayController {
             return "success";
         }
     }
+
+    @GetMapping("/get_holiday_plan_of_student")
+    public List<HolidayPlan> getHolidayPlanOfStudent(Long holidayId){
+        return holidayPlanRepository.findAllByHolidayInfo_HolidayId(holidayId);
+    }
 }

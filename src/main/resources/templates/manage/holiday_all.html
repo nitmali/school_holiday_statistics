@@ -1,5 +1,5 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.springframework.org/schema/jdbc"
-      xmlns:on-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
+      xmlns:v-on="http://www.w3.org/1999/xhtml"
       layout:decorator="public/home_layout">
 <head>
 
@@ -20,11 +20,10 @@
             <th>假期结束时间</th>
             <th class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                 aria-expanded="false">假期状态</a>
-              <span class="glyphicon glyphicon-menu-down"></span>
+                 aria-expanded="false">假期状态<span class="glyphicon glyphicon-menu-down"></span></a>
               <ul class="dropdown-menu" style="left: 0">
                 <li>
-                 <a href="#" v-on:click="get_all('ALL')"> ALL</a>
+                  <a href="#" v-on:click="set_stat('')"> ALL</a>
                 </li>
                 <li>
                   <a href="#" v-on:click="set_stat('START')"> START</a>
@@ -40,7 +39,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="holidayInfo_list in holidayInfo_list">
+          <tr v-for="(holidayInfo_list,index) in holidayInfo_list" v-on:click="show_holiday_plan_of_student(index)">
             <td>{{holidayInfo_list.holidayId}}</td>
             <td>{{holidayInfo_list.holidayName}}</td>
             <td>{{holidayInfo_list.holidayStartTime}}</td>
@@ -49,6 +48,52 @@
           </tr>
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+
+  <div id="adminHolidayPlanOfStudent">
+    <div class="modal fade" id="HolidayPlanOfStudentModal">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <!-- 模态框头部 -->
+          <div class="modal-header">
+            <h4 class="modal-title">学生假期去向</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+          </div>
+
+          <!-- 模态框主体 -->
+          <div class="modal-body">
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th>序号</th>
+                <th>学生学号</th>
+                <th>学生姓名</th>
+                <th>假期去向</th>
+                <th>离校时间</th>
+                <th>返校时间</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr v-for="(holidayPlan,index) in holidayPlan_list">
+                <td>{{index+1}}</td>
+                <td>{{holidayPlan.student.studentId}}</td>
+                <td>{{holidayPlan.student.studentName}}</td>
+                <td>{{holidayPlan.whereToGo}}</td>
+                <td>{{holidayPlan.leaveTime}}</td>
+                <td>{{holidayPlan.backTime}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- 模态框底部 -->
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          </div>
+
+        </div>
       </div>
     </div>
   </div>

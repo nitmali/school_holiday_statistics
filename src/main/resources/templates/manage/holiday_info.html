@@ -7,7 +7,7 @@
 <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div layout:fragment="content">
-  <div class="row">
+  <div class="row" style="width: 100%">
     <div class="col-lg-12 text-center">
       <h1>假期信息填写</h1>
     </div>
@@ -36,7 +36,10 @@
             <option value="OVER">结束（测试）</option>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary">提交</button>
+        <div class="form-group right col-xs-6 col-lg-3">
+          <button type="submit" class="btn btn-primary" style="width: 100%">提交</button>
+        </div>
+
       </form>
     </div>
   </div>

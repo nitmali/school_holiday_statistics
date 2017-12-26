@@ -1,6 +1,7 @@
 package com.example.holidaystatistics.controller;
 
 
+import com.example.holidaystatistics.model.HolidayInfoFromModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -65,5 +66,13 @@ public class HomeController {
         modelAndView.setViewName("student/holiday_addition");
         return modelAndView;
     }
+
+    @GetMapping("/holiday_info")
+    public ModelAndView holidayInfo(ModelAndView modelAndView, HolidayInfoFromModel holidayInfoFromModel) {
+        modelAndView.setViewName("manage/holiday_info");
+        modelAndView.addObject("nationalDayInfoFormModel",holidayInfoFromModel);
+        return modelAndView;
+    }
+
 }
 

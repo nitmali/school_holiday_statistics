@@ -21,6 +21,7 @@ var that = new Vue({
                 if(!that.get_holidayPlan.leaveTime)
                 {
                     that.get_holidayPlan.whereToGo = "留校";
+                    that.set_holidayPlan.whereToGo = "留校";
                     that.get_holidayPlan.leaveTime = that.get_holidayPlan.holidayStartTime;
                     that.get_holidayPlan.backTime = that.get_holidayPlan.holidayEndTime;
                 }
