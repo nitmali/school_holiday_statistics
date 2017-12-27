@@ -8,6 +8,7 @@
 <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
 
 <div layout:fragment="content">
+
   <div id="adminHolidayInfoAll">
     <div class="col-lg-12">
       <div class="table-responsive" style="min-height: 200px">
@@ -70,6 +71,7 @@
                 <th>序号</th>
                 <th>学生学号</th>
                 <th>学生姓名</th>
+                <th>学生手机号码</th>
                 <th>假期去向</th>
                 <th>离校时间</th>
                 <th>返校时间</th>
@@ -78,8 +80,9 @@
               <tbody>
               <tr v-for="(holidayPlan,index) in holidayPlan_list">
                 <td>{{index+1}}</td>
-                <td>{{holidayPlan.student.studentId}}</td>
-                <td>{{holidayPlan.student.studentName}}</td>
+                <td>{{holidayPlan.studentId}}</td>
+                <td>{{holidayPlan.studentName}}</td>
+                <td>{{holidayPlan.phone}}</td>
                 <td>{{holidayPlan.whereToGo}}</td>
                 <td>{{holidayPlan.leaveTime}}</td>
                 <td>{{holidayPlan.backTime}}</td>
@@ -94,9 +97,10 @@
           </div>
 
         </div>
+        </div>
       </div>
     </div>
-  </div>
+
 </div>
 
 <th:block layout:fragment="scripts">

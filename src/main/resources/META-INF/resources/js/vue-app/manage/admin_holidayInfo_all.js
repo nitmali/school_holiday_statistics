@@ -1,4 +1,4 @@
-var adminHolidayPlan0FStudent = new Vue({
+var adminHolidayPlan0fStudent = new Vue({
     el: '#adminHolidayPlanOfStudent',
     data: {
         holidayPlan_list: ''
@@ -31,9 +31,10 @@ var adminHolidayInfoAllApp = new Vue({
             $.get("/get_holiday_plan_of_student",
                 {
                     holidayId: adminHolidayInfoAllApp.holidayInfo_list[index].holidayId
-                }, function (HolidayPlan) {
-                    if (HolidayPlan !== null) {
-                        adminHolidayPlan0FStudent.holidayPlan_list = HolidayPlan;
+                }, function (HolidayPlanOfStudent) {
+                    if (HolidayPlanOfStudent !== null) {
+                        adminHolidayPlan0fStudent.holidayPlan_list = HolidayPlanOfStudent;
+                        // $("#adminHolidayInfoAll").hide();
                         $("#HolidayPlanOfStudentModal").modal();
                     } else {
                         alert("无统计记录")
@@ -42,6 +43,5 @@ var adminHolidayInfoAllApp = new Vue({
         }
     }
 });
-
 
 

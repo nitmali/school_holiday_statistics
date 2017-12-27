@@ -1,10 +1,15 @@
 package com.example.holidaystatistics.model;
 
 import com.example.holidaystatistics.entity.HolidayPlan;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
+/**
+ * @author 马小生
+ */
+@Component
 public class HolidayAdditionFromModel {
     @NotNull
     private HolidayPlan holidayPlan;

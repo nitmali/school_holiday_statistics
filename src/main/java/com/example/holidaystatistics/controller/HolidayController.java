@@ -7,6 +7,7 @@ import com.example.holidaystatistics.entity.Student;
 import com.example.holidaystatistics.model.HolidayAdditionFromModel;
 import com.example.holidaystatistics.model.HolidayInfoFromModel;
 import com.example.holidaystatistics.model.HolidayPlanFormModel;
+import com.example.holidaystatistics.model.HolidayPlanOfStudentFromModel;
 import com.example.holidaystatistics.repository.HolidayAdditionRepository;
 import com.example.holidaystatistics.repository.HolidayInfoRepository;
 import com.example.holidaystatistics.repository.HolidayPlanRepository;
@@ -20,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -179,7 +181,14 @@ public class HolidayController {
     }
 
     @GetMapping("/get_holiday_plan_of_student")
-    public List<HolidayPlan> getHolidayPlanOfStudent(Long holidayId){
-        return holidayPlanRepository.findAllByHolidayInfo_HolidayId(holidayId);
+    public List<HolidayPlanOfStudentFromModel> getHolidayPlanOfStudent(Long holidayId) {
+        List<HolidayPlan> holidayPlanList = holidayPlanRepository.findAllByHolidayInfo_HolidayId(holidayId);
+        List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
+        for (int i = 0; i <= holidayPlanList.size()-1; i++) {
+            HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
+                    = new HolidayPlanOfStudentFromModel(holidayPlanList.get(i));
+            holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
+        }
+        return holidayPlanOfStudentFromModelList;
     }
 }

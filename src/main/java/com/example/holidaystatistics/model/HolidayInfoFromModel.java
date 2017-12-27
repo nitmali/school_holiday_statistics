@@ -1,6 +1,7 @@
 package com.example.holidaystatistics.model;
 
 import com.example.holidaystatistics.entity.HolidayInfo;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
@@ -8,6 +9,7 @@ import java.sql.Date;
 /**
  * @author 马小生
  */
+@Component
 public class HolidayInfoFromModel {
 
     private Long holidayId;
