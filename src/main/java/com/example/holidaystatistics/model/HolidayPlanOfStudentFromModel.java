@@ -1,6 +1,7 @@
 package com.example.holidaystatistics.model;
 
 import com.example.holidaystatistics.entity.HolidayPlan;
+import com.example.holidaystatistics.entity.Student;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -29,14 +30,22 @@ public class HolidayPlanOfStudentFromModel {
     public HolidayPlanOfStudentFromModel() {
     }
 
-    public HolidayPlanOfStudentFromModel(HolidayPlan holidayPlan) {
-        studentName = holidayPlan.getStudent().getStudentName();
-        studentId = holidayPlan.getStudent().getStudentId();
-        phone = holidayPlan.getStudent().getPhone();
-        whereToGo = holidayPlan.getWhereToGo();
-        leaveTime = holidayPlan.getLeaveTime();
-        backTime = holidayPlan.getBackTime();
+    public HolidayPlanOfStudentFromModel(HolidayPlan holidayPlan, Student student) {
+        if (holidayPlan != null)
+        {
+            studentName = holidayPlan.getStudent().getStudentName();
+            studentId = holidayPlan.getStudent().getStudentId();
+            phone = holidayPlan.getStudent().getPhone();
+            whereToGo = holidayPlan.getWhereToGo();
+            leaveTime = holidayPlan.getLeaveTime();
+            backTime = holidayPlan.getBackTime();
+        }else {
+            studentName = student.getStudentName();
+            studentId = student.getStudentId();
+            phone = student.getPhone();
+        }
     }
+
 
     public String getStudentName() {
         return studentName;

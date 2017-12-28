@@ -19,6 +19,8 @@ public interface HolidayPlanRepository extends CrudRepository<HolidayPlan, Strin
      */
     HolidayPlan findAllByHolidayInfoAndStudent(HolidayInfo holidayInfo, Student student);
 
+
+
     /**
      * 匹配唯一学生和假期组合
      *

@@ -24,6 +24,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * @author 马小生
@@ -182,11 +183,18 @@ public class HolidayController {
 
     @GetMapping("/get_holiday_plan_of_student")
     public List<HolidayPlanOfStudentFromModel> getHolidayPlanOfStudent(Long holidayId) {
-        List<HolidayPlan> holidayPlanList = holidayPlanRepository.findAllByHolidayInfo_HolidayId(holidayId);
+        HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
         List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
-        for (int i = 0; i <= holidayPlanList.size()-1; i++) {
+        List<Student> studentList = (List<Student>) studentRepository.findAll();
+        studentList = studentList
+                .stream()
+                .filter(student -> student.getStudentId().length() == 10)
+                .collect(Collectors.toList());
+        for (int i = 0; i <= studentList.size() - 1; i++) {
+            HolidayPlan holidayPlan = holidayPlanRepository
+                    .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
             HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-                    = new HolidayPlanOfStudentFromModel(holidayPlanList.get(i));
+                    = new HolidayPlanOfStudentFromModel(holidayPlan,studentList.get(i));
             holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
         }
         return holidayPlanOfStudentFromModelList;
