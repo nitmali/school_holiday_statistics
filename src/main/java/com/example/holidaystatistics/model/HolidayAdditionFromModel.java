@@ -15,6 +15,9 @@ public class HolidayAdditionFromModel {
     private HolidayPlan holidayPlan;
 
     @NotNull
+    private String whereNow;
+
+    @NotNull
     private String addition;
 
     @NotNull
@@ -22,6 +25,14 @@ public class HolidayAdditionFromModel {
 
     public HolidayPlan getHolidayPlan() {
         return holidayPlan;
+    }
+
+    public String getWhereNow() {
+        return whereNow;
+    }
+
+    public void setWhereNow(String whereNow) {
+        this.whereNow = whereNow;
     }
 
     public void setHolidayPlan(HolidayPlan holidayPlan) {

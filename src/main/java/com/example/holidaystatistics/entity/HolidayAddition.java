@@ -5,6 +5,9 @@ import com.example.holidaystatistics.model.HolidayAdditionFromModel;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author 马小生
+ */
 @Entity
 @Table
 public class HolidayAddition {
@@ -14,6 +17,9 @@ public class HolidayAddition {
 
     @OneToOne
     private HolidayPlan holidayPlan;
+
+    @Column
+    private String whereNow;
 
     @Column
     private String addition;
@@ -26,6 +32,7 @@ public class HolidayAddition {
 
     public void setHolidayAdditionFromModel(HolidayAdditionFromModel holidayAdditionFromModel) {
         holidayPlan = holidayAdditionFromModel.getHolidayPlan();
+        whereNow= holidayAdditionFromModel.getWhereNow();
         addition = holidayAdditionFromModel.getAddition();
         expectedBackTime = holidayAdditionFromModel.getExpectedBackTime();
     }
@@ -44,6 +51,14 @@ public class HolidayAddition {
 
     public void setHolidayPlan(HolidayPlan holidayPlan) {
         this.holidayPlan = holidayPlan;
+    }
+
+    public String getWhereNow() {
+        return whereNow;
+    }
+
+    public void setWhereNow(String whereNow) {
+        this.whereNow = whereNow;
     }
 
     public String getAddition() {

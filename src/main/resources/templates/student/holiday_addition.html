@@ -11,7 +11,11 @@
   <div class="jumbotron" id="studentHolidayAddition" style="height: 150%">
     <div>
       <div class="form-group">
-        <label for="addition_text">为什么不能及时到校：</label>
+        <label for="addition_where_now">现在我在哪：</label>
+        <input class="form-control" id="addition_where_now" v-model="set_holidayAddition.whereNow" />
+      </div>
+      <div class="form-group">
+        <label for="addition_text">为什么我不能及时到校：</label>
         <textarea class="form-control" id="addition_text" v-model="set_holidayAddition.addition"></textarea>
       </div>
       <div class="form-group">
@@ -23,7 +27,7 @@
       <div class="form-group">
         <span>&nbsp;</span>
         <button type="button" class="btn btn-primary col-lg-2 col-xs-6" v-on:click="set_holiday_addition_api()"
-                v-bind:disabled="!(set_holidayAddition.addition)">提交
+                v-bind:disabled="((!set_holidayAddition.addition || !set_holidayAddition.whereNow))">提交
         </button>
       </div>
     </div>

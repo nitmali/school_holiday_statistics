@@ -14,6 +14,7 @@ var that = new Vue({
         set_holiday_addition_api: function () {
             $.post("/set_holiday_addition",
                 {
+                    whereNow:that.set_holidayAddition.whereNow,
                     expectedBackTime: new Date(that.set_holidayAddition.expectedBackTime.replace(/-/g, "/")),
                     addition: that.set_holidayAddition.addition
                 },
