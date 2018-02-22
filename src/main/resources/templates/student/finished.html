@@ -9,9 +9,9 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="table-responsive">
+            <div class="table-responsive" id="student_finished">
                 <table class="table table-hover">
-                    <caption>已完成的调查</caption>
+                    <caption><a class="btn">当前调查</a>&emsp;&emsp;&emsp;<a class="btn">所有调查</a></caption>
                     <thead>
                     <tr>
                         <th>假期</th>
@@ -25,15 +25,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="holidayPlan : ${holidayPlan}">
-                        <th th:text="${holidayPlan.holidayInfo.holidayName}">假期</th>
-                        <th th:text="${holidayPlan.student.studentId}">学号</th>
-                        <th th:text="${holidayPlan.student.studentName}">姓名</th>
-                        <th th:text="${holidayPlan.whereToGo}">去向</th>
-                        <th th:text="${holidayPlan.leaveTime}">离校时间</th>
-                        <th th:text="${holidayPlan.backTime}">回校时间</th>
-                        <th th:text="${holidayPlan.ip}">提交IP</th>
-                        <th th:text="${holidayPlan.submitTime}">提交时间</th>
+                    <tr v-for="holidayPlan in finished_info_all">
+                        <th>{{holidayPlan.holidayInfo.holidayName}}</th>
+                        <th>{{holidayPlan.student.studentId}}</th>
+                        <th>{{holidayPlan.student.studentName}}</th>
+                        <th>{{holidayPlan.whereToGo}}</th>
+                        <th>{{holidayPlan.leaveTime}}</th>
+                        <th>{{holidayPlan.backTime}}</th>
+                        <th>{{holidayPlan.ip}}</th>
+                        <th>{{holidayPlan.submitTime}}</th>
                     </tr>
                     </tbody>
                 </table>
@@ -43,7 +43,8 @@
 </div>
 </body>
 <th:block layout:fragment="scripts">
-
+    <script src="/js/vue-app/student/student_finished_app.js"
+            th:src="@{/js/vue-app/student/student_finished_app.js}"></script>
 </th:block>
 
 </html>

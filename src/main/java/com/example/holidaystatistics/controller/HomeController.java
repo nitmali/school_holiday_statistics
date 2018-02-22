@@ -61,6 +61,18 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/holiday_plan_of_student")
+    public ModelAndView studentPlan(ModelAndView modelAndView) {
+        modelAndView.setViewName("manage/holiday_plan_of_student");
+        return modelAndView;
+    }
+
+    @GetMapping("/finished")
+    public ModelAndView finished(ModelAndView modelAndView) {
+        modelAndView.setViewName("student/finished");
+        return modelAndView;
+    }
+
     @GetMapping("/holiday_addition")
     public ModelAndView holidayAddition(ModelAndView modelAndView) {
         modelAndView.setViewName("student/holiday_addition");

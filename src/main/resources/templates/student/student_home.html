@@ -23,7 +23,7 @@
               </div>
               <div v-show="!(holidayInfo.holidayStatus == 'START')">
                 <p>正在假期中...</p>
-                <p><a class="btn btn-primary">现在提交为何我不能及时到校</a></p>
+                <p><a class="btn btn-primary" href="/holiday_addition" th:href="@{/holiday_addition}">现在提交为何我不能及时到校</a></p>
               </div>
             </div>
             <div v-show="!(holidayInfo.holidayStatus == 'START' || holidayInfo.holidayStatus == 'ACTIVATION')">

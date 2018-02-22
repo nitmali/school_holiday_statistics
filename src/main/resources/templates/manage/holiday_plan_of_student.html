@@ -1,0 +1,47 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="public/home_layout">
+<head>
+
+</head>
+<body>
+<link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+<div layout:fragment="content">
+  <div id="studentOfPlan">
+    <div class="col-lg-12">
+      <div class="table-responsive" style="min-height: 200px">
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th>序号</th>
+            <th>学生学号</th>
+            <th>学生姓名</th>
+            <th>学生手机号码</th>
+            <th>假期去向</th>
+            <th>离校时间</th>
+            <th>返校时间</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="holidayPlan,index:${holidayPlanOfStudentFromModelList}">
+            <th th:text="${index.count}">序号</th>
+            <th th:text="${holidayPlan.studentId}">学生学号</th>
+            <th th:text="${holidayPlan.studentName}">学生姓名</th>
+            <th th:text="${holidayPlan.phone}">学生手机号码</th>
+            <th th:text="${holidayPlan.whereToGo}">假期去向</th>
+            <th th:text="${holidayPlan.leaveTime}">离校时间</th>
+            <th th:text="${holidayPlan.backTime}">返校时间</th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<th:block layout:fragment="scripts">
+  <script src="/js/vue-app/manage/admin_holidayInfo_all.js"
+          th:src="@{/js/vue-app/manage/admin_holidayInfo_all.js}"></script>
+</th:block>
+
+</body>
+</html>

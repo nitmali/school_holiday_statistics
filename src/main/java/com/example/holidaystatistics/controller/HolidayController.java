@@ -79,11 +79,6 @@ public class HolidayController {
         {
             return holidayPlanFormModel;
         }
-        //        Date startTime = holidayInfo.getHolidayStartTime();
-//        Date endTime = holidayInfo.getHolidayEndTime();
-//        holidayPlanFormModel.setHolidayName(holidayInfo.getHolidayName());
-//        holidayPlanFormModel.setLeaveTime(startTime);
-//        holidayPlanFormModel.setBackTime(endTime);
 
         holidayPlanFormModel.setHolidayPlan(holidayPlan);
         return holidayPlanFormModel;
@@ -121,20 +116,12 @@ public class HolidayController {
         return "success";
     }
 
-    @GetMapping("/finished")
-    public ModelAndView finished(ModelAndView modelAndView, HttpServletRequest httpServletRequest) {
+    @GetMapping("/get_holidayPlan_of_student")
+    public List<HolidayPlan> holidayPlans(HttpServletRequest httpServletRequest) {
         String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
-        HolidayInfo holidayInfo;
-        holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-        if(holidayInfo == null)
-        {
-            holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.ACTIVATION);
-        }
         Student student = studentRepository.findBystudentId(studentId);
-        HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
-        modelAndView.setViewName("student/finished");
-        modelAndView.addObject("holidayPlan", holidayPlan);
-        return modelAndView;
+
+        return holidayPlanRepository.findAllByStudent(student);
     }
 
     @GetMapping("/get_holidayInfo_of_Status")
@@ -181,8 +168,28 @@ public class HolidayController {
         }
     }
 
+//    @GetMapping("/get_holiday_plan_of_student")
+//    public List<HolidayPlanOfStudentFromModel> getHolidayPlanOfStudent(Long holidayId) {
+//        HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
+//        List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
+//        List<Student> studentList = (List<Student>) studentRepository.findAll();
+//        studentList = studentList
+//                .stream()
+//                .filter(student -> student.getStudentId().length() == 10)
+//                .collect(Collectors.toList());
+//        for (int i = 0; i <= studentList.size() - 1; i++) {
+//            HolidayPlan holidayPlan = holidayPlanRepository
+//                    .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
+//            HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
+//                    = new HolidayPlanOfStudentFromModel(holidayPlan,studentList.get(i));
+//            holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
+//        }
+//        return holidayPlanOfStudentFromModelList;
+//    }
+
     @GetMapping("/get_holiday_plan_of_student")
-    public List<HolidayPlanOfStudentFromModel> getHolidayPlanOfStudent(Long holidayId) {
+    public ModelAndView getHolidayPlanOfStudent(Long holidayId,ModelAndView modelAndView) {
+        System.out.println("get holiday:"+holidayId);
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
         List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
         List<Student> studentList = (List<Student>) studentRepository.findAll();
@@ -197,6 +204,8 @@ public class HolidayController {
                     = new HolidayPlanOfStudentFromModel(holidayPlan,studentList.get(i));
             holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
         }
-        return holidayPlanOfStudentFromModelList;
+        modelAndView.setViewName("manage/holiday_plan_of_student");
+        modelAndView.addObject("holidayPlanOfStudentFromModelList",holidayPlanOfStudentFromModelList);
+        return modelAndView;
     }
 }

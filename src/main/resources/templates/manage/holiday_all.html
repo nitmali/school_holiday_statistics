@@ -40,7 +40,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr v-for="(holidayInfo_list,index) in holidayInfo_list" v-on:click="show_holiday_plan_of_student(index)">
+          <tr v-for="(holidayInfo_list,index) in holidayInfo_list" v-on:click="show_holiday_plan_of_student(holidayInfo_list.holidayId)">
             <td>{{holidayInfo_list.holidayId}}</td>
             <td>{{holidayInfo_list.holidayName}}</td>
             <td>{{holidayInfo_list.holidayStartTime}}</td>

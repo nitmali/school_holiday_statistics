@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author 马小生
+ */
 @Repository
 public interface HolidayPlanRepository extends CrudRepository<HolidayPlan, String> {
     /**
@@ -24,8 +27,8 @@ public interface HolidayPlanRepository extends CrudRepository<HolidayPlan, Strin
     /**
      * 匹配唯一学生和假期组合
      *
-     * @param holidayId
+     * @param student
      * @return HolidayPlan
      */
-    List<HolidayPlan> findAllByHolidayInfo_HolidayId(Long holidayId);
+    List<HolidayPlan> findAllByStudent(Student student);
 }
