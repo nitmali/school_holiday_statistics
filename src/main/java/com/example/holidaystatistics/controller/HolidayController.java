@@ -195,7 +195,7 @@ public class HolidayController {
         List<Student> studentList = (List<Student>) studentRepository.findAll();
         studentList = studentList
                 .stream()
-                .filter(student -> student.getStudentId().length() == 10)
+                .filter(student -> student.getStudentId().charAt(0) == '3')
                 .collect(Collectors.toList());
         for (int i = 0; i <= studentList.size() - 1; i++) {
             HolidayPlan holidayPlan = holidayPlanRepository
