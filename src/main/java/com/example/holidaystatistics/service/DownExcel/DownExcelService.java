@@ -98,15 +98,17 @@ public class DownExcelService {
                             + " - " + holidayPlanOfStudentFromModel
                             .getBackTime().toString().substring(5, 10));
                 }
-                if ("留校".equals(holidayPlanOfStudentFromModel.getWhereToGo())) {
-                    cell3.setCellValue("√");
-                    atSchool++;
-                } else if (holidayPlanOfStudentFromModel.getWhereToGo().contains("回家")) {
-                    cell4.setCellValue("√");
-                    goHome++;
-                } else {
-                    cell5.setCellValue(holidayPlanOfStudentFromModel.getWhereToGo());
-                    other++;
+                if (holidayPlanOfStudentFromModel.getWhereToGo() != null) {
+                    if ("留校".equals(holidayPlanOfStudentFromModel.getWhereToGo())) {
+                        cell3.setCellValue("√");
+                        atSchool++;
+                    } else if (holidayPlanOfStudentFromModel.getWhereToGo().contains("回家")) {
+                        cell4.setCellValue("√");
+                        goHome++;
+                    } else {
+                        cell5.setCellValue(holidayPlanOfStudentFromModel.getWhereToGo());
+                        other++;
+                    }
                 }
                 cell6.setCellValue(holidayPlanOfStudentFromModel.getPhone());
 
@@ -132,7 +134,6 @@ public class DownExcelService {
             footCellStyle.setFont(font);
 
 
-
             HSSFRow atSchoolRow = sheet.createRow(43);
             HSSFCell atSchoolCell0 = atSchoolRow.createCell(0);
             HSSFCell atSchoolCell1 = atSchoolRow.createCell(1);
@@ -143,7 +144,7 @@ public class DownExcelService {
             HSSFCell atSchoolCell6 = atSchoolRow.createCell(6);
             HSSFCell atSchoolCell7 = atSchoolRow.createCell(7);
             atSchoolCell0.setCellValue("在校人数");
-            atSchoolCell3.setCellValue(atSchool+"人");
+            atSchoolCell3.setCellValue(atSchool + "人");
 
             HSSFRow goHomeRow = sheet.createRow(44);
             HSSFCell goHomeCell0 = goHomeRow.createCell(0);
@@ -155,7 +156,7 @@ public class DownExcelService {
             HSSFCell goHomeCell6 = goHomeRow.createCell(6);
             HSSFCell goHomeCell7 = goHomeRow.createCell(7);
             goHomeCell0.setCellValue("回家人数");
-            goHomeCell3.setCellValue(goHome+"人");
+            goHomeCell3.setCellValue(goHome + "人");
 
             HSSFRow otherRow = sheet.createRow(45);
             HSSFCell otherCell0 = otherRow.createCell(0);
@@ -167,7 +168,7 @@ public class DownExcelService {
             HSSFCell otherCell6 = otherRow.createCell(6);
             HSSFCell otherCell7 = otherRow.createCell(7);
             otherCell0.setCellValue("有其他安排人数");
-            otherCell3.setCellValue(other+"人");
+            otherCell3.setCellValue(other + "人");
 
             atSchoolCell0.setCellStyle(footCellStyle);
             atSchoolCell1.setCellStyle(footCellStyle);
