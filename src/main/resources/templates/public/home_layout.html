@@ -1,204 +1,206 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1, user-scalable=no"/>
 
-  <title>软件工程151假期管理</title>
+    <title>软件工程151假期管理</title>
 
-  <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"
-        th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
-  <link href="/css/public/site.css"
-        th:href="@{/css/public/site.css}" rel="stylesheet"/>
-  <link href="/css/public/timeapi.css"
-        th:href="@{/css/public/timeapi.css}" rel="stylesheet"/>
-  <link href="/css/public/time.css"
-        th:href="@{/css/public/time.css}" rel="stylesheet"/>
+    <link href="/webjars/bootstrap/3.3.7/dist/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="/css/public/site.css"
+          th:href="@{/css/public/site.css}" rel="stylesheet"/>
+    <link href="/css/public/timeapi.css"
+          th:href="@{/css/public/timeapi.css}" rel="stylesheet"/>
+    <link href="/css/public/time.css"
+          th:href="@{/css/public/time.css}" rel="stylesheet"/>
 </head>
 
 <body>
 
 <div class="plash">
-  <div class="loading">Loading...</div>
+    <div class="loading">Loading...</div>
 </div>
 
 <nav class="navbar  navbar-fixed-top">
-  <div class="navbar-inverse">
-    <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/" th:href="@{/}">假期管理</a>
-    </div>
-    <div id="navbar" class="collapse navbar-collapse">
-      <ul class="nav navbar-nav" id="student" style="display: none">
-        <li><a href="/student_home" th:href="@{/student_home}">首页</a></li>
-        <li><a href="/holiday_plan" th:href="@{/holiday_plan}">去向调查</a></li>
-        <li><a href="/holiday_addition" th:href="@{/holiday_addition}">未能及时返校</a></li>
-        <li><a href="/finished" th:href="@{/finished}">已完成</a></li>
-      </ul>
-      <ul class="nav navbar-nav" id="admin" style="display: none">
-        <li><a href="/admin_home" th:href="@{/admin_home}">首页</a></li>
-        <li><a href="/holiday_info" th:href="@{/holiday_info}">假期信息提交</a></li>
-        <li><a href="/holiday_all" th:href="@{/holiday_all}">查看假期信息</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right" id="entrance" style="display: none">
-        <li><a href="/student_login" th:href="@{/student_login}">学生登录</a></li>
-        <li><a href="/admin_login" th:href="@{/admin_login}">管理员入口</a></li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right" id="personal" style="display: none">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-             aria-expanded="false">用户：
-            <span id="userName"></span>
-            <span class="glyphicon glyphicon-menu-down"></span>
-          </a>
-          <ul class="dropdown-menu" style="left: 0px">
-            <li role="separator"></li>
-            <li>
-              <a href="/change_password" th:href="@{/change_password}"><span class="glyphicon glyphicon-cog"></span> &nbsp;修改密码</a>
-            </li>
-            <li role="separator" class="divider"></li>
-            <li>
-              <a href="/logout" th:href="@{/logout}" onclick="logout()"><span class="glyphicon glyphicon-off"></span>
-                &nbsp;退出</a>
-            </li>
-          </ul>
-        </li>
+    <div class="navbar-inverse">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/" th:href="@{/}">假期管理</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav" id="student" style="display: none">
+                    <li><a href="/student_home" th:href="@{/student_home}">首页</a></li>
+                    <li><a href="/holiday_plan" th:href="@{/holiday_plan}">去向调查</a></li>
+                    <li><a href="/holiday_addition" th:href="@{/holiday_addition}">未能及时返校</a></li>
+                    <li><a href="/finished" th:href="@{/finished}">已完成</a></li>
+                </ul>
+                <ul class="nav navbar-nav" id="admin" style="display: none">
+                    <li><a href="/admin_home" th:href="@{/admin_home}">首页</a></li>
+                    <li><a href="/holiday_info" th:href="@{/holiday_info}">假期信息提交</a></li>
+                    <li><a href="/holiday_all" th:href="@{/holiday_all}">查看假期信息</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="entrance" style="display: none">
+                    <li><a href="/student_login" th:href="@{/student_login}">学生登录</a></li>
+                    <li><a href="/admin_login" th:href="@{/admin_login}">管理员入口</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right" id="personal" style="display: none">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">用户：
+                            <span id="userName"></span>
+                            <span class="glyphicon glyphicon-menu-down"></span>
+                        </a>
+                        <ul class="dropdown-menu" style="left: 0px">
+                            <li role="separator"></li>
+                            <li>
+                                <a href="/change_password" th:href="@{/change_password}"><span
+                                        class="glyphicon glyphicon-cog"></span> &nbsp;修改密码</a>
+                            </li>
+                            <li role="separator" class="divider"></li>
+                            <li>
+                                <a href="/logout" th:href="@{/logout}" onclick="logout()"><span
+                                        class="glyphicon glyphicon-off"></span>
+                                    &nbsp;退出</a>
+                            </li>
+                        </ul>
+                    </li>
 
-      </ul>
-    </div>
-    </div>
+                </ul>
+            </div>
+        </div>
 
-  </div>
-  <div class="time_01 col-xs-10  col-xs-offset-1 col-lg-12 col-lg-offset-3">
-    <div class='center' align="center">
-      <table>
-        <tr class='hours'>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td class="td_time" id = "hours"></td>
-          <td class="td_time">hours</td>
-        </tr>
-        <tr class='minutes'>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td class="td_time" id="minutes"></td>
-          <td class="td_time">minutes</td>
-
-        </tr>
-        <tr class='seconds'>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
-          <td class="td_time" id = "seconds"></td>
-          <td class="td_time">seconds</td>
-
-        </tr>
-      </table>
     </div>
-  </div>
+    <div class="time_01 col-xs-10  col-xs-offset-1 col-lg-12 col-lg-offset-3">
+        <div class='center' align="center">
+            <table>
+                <tr class='hours'>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td class="td_time" id="hours"></td>
+                    <td class="td_time">hours</td>
+                </tr>
+                <tr class='minutes'>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td class="td_time" id="minutes"></td>
+                    <td class="td_time">minutes</td>
+
+                </tr>
+                <tr class='seconds'>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td><em><span class="glyphicon glyphicon-stop"></span></em></td>
+                    <td class="td_time" id="seconds"></td>
+                    <td class="td_time">seconds</td>
+
+                </tr>
+            </table>
+        </div>
+    </div>
 </nav>
 
 
 <div class="container frame">
-  <div layout:fragment="content">
-    CONTENT
-  </div>
+    <div layout:fragment="content">
+        CONTENT
+    </div>
 </div>
 
 <footer>
-  <nav class="navbar  navbar-fixed-bottom">
-    <div class="navbar-inverse">
-      <div class="container ">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
-            <span class="glyphicon glyphicon-option-horizontal" style="color: #e0e0e0"></span>
-          </button>
-          <p class="navbar-text" style="font-size: 13px">2017 © 假期管理系统（测试版） by nitmali</p>
+    <nav class="navbar  navbar-fixed-bottom">
+        <div class="navbar-inverse">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
+                        <span class="glyphicon glyphicon-option-horizontal" style="color: #e0e0e0"></span>
+                    </button>
+                    <p class="navbar-text" style="font-size: 13px">2017 © 假期管理系统（测试版） by nitmali</p>
+                </div>
+                <div id="footer" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav center-block">
+                        <li>
+                            <a data-toggle="modal" data-target="#aboutModal">关于此系统</a>
+                        </li>
+                        <li>
+                            <a data-toggle="modal" data-target="#helpModal">帮助中心</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div id="footer" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav center-block">
-            <li>
-              <a data-toggle="modal" data-target="#aboutModal">关于此系统</a>
-            </li>
-            <li>
-              <a data-toggle="modal" data-target="#helpModal">帮助中心</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </nav>
+    </nav>
 </footer>
 
 <div class="modal fade" id="aboutModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-      <!-- 模态框头部 -->
-      <div class="modal-header">
-        <h4 class="modal-title">关于</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">关于</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-      <!-- 模态框主体 -->
-      <div class="modal-body">
-        <p>1、此网站为方便同学们的离校信息而设立管理和统计</p>
-        <p>2、使用此网站并提交信息则视为亲自填写《数据学院学生假期去向统计》表。</p>
-        <p>3、此网站不会泄露任何用户信息，请妥善保管个人密码及信息。</p>
-        <p>4、此系统处于测试阶段，若有BUG或意见请到反馈给开发者。</p>
-      </div>
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <p>1、此网站为方便同学们的离校信息而设立管理和统计</p>
+                <p>2、使用此网站并提交信息则视为亲自填写《数据学院学生假期去向统计》表。</p>
+                <p>3、此网站不会泄露任何用户信息，请妥善保管个人密码及信息。</p>
+                <p>4、此系统处于测试阶段，若有BUG或意见请到反馈给开发者。</p>
+            </div>
 
-      <!-- 模态框底部 -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-      </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
 
+        </div>
     </div>
-  </div>
 </div>
 
 <div class="modal fade" id="helpModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
+    <div class="modal-dialog">
+        <div class="modal-content">
 
-      <!-- 模态框头部 -->
-      <div class="modal-header">
-        <h4 class="modal-title">帮助</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">帮助</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-      <!-- 模态框主体 -->
-      <div class="modal-body">
-        <p>1、初次登录此网站请及时修改密码<span class="text text-info">（手机端导航栏请点击右上角三条白杠）</span></p>
-        <p>2、请在节假日开始前到<a href="/holiday_plan">“去向调查”</a>页面及时填写离校信息。</p>
-        <p>3、在假期中，若有不能及示返校的同学请到<a href="/holiday_addition">“未能及时返校”</a>界面填写相关信息。</p>
-        <p>4、“去向调查”和“未能及时返校”再次提交便是修改。</p>
-      </div>
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                <p>1、初次登录此网站请及时修改密码<span class="text text-info">（手机端导航栏请点击右上角三条白杠）</span></p>
+                <p>2、请在节假日开始前到<a href="/holiday_plan">“去向调查”</a>页面及时填写离校信息。</p>
+                <p>3、在假期中，若有不能及示返校的同学请到<a href="/holiday_addition">“未能及时返校”</a>界面填写相关信息。</p>
+                <p>4、“去向调查”和“未能及时返校”再次提交便是修改。</p>
+            </div>
 
-      <!-- 模态框底部 -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-      </div>
+            <!-- 模态框底部 -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            </div>
 
+        </div>
     </div>
-  </div>
 </div>
 
 <script src="/webjars/jquery/3.2.1/dist/jquery.min.js"

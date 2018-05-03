@@ -28,30 +28,8 @@ var adminHolidayInfoAllApp = new Vue({
                 });
         },
         show_holiday_plan_of_student: function (index) {
-            // $.get("/get_holiday_plan_of_student",
-            //     {
-            //         holidayId: adminHolidayInfoAllApp.holidayInfo_list[index].holidayId
-            //     }, function (HolidayPlanOfStudent) {
-            //         if (HolidayPlanOfStudent !== null) {
-            //             studentOfPlanApp.holidayPlan_list = HolidayPlanOfStudent;
-            //             // $("#adminHolidayInfoAll").hide();
-            //             // $("#HolidayPlanOfStudentModal").modal();
-            //             window.open("/holiday_plan_of_student");
-            //         } else {
-            //             alert("无统计记录")
-            //         }
-            //     });
-
             window.open("/get_holiday_plan_of_student?holidayId="+index);
         }
     }
 });
 
-
-// var studentOfPlanApp = new Vue({
-//     el: '#studentOfPlan',
-//     data: {
-//         holidayPlan_list: ''
-//     }
-// });
-//

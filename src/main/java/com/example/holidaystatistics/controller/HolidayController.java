@@ -12,8 +12,10 @@ import com.example.holidaystatistics.repository.HolidayAdditionRepository;
 import com.example.holidaystatistics.repository.HolidayInfoRepository;
 import com.example.holidaystatistics.repository.HolidayPlanRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
+import com.example.holidaystatistics.service.DownExcel.DownExcelService;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,6 @@ import javax.validation.Valid;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,9 @@ public class HolidayController {
 
     @Resource
     private HolidayAdditionRepository holidayAdditionRepository;
+
+    @Resource
+    private DownExcelService downExcelService;
 
     @PostMapping("/holiday_info")
     public ModelAndView setHolidayInfo(ModelAndView modelAndView, @Valid HolidayInfoFromModel holidayInfoFromModel) {
@@ -172,25 +176,6 @@ public class HolidayController {
         }
     }
 
-//    @GetMapping("/get_holiday_plan_of_student")
-//    public List<HolidayPlanOfStudentFromModel> getHolidayPlanOfStudent(Long holidayId) {
-//        HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
-//        List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
-//        List<Student> studentList = (List<Student>) studentRepository.findAll();
-//        studentList = studentList
-//                .stream()
-//                .filter(student -> student.getStudentId().length() == 10)
-//                .collect(Collectors.toList());
-//        for (int i = 0; i <= studentList.size() - 1; i++) {
-//            HolidayPlan holidayPlan = holidayPlanRepository
-//                    .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
-//            HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-//                    = new HolidayPlanOfStudentFromModel(holidayPlan,studentList.get(i));
-//            holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
-//        }
-//        return holidayPlanOfStudentFromModelList;
-//    }
-
     @GetMapping("/get_holiday_plan_of_student")
     public ModelAndView getHolidayPlanOfStudent(Long holidayId, ModelAndView modelAndView) {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
@@ -208,67 +193,14 @@ public class HolidayController {
             holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
         }
         modelAndView.setViewName("manage/holiday_plan_of_student");
+        modelAndView.addObject("holidayId", holidayId);
+        modelAndView.addObject("holidayName", holidayInfo.getHolidayName());
         modelAndView.addObject("holidayPlanOfStudentFromModelList", holidayPlanOfStudentFromModelList);
         return modelAndView;
     }
 
     @GetMapping("/download_excel")
     public void downloadExcelOfholidayPlan(HttpServletResponse response, Long holidayId) throws IOException {
-        File fi=new File("F:/0.xls");
-        POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(fi));
-        HSSFWorkbook workbook = new HSSFWorkbook(fs);
-        HSSFSheet sheet = workbook.getSheetAt(0);
-
-        HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
-        List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
-        List<Student> studentList = (List<Student>) studentRepository.findAll();
-        studentList = studentList
-                .stream()
-                .filter(student -> student.getStudentId().charAt(0) == '3')
-                .collect(Collectors.toList());
-        for (int i = 0; i <= studentList.size() - 1; i++) {
-            HolidayPlan holidayPlan = holidayPlanRepository
-                    .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
-            HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-                    = new HolidayPlanOfStudentFromModel(holidayPlan, studentList.get(i));
-            holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
-        }
-
-        String fileName = holidayId + ".xls";
-
-        int atSchool = 0;
-        int outSchool = 0;
-        //在表中存放查询到的数据放入对应的列
-        for (int i = 0; i <= studentList.size() - 1; i++) {
-            HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-                    = holidayPlanOfStudentFromModelList.get(i);
-            HSSFRow row = sheet.createRow(i + 4);
-            row.createCell(0).setCellValue(holidayPlanOfStudentFromModel.getStudentId());
-            row.createCell(1).setCellValue(holidayPlanOfStudentFromModel.getStudentName());
-            if (holidayPlanOfStudentFromModel.getLeaveTime() != null
-                    && holidayPlanOfStudentFromModel.getBackTime() != null) {
-                row.createCell(2).setCellValue(holidayPlanOfStudentFromModel.getLeaveTime()
-                        + "-" + holidayPlanOfStudentFromModel.getBackTime());
-            }
-            if ("留校".equals(holidayPlanOfStudentFromModel.getWhereToGo())) {
-                row.createCell(3).setCellValue("1");
-                atSchool++;
-            } else if (holidayPlanOfStudentFromModel.getWhereToGo().contains("回家")) {
-                row.createCell(4).setCellValue("1");
-                outSchool++;
-            } else {
-                row.createCell(5).setCellValue(holidayPlanOfStudentFromModel.getWhereToGo());
-                outSchool++;
-            }
-            row.createCell(6).setCellValue(holidayPlanOfStudentFromModel.getPhone());
-        }
-        HSSFRow atSchoolRow = sheet.createRow(43);
-        atSchoolRow.createCell(3).setCellValue(atSchool);
-        HSSFRow outSchoolRow = sheet.createRow(44);
-        outSchoolRow.createCell(3).setCellValue(outSchool);
-        response.setContentType("application/octet-stream");
-        response.setHeader("Content-disposition", "attachment;filename=" + fileName);
-        response.flushBuffer();
-        workbook.write(response.getOutputStream());
+        downExcelService.getExcel(response,holidayId);
     }
 }
