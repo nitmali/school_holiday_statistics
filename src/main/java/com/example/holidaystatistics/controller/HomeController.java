@@ -19,37 +19,37 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping("/student_home")
+    @GetMapping("/student/home")
     public ModelAndView home(ModelAndView modelAndView) {
         modelAndView.setViewName("student/student_home");
         return modelAndView;
     }
 
-    @GetMapping("/admin_home")
-    public ModelAndView admin(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/admin_home");
+    @GetMapping("/manager/home")
+    public ModelAndView manager(ModelAndView modelAndView) {
+        modelAndView.setViewName("manage/manager_home");
         return modelAndView;
     }
 
-    @GetMapping("/holiday_plan")
+    @GetMapping("/student/holiday_plan")
     public ModelAndView holidayPlan(ModelAndView modelAndView) {
         modelAndView.setViewName("student/holiday_plan");
         return modelAndView;
     }
 
-    @GetMapping("/student_login")
+    @GetMapping("/student/login")
     public ModelAndView studentLogin(ModelAndView modelAndView) {
         modelAndView.setViewName("student/student_login");
         return modelAndView;
     }
 
-    @GetMapping("/admin_login")
-    public ModelAndView adminLogin(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/admin_login");
+    @GetMapping("/manager/login")
+    public ModelAndView managerLogin(ModelAndView modelAndView) {
+        modelAndView.setViewName("manage/manager_login");
         return modelAndView;
     }
 
-    @GetMapping("/change_password")
+    @GetMapping("/public/change_password")
     public ModelAndView change(ModelAndView modelAndView) {
         modelAndView.setViewName("public/change_password");
         return modelAndView;
@@ -67,22 +67,28 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping("/finished")
+    @GetMapping("/student/finished")
     public ModelAndView finished(ModelAndView modelAndView) {
         modelAndView.setViewName("student/finished");
         return modelAndView;
     }
 
-    @GetMapping("/holiday_addition")
+    @GetMapping("/student/holiday_addition")
     public ModelAndView holidayAddition(ModelAndView modelAndView) {
         modelAndView.setViewName("student/holiday_addition");
         return modelAndView;
     }
 
-    @GetMapping("/holiday_info")
+    @GetMapping("/manager/holiday_info")
     public ModelAndView holidayInfo(ModelAndView modelAndView, HolidayInfoFromModel holidayInfoFromModel) {
         modelAndView.setViewName("manage/holiday_info");
         modelAndView.addObject("nationalDayInfoFormModel",holidayInfoFromModel);
+        return modelAndView;
+    }
+
+    @GetMapping("/manager/holiday_all")
+    public ModelAndView holidayAll(ModelAndView modelAndView) {
+        modelAndView.setViewName("manage/holiday_all");
         return modelAndView;
     }
 

@@ -25,8 +25,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -68,16 +66,10 @@ public class HolidayController {
         return modelAndView;
     }
 
-    @GetMapping("/holiday_all")
-    public ModelAndView holidayAll(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/holiday_all");
-        return modelAndView;
-    }
-
     @GetMapping("/get_holiday_plan")
     public HolidayPlanFormModel holidayPlan(HttpServletRequest httpServletRequest) {
         HolidayInfo holidayInfo;
-        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
         holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         if (holidayInfo == null) {
@@ -100,7 +92,7 @@ public class HolidayController {
         if (Objects.equals(holidayPlanFormModel.getWhereToGo(), "")) {
             return "error";
         }
-        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
         HolidayInfo holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
@@ -128,18 +120,18 @@ public class HolidayController {
 
     @GetMapping("/get_holidayPlan_of_student")
     public List<HolidayPlan> holidayPlans(HttpServletRequest httpServletRequest) {
-        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
 
         return holidayPlanRepository.findAllByStudent(student);
     }
 
-    @GetMapping("/get_holidayInfo_of_Status")
+    @GetMapping("/public/get_holidayInfo_of_Status")
     public HolidayInfo holidayInfo(HolidayInfo.holidayStatus holidayStatus) {
         return holidayInfoRepository.findAllByholidayStatus(holidayStatus);
     }
 
-    @GetMapping("get_holidayInfo_all")
+    @GetMapping("/manager/get_holidayInfo_all")
     public List<HolidayInfo> holidayInfoList(HolidayInfo.holidayStatus holidayStatus) {
         if (holidayStatus == null) {
             return (List<HolidayInfo>) holidayInfoRepository.findAll();
@@ -148,7 +140,7 @@ public class HolidayController {
         }
     }
 
-    @PostMapping("/updated_holiday_info")
+    @PostMapping("/manager/updated_holiday_info")
     public void updatedHolidayInfo(HolidayInfoFromModel holidayInfoFromModel) {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayInfoFromModel.getHolidayId());
         holidayInfo.setholidayInfoFromModel(holidayInfoFromModel);
@@ -157,7 +149,7 @@ public class HolidayController {
 
     @PostMapping("/set_holiday_addition")
     public String holidayAddition(HolidayAdditionFromModel holidayAdditionFromModel, HttpServletRequest httpServletRequest) {
-        String studentId = httpServletRequest.getSession().getAttribute("studentid").toString();
+        String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
         HolidayInfo holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
         HolidayPlan holidayPlan = holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
@@ -176,7 +168,7 @@ public class HolidayController {
         }
     }
 
-    @GetMapping("/get_holiday_plan_of_student")
+    @GetMapping("/manager/get_holiday_plan_of_student")
     public ModelAndView getHolidayPlanOfStudent(Long holidayId, ModelAndView modelAndView) {
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
         List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
@@ -199,7 +191,7 @@ public class HolidayController {
         return modelAndView;
     }
 
-    @GetMapping("/download_excel")
+    @GetMapping("/manager/download_excel")
     public void downloadExcelOfholidayPlan(HttpServletResponse response, Long holidayId) throws IOException {
         downExcelService.getExcel(response,holidayId);
     }

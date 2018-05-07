@@ -17,7 +17,7 @@ function changePassword() {
     if (inputFlag) {
         if (newPassWord.val() === newPassWordAgin.val()) {
             if (newPassWordAgin.val().length >= 6 && newPassWordAgin.val().length <= 16) {
-                $.post("/change_password",
+                $.post("/public/change_password",
                     {
                         oldPassword: md5(oldPassword.val()),
                         newPassword: md5(newPassWordAgin.val())

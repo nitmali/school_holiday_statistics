@@ -38,16 +38,16 @@ function loginin() {
     var str_userName = null;
     // Remember Me
     if ($('#checkbox1').is(':checked')) {
-        $.cookie("rmbUser", "true", {expires: 7});
-        $.cookie("studentid", str_userId, {expires: 7});
+        $.cookie("rmbUser", "true", {expires: 7,path: '/'});
+        $.cookie("studentId", str_userId, {expires: 7,path: '/'});
         if (str_password.length <= 16) {
-            $.cookie("df151bf2egf2hjl", md5(str_password), {expires: 7});
+            $.cookie("df151bf2egf2hjl", md5(str_password), {expires: 7,path: '/'});
         }else
         {
-            $.cookie("df151bf2egf2hjl", str_password, {expires: 7})
+            $.cookie("df151bf2egf2hjl", str_password, {expires: 7,path: '/'})
         }
     } else {
-        $.cookie("studentid", "", {expires: -1});
+        $.cookie("studentId", "", {expires: -1});
     }
     if (str_password.length <= 16) {
         str_password = md5(str_password);
@@ -64,15 +64,15 @@ function loginin() {
             },
             function (userFromModel) {
                 if (userFromModel.userName !== "") {
-                    $.cookie("UserType", userFromModel.userType, {expires: 7});
-                    $.cookie("Token", userFromModel.userId, {expires: 7});
-                    $.cookie("UserName", userFromModel.userName, {expires: 7});
+                    $.cookie("UserType", userFromModel.userType, {expires: 7,path: '/'});
+                    $.cookie("Token", userFromModel.userId, {expires: 7,path: '/'});
+                    $.cookie("UserName", userFromModel.userName, {expires: 7,path: '/'});
                     if (userFromModel.userType === "student") {
-                        $.cookie("UserType", "student", {expires: 7});
-                        window.location.href = "/student_home";
+                        $.cookie("UserType", "student", {expires: 7,path: '/'});
+                        window.location.href = "/student/home";
                     } else {
-                        window.location.href = "/admin_home";
-                        $.cookie("UserType", "admin", {expires: 7});
+                        window.location.href = "/manager/home";
+                        $.cookie("UserType", "manager", {expires: 7,path: '/'});
                     }
                 }else {
                     $("#login_message").html("账号或者密码错误");
@@ -95,13 +95,13 @@ function get_login() {
 
 function init_nav() {
     var student = $("#student");
-    var admin = $("#admin");
+    var manager = $("#manager");
     var entrance = $("#entrance");
     var personal = $("#personal");
     var userName = $("#userName");
 
     student.css("display", "none");
-    admin.css("display", "none");
+    manager.css("display", "none");
     personal.css("display", "none");
 
     if (document.cookie.indexOf("UserType") === -1) {
@@ -114,15 +114,15 @@ function init_nav() {
             student.css("display", "list-item");
         }
 
-        if ($.cookie("UserType") === "admin") {
-            admin.css("display", "list-item");
+        if ($.cookie("UserType") === "manager") {
+            manager.css("display", "list-item");
         }
     }
 }
 
 function logout() {
-    $.cookie("UserType", "", {expires: -1});
-    $.cookie("Token", "", {expires: -1});
+    $.cookie("UserType", "", {expires: -1,path: '/'});
+    $.cookie("Token", "", {expires: -1,path: '/'});
     init_nav();
 }
 

@@ -1,12 +1,12 @@
-var adminHolidayPlan0fStudent = new Vue({
-    el: '#adminHolidayPlanOfStudent',
+var managerHolidayPlan0fStudent = new Vue({
+    el: '#managerHolidayPlanOfStudent',
     data: {
         holidayPlan_list: ''
     }
 });
 
-var adminHolidayInfoAllApp = new Vue({
-    el: '#adminHolidayInfoAll',
+var managerHolidayInfoAllApp = new Vue({
+    el: '#managerHolidayInfoAll',
     data: {
         holidayInfo_list: null
     },
@@ -19,16 +19,16 @@ var adminHolidayInfoAllApp = new Vue({
 
         },
         get_holiday_info_of_status: function (holidayStatus) {
-            $.get("/get_holidayInfo_all",
+            $.get("/manager/get_holidayInfo_all",
                 {
                     holidayStatus: holidayStatus
                 },
                 function (HolidayInfoFromModel) {
-                    adminHolidayInfoAllApp.holidayInfo_list = HolidayInfoFromModel;
+                    managerHolidayInfoAllApp.holidayInfo_list = HolidayInfoFromModel;
                 });
         },
         show_holiday_plan_of_student: function (index) {
-            window.open("/get_holiday_plan_of_student?holidayId="+index);
+            window.open("/manager/get_holiday_plan_of_student?holidayId="+index);
         }
     }
 });

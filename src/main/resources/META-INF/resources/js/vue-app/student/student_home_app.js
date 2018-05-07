@@ -10,7 +10,7 @@ new Vue({
     },
     methods:{
         get_holiday_info_of_status: function (that, holidayStatus) {
-            $.get("/get_holidayInfo_of_Status",
+            $.get("/public/get_holidayInfo_of_Status",
                 {
                     holidayStatus: holidayStatus
                 },

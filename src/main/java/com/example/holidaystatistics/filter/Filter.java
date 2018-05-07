@@ -5,6 +5,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -27,32 +29,39 @@ public class Filter implements javax.servlet.Filter {
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         boolean flag = true;
-        String login = "login";
-        String root = "/";
-        String webjars = "webjars";
-        String css = "css";
-        String js = "js";
-        String admin = "admin";
+        String LOGIN = "login";
+        String ROOT = "/";
+        String WEBJARS = "webjars";
+        String CSS = "css";
+        String JS = "js";
+        String MANAGER = "manager";
+        String STUDENT = "manager";
+        String PUBLIC = "public";
+
+
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String userType = (String) request.getSession().getAttribute("usertype");
+        String userType = (String) request.getSession().getAttribute("userType");
         String uri = request.getRequestURI();
 
         if (userType != null) {
-            flag = false;
-            if(Objects.equals(uri, root))
-            {
-                if(Objects.equals(userType, admin))
-                {
-                    response.sendRedirect("/admin_home");
-                }else {
-                    response.sendRedirect("/student_home");
+            if (Objects.equals(uri, ROOT)) {
+                if (Objects.equals(userType, MANAGER)) {
+                    response.sendRedirect("/manager/home");
+                } else if (Objects.equals(userType, STUDENT)){
+                    response.sendRedirect("/student/home");
                 }
+            }
+            if (uri.contains(userType)) {
+                flag = false;
+            }
+            if (uri.contains(PUBLIC)){
+                flag = false;
             }
         }
 
-        if (uri.contains(login) || Objects.equals(uri, root) || uri.contains(webjars)
-                || uri.contains(css) || uri.contains(js)) {
+        if (uri.contains(LOGIN) || Objects.equals(uri, ROOT) || uri.contains(WEBJARS)
+                || uri.contains(CSS) || uri.contains(JS)) {
             flag = false;
         }
         if (flag) {

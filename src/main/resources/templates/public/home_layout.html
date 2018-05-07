@@ -36,19 +36,19 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav" id="student" style="display: none">
-                    <li><a href="/student_home" th:href="@{/student_home}">首页</a></li>
-                    <li><a href="/holiday_plan" th:href="@{/holiday_plan}">去向调查</a></li>
-                    <li><a href="/holiday_addition" th:href="@{/holiday_addition}">未能及时返校</a></li>
-                    <li><a href="/finished" th:href="@{/finished}">已完成</a></li>
+                    <li><a href="/student/home" th:href="@{/student/home}">首页</a></li>
+                    <li><a href="/student/holiday_plan" th:href="@{/holiday/plan}">去向调查</a></li>
+                    <li><a href="/student/holiday_addition" th:href="@{/student/holiday_addition}">未能及时返校</a></li>
+                    <li><a href="/student/finished" th:href="@{/student/finished}">已完成</a></li>
                 </ul>
-                <ul class="nav navbar-nav" id="admin" style="display: none">
-                    <li><a href="/admin_home" th:href="@{/admin_home}">首页</a></li>
-                    <li><a href="/holiday_info" th:href="@{/holiday_info}">假期信息提交</a></li>
-                    <li><a href="/holiday_all" th:href="@{/holiday_all}">查看假期信息</a></li>
+                <ul class="nav navbar-nav" id="manager" style="display: none">
+                    <li><a href="/manager/home" th:href="@{/manager/home}">首页</a></li>
+                    <li><a href="/manager/holiday_info" th:href="@{/manager/holiday_info}">假期信息提交</a></li>
+                    <li><a href="/manager/holiday_all" th:href="@{/manager/holiday_all}">查看假期信息</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="entrance" style="display: none">
-                    <li><a href="/student_login" th:href="@{/student_login}">学生登录</a></li>
-                    <li><a href="/admin_login" th:href="@{/admin_login}">管理员入口</a></li>
+                    <li><a href="/student/login" th:href="@{/student/login}">学生登录</a></li>
+                    <li><a href="/manager/login" th:href="@{/manager/login}">管理员入口</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="personal" style="display: none">
                     <li class="dropdown">
@@ -60,12 +60,12 @@
                         <ul class="dropdown-menu" style="left: 0px">
                             <li role="separator"></li>
                             <li>
-                                <a href="/change_password" th:href="@{/change_password}"><span
+                                <a href="/public/change_password" th:href="@{/public/change_password}"><span
                                         class="glyphicon glyphicon-cog"></span> &nbsp;修改密码</a>
                             </li>
                             <li role="separator" class="divider"></li>
                             <li>
-                                <a href="/logout" th:href="@{/logout}" onclick="logout()"><span
+                                <a href="/public/logout" th:href="@{/public/logout}" onclick="logout()"><span
                                         class="glyphicon glyphicon-off"></span>
                                     &nbsp;退出</a>
                             </li>
@@ -211,10 +211,9 @@
         th:src="@{/webjars/vue/2.5.9/dist/vue.js}"></script>
 <script src="/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js"
         th:src="@{/webjars/jquery-cookie/1.4.1-1/jquery.cookie.js}"></script>
-<script src="/META-INF/resources/js/js-md5/md5.js"
+<script src="/js/js-md5/md5.js"
         th:src="@{/js/js-md5/md5.js}"></script>
-<script src="/META-INF/resources/js/time.js" th:src="@{/js/time.js}"></script>
-<script src="/META-INF/resources/js/login.js" th:src="@{/js/login.js}"></script>
+<script src="/js/public/login.js" th:src="@{/js/public/login.js}"></script>
 
 <script>
     setTimeout("$('.plash').fadeOut(300)", 300);

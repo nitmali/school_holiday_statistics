@@ -1,5 +1,5 @@
-var adminHolidayInfoApp =new Vue({
-    el: '#adminHolidayInfo',
+var managerHolidayInfoApp =new Vue({
+    el: '#managerHolidayInfo',
     data: {
         holidayInfo: '',
         getIt:false
@@ -33,7 +33,7 @@ var adminHolidayInfoApp =new Vue({
         },
         updated_holiday_info: function () {
             var that = this;
-            $.post("/updated_holiday_info",
+            $.post("/manager/updated_holiday_info",
                 {
                     holidayId: that.holidayInfo.holidayId,
                     holidayName: that.holidayInfo.holidayName,
@@ -45,7 +45,7 @@ var adminHolidayInfoApp =new Vue({
             );
         },
         get_holiday_info_of_status: function (that, holidayStatus) {
-            $.get("/get_holidayInfo_of_Status",
+            $.get("/public/get_holidayInfo_of_Status",
                 {
                     holidayStatus: holidayStatus
                 },
