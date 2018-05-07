@@ -35,7 +35,7 @@ public class Filter implements javax.servlet.Filter {
         String CSS = "css";
         String JS = "js";
         String MANAGER = "manager";
-        String STUDENT = "manager";
+        String STUDENT = "student";
         String PUBLIC = "public";
 
 

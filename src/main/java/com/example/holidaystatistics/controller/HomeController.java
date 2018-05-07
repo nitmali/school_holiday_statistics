@@ -27,7 +27,7 @@ public class HomeController {
 
     @GetMapping("/manager/home")
     public ModelAndView manager(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/manager_home");
+        modelAndView.setViewName("manager/manager_home");
         return modelAndView;
     }
 
@@ -45,7 +45,7 @@ public class HomeController {
 
     @GetMapping("/manager/login")
     public ModelAndView managerLogin(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/manager_login");
+        modelAndView.setViewName("manager/manager_login");
         return modelAndView;
     }
 
@@ -55,7 +55,7 @@ public class HomeController {
         return modelAndView;
     }
 
-    @GetMapping("/success")
+    @GetMapping("/student/success")
     public ModelAndView success(ModelAndView modelAndView) {
         modelAndView.setViewName("student/success");
         return modelAndView;
@@ -63,7 +63,7 @@ public class HomeController {
 
     @GetMapping("/holiday_plan_of_student")
     public ModelAndView studentPlan(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/holiday_plan_of_student");
+        modelAndView.setViewName("manager/holiday_plan_of_student");
         return modelAndView;
     }
 
@@ -81,14 +81,14 @@ public class HomeController {
 
     @GetMapping("/manager/holiday_info")
     public ModelAndView holidayInfo(ModelAndView modelAndView, HolidayInfoFromModel holidayInfoFromModel) {
-        modelAndView.setViewName("manage/holiday_info");
+        modelAndView.setViewName("manager/holiday_info");
         modelAndView.addObject("nationalDayInfoFormModel",holidayInfoFromModel);
         return modelAndView;
     }
 
     @GetMapping("/manager/holiday_all")
     public ModelAndView holidayAll(ModelAndView modelAndView) {
-        modelAndView.setViewName("manage/holiday_all");
+        modelAndView.setViewName("manager/holiday_all");
         return modelAndView;
     }
 

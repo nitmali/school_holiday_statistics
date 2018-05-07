@@ -52,7 +52,7 @@ public class HolidayController {
     @Resource
     private DownExcelService downExcelService;
 
-    @PostMapping("/holiday_info")
+    @PostMapping("/manager/holiday_info")
     public ModelAndView setHolidayInfo(ModelAndView modelAndView, @Valid HolidayInfoFromModel holidayInfoFromModel) {
 
         HolidayInfo holidayInfo = holidayInfoRepository.findByHolidayName(holidayInfoFromModel.getHolidayName());
@@ -62,11 +62,11 @@ public class HolidayController {
             holidayInfo.setholidayInfoFromModel(holidayInfoFromModel);
         }
         holidayInfoRepository.save(holidayInfo);
-        modelAndView.setViewName("manage/success");
+        modelAndView.setViewName("manager/success");
         return modelAndView;
     }
 
-    @GetMapping("/get_holiday_plan")
+    @GetMapping("/student/get_holiday_plan")
     public HolidayPlanFormModel holidayPlan(HttpServletRequest httpServletRequest) {
         HolidayInfo holidayInfo;
         String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
@@ -86,7 +86,7 @@ public class HolidayController {
         return holidayPlanFormModel;
     }
 
-    @PostMapping("/set_holiday_plan")
+    @PostMapping("/student/set_holiday_plan")
     public String holidayPlan(HolidayPlanFormModel holidayPlanFormModel, HttpServletRequest httpServletRequest) {
         String stayAtSchool = "留校";
         if (Objects.equals(holidayPlanFormModel.getWhereToGo(), "")) {
@@ -118,7 +118,7 @@ public class HolidayController {
         return "success";
     }
 
-    @GetMapping("/get_holidayPlan_of_student")
+    @GetMapping("/student/get_holidayPlan_of_student")
     public List<HolidayPlan> holidayPlans(HttpServletRequest httpServletRequest) {
         String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
@@ -147,7 +147,7 @@ public class HolidayController {
         holidayInfoRepository.save(holidayInfo);
     }
 
-    @PostMapping("/set_holiday_addition")
+    @PostMapping("/student/set_holiday_addition")
     public String holidayAddition(HolidayAdditionFromModel holidayAdditionFromModel, HttpServletRequest httpServletRequest) {
         String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
@@ -184,7 +184,7 @@ public class HolidayController {
                     = new HolidayPlanOfStudentFromModel(holidayPlan, studentList.get(i));
             holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
         }
-        modelAndView.setViewName("manage/holiday_plan_of_student");
+        modelAndView.setViewName("manager/holiday_plan_of_student");
         modelAndView.addObject("holidayId", holidayId);
         modelAndView.addObject("holidayName", holidayInfo.getHolidayName());
         modelAndView.addObject("holidayPlanOfStudentFromModelList", holidayPlanOfStudentFromModelList);

@@ -9,7 +9,7 @@ var student_finished_app = new Vue({
     },
     methods:{
         get_holidayPlan_api:function () {
-            $.get("/get_holidayPlan_of_student",
+            $.get("/student/get_holidayPlan_of_student",
                 function (get_holidayPlan_of_student) {
                     student_finished_app.finished_info_all = get_holidayPlan_of_student;
                 }

@@ -7,9 +7,9 @@ $(document).ready(function () {
 
 function remember() {
     $("#checkbox1").attr("checked", 'true');
-    if ($.cookie("rmbUser") === "true" && window.location.pathname !== "/managelogin") {
+    if ($.cookie("rmbUser") === "true" && window.location.pathname !== "/manager/login") {
         $("#ck_rmbUser").attr("checked", true);
-        $("#inputUsername").val($.cookie("studentid"));
+        $("#inputUsername").val($.cookie("studentId"));
         $("#inputPassword").val($.cookie("df151bf2egf2hjl"));
     }
 }
@@ -23,21 +23,20 @@ function focus() {
 }
 
 function loginofenter() {
-
     $(document).keydown(function (event) {
         if (event.keyCode === 13 && $("#inputPassword").val() !== "") {
-            loginin();
+            $("#login").click();
         }
     });
 }
 
-function loginin() {
+function loginIn(userType) {
     var str_userId = $("#inputUsername").val();
     var str_password = $("#inputPassword").val();
-    var str_userType = null;
+    var str_userType = userType;
     var str_userName = null;
     // Remember Me
-    if ($('#checkbox1').is(':checked')) {
+    if ($('#checkbox1').is(':checked') && window.location.pathname !== "/manager/login") {
         $.cookie("rmbUser", "true", {expires: 7,path: '/'});
         $.cookie("studentId", str_userId, {expires: 7,path: '/'});
         if (str_password.length <= 16) {

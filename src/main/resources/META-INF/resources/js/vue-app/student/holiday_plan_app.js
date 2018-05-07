@@ -54,7 +54,7 @@ var that = new Vue({
             }
         },
         set_holiday_plan_api:function () {
-            $.post("/set_holiday_plan",
+            $.post("/student/set_holiday_plan",
                 {
                     whereToGo: that.set_holidayPlan.whereToGo,
                     leaveTime: that.set_holidayPlan.leaveTime,
@@ -62,7 +62,7 @@ var that = new Vue({
                 },
                 function (message) {
                     if(message === "success") {
-                        window.location.href = "/success";
+                        window.location.href = "/student/success";
                     }else if (message === "Time Error")
                     {
                         alert("请填写有效时间区间");
@@ -73,7 +73,7 @@ var that = new Vue({
             );
         },
         get_holiday_plan_api: function () {
-            $.get("/get_holiday_plan",
+            $.get("/student/get_holiday_plan",
                 function (get_holidayPlanFormModel) {
                     that.get_holidayPlan = get_holidayPlanFormModel;
                 }

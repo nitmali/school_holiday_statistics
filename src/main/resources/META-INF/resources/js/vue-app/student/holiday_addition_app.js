@@ -12,7 +12,7 @@ var that = new Vue({
     },
     methods: {
         set_holiday_addition_api: function () {
-            $.post("/set_holiday_addition",
+            $.post("/student/set_holiday_addition",
                 {
                     whereNow:that.set_holidayAddition.whereNow,
                     expectedBackTime: new Date(that.set_holidayAddition.expectedBackTime.replace(/-/g, "/")),
@@ -23,7 +23,7 @@ var that = new Vue({
                         alert("没有找到假日或未填写离校信息");
                     }
                     else {
-                        window.location.href = "/success";
+                        window.location.href = "/student/success";
                     }
                 });
         }

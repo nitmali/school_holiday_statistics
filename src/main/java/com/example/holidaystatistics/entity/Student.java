@@ -15,7 +15,7 @@ public class Student {
     @Column(nullable = false, length = 10)
     private String studentId;
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String studentName;
 
     @Column(nullable = false)
