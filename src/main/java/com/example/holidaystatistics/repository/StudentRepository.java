@@ -19,11 +19,6 @@ public interface StudentRepository extends CrudRepository<Student,String> {
      */
     Student findBystudentId(String studentId);
 
-
-//    /**
-//     * 查询所有学生
-//     *
-//     * @return Student
-//     */
-//    List<Student> findAll();
+    Student findBystudentName(String studentName);
+    
 }

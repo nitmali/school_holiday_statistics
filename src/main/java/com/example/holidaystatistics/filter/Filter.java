@@ -37,6 +37,7 @@ public class Filter implements javax.servlet.Filter {
         String MANAGER = "manager";
         String STUDENT = "student";
         String PUBLIC = "public";
+        String OPENAPI = "openApi";
 
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -48,20 +49,17 @@ public class Filter implements javax.servlet.Filter {
             if (Objects.equals(uri, ROOT)) {
                 if (Objects.equals(userType, MANAGER)) {
                     response.sendRedirect("/manager/home");
-                } else if (Objects.equals(userType, STUDENT)){
+                } else if (Objects.equals(userType, STUDENT)) {
                     response.sendRedirect("/student/home");
                 }
             }
             if (uri.contains(userType)) {
                 flag = false;
             }
-            if (uri.contains(PUBLIC)){
-                flag = false;
-            }
         }
 
         if (uri.contains(LOGIN) || Objects.equals(uri, ROOT) || uri.contains(WEBJARS)
-                || uri.contains(CSS) || uri.contains(JS)) {
+                || uri.contains(CSS) || uri.contains(JS) || uri.contains(OPENAPI) || uri.contains(PUBLIC)) {
             flag = false;
         }
         if (flag) {

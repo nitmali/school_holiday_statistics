@@ -14,6 +14,9 @@
           th:href="@{/css/public/timeapi.css}" rel="stylesheet"/>
     <link href="/css/public/time.css"
           th:href="@{/css/public/time.css}" rel="stylesheet"/>
+    <link href="/css/public/site.css"
+          th:href="@{/css/public/site.css}" rel="stylesheet"/>
+
 </head>
 
 <body>
@@ -33,6 +36,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="/" th:href="@{/}">假期管理</a>
+                <div class="navbar-brand" id="tp-weather-widget" style=" padding:10px;"></div>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav" id="student" style="display: none">
@@ -77,7 +81,44 @@
         </div>
 
     </div>
-    <div class="time_01 col-xs-10  col-xs-offset-1 col-lg-12 col-lg-offset-3">
+
+    <script>(function (T, h, i, n, k, P, a, g, e) {
+        g = function () {
+            P = h.createElement(i);
+            a = h.getElementsByTagName(i)[0];
+            P.src = k;
+            P.charset = "utf-8";
+            P.async = 1;
+            a.parentNode.insertBefore(P, a)
+        };
+        T["ThinkPageWeatherWidgetObject"] = n;
+        T[n] || (T[n] = function () {
+            (T[n].q = T[n].q || []).push(arguments)
+        });
+        T[n].l = +new Date();
+        if (T.attachEvent) {
+            T.attachEvent("onload", g)
+        } else {
+            T.addEventListener("load", g, false)
+        }
+    }(window, document, "script", "tpwidget", "//widget.seniverse.com/widget/chameleon.js"))</script>
+    <script>tpwidget("init", {
+        "flavor": "slim",
+        "location": "WTQ3VZQP879N",
+        "geolocation": "disabled",
+        "language": "zh-chs",
+        "unit": "c",
+        "theme": "chameleon",
+        "container": "tp-weather-widget",
+        "bubble": "enabled",
+        "alarmType": "badge",
+        "color": "#FFFFFF",
+        "uid": "U8C61B0333",
+        "hash": "a5040382b70ed09567c685a7863b24c1"
+    });
+    tpwidget("show");</script>
+
+    <div class="time_01 col-xs-10  col-xs-offset-1 col-lg-12 col-lg-offset-3" style="display: none">
         <div class='center' align="center">
             <table>
                 <tr class='hours'>
@@ -119,8 +160,10 @@
 
 
 <div class="container frame">
-    <div layout:fragment="content">
-        CONTENT
+    <div id="particles">
+        <div layout:fragment="content">
+            CONTENT
+        </div>
     </div>
 </div>
 
@@ -132,7 +175,9 @@
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#footer">
                         <span class="glyphicon glyphicon-option-horizontal" style="color: #e0e0e0"></span>
                     </button>
-                    <p class="navbar-text" style="font-size: 13px">2017 © 假期管理系统（测试版） by nitmali</p>
+                    <p class="navbar-text" style="font-size: 14px">
+                        2017 © 假期管理系统（测试版） by <a href="mailto:1996nitmali@gmail.com">nitmali</a>
+                    </p>
                 </div>
                 <div id="footer" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav center-block">
@@ -142,6 +187,11 @@
                         <li>
                             <a data-toggle="modal" data-target="#helpModal">帮助中心</a>
                         </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a th:href="@{http://www.miitbeian.gov.cn/publish/query/indexFirst.action}" target="_blank">
+                            浙ICP备18013845号-1
+                        </a></li>
                     </ul>
                 </div>
             </div>

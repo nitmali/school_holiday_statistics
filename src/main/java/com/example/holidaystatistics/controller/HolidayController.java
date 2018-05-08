@@ -118,12 +118,19 @@ public class HolidayController {
         return "success";
     }
 
-    @GetMapping("/student/get_holidayPlan_of_student")
-    public List<HolidayPlan> holidayPlans(HttpServletRequest httpServletRequest) {
+    @GetMapping("/student/get_holidayPlan_all")
+    public List<HolidayPlan> holidayPlanListofStudent(HttpServletRequest httpServletRequest) {
         String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
-
         return holidayPlanRepository.findAllByStudent(student);
+    }
+
+    @GetMapping("/student/get_holidayPlan_one")
+    public HolidayPlan holidayPlanOneOfStudent(HttpServletRequest httpServletRequest) {
+        String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
+        Student student = studentRepository.findBystudentId(studentId);
+        HolidayInfo holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
+        return holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo,student);
     }
 
     @GetMapping("/public/get_holidayInfo_of_Status")

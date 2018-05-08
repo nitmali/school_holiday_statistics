@@ -92,5 +92,10 @@ public class HomeController {
         return modelAndView;
     }
 
+    @GetMapping("/public/forget_password")
+    public ModelAndView forgetPassword(ModelAndView modelAndView) {
+        modelAndView.setViewName("public/forget_password");
+        return modelAndView;
+    }
 }
 
