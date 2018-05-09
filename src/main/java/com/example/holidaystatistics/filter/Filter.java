@@ -29,15 +29,15 @@ public class Filter implements javax.servlet.Filter {
     public void doFilter(ServletRequest servletRequest,
                          ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         boolean flag = true;
-        String LOGIN = "login";
-        String ROOT = "/";
-        String WEBJARS = "webjars";
-        String CSS = "css";
-        String JS = "js";
-        String MANAGER = "manager";
-        String STUDENT = "student";
-        String PUBLIC = "public";
-        String OPENAPI = "openApi";
+        String loginUri = "login";
+        String rootUri = "/";
+        String webjarsUri = "webjars";
+        String cssUri = "css";
+        String jsUri = "js";
+        String managerUri = "manager";
+        String studentUri = "student";
+        String publicUri = "public";
+        String openApiUri = "openApi";
 
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
@@ -46,10 +46,10 @@ public class Filter implements javax.servlet.Filter {
         String uri = request.getRequestURI();
 
         if (userType != null) {
-            if (Objects.equals(uri, ROOT)) {
-                if (Objects.equals(userType, MANAGER)) {
+            if (Objects.equals(uri, rootUri)) {
+                if (Objects.equals(userType, managerUri)) {
                     response.sendRedirect("/manager/home");
-                } else if (Objects.equals(userType, STUDENT)) {
+                } else if (Objects.equals(userType, studentUri)) {
                     response.sendRedirect("/student/home");
                 }
             }
@@ -58,8 +58,9 @@ public class Filter implements javax.servlet.Filter {
             }
         }
 
-        if (uri.contains(LOGIN) || Objects.equals(uri, ROOT) || uri.contains(WEBJARS)
-                || uri.contains(CSS) || uri.contains(JS) || uri.contains(OPENAPI) || uri.contains(PUBLIC)) {
+        if (uri.contains(loginUri) || Objects.equals(uri, rootUri) || uri.contains(webjarsUri)
+                || uri.contains(cssUri) || uri.contains(jsUri) || uri.contains(openApiUri)
+                || uri.contains(publicUri)) {
             flag = false;
         }
         if (flag) {

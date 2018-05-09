@@ -1,4 +1,4 @@
-package com.example.holidaystatistics.service.DownExcel;
+package com.example.holidaystatistics.service.DownExcelService;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;

@@ -1,10 +1,15 @@
 package com.example.holidaystatistics.controller;
 
+import com.example.holidaystatistics.entity.EmailToken;
 import com.example.holidaystatistics.entity.Manager;
 import com.example.holidaystatistics.entity.Student;
 import com.example.holidaystatistics.model.UserFromModel;
+import com.example.holidaystatistics.repository.EmailTokenRepository;
 import com.example.holidaystatistics.repository.ManagerRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
+import com.example.holidaystatistics.service.EmailService.Md5Token;
+import com.example.holidaystatistics.service.EmailService.SendEmail;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,21 +17,32 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.Objects;
 
 /**
  * @author 马小生
  */
 @RestController
-public class LoginController {
+public class UserController {
 
     @Resource
     private StudentRepository studentRepository;
 
     @Resource
     private ManagerRepository managerRepository;
+
+    @Resource
+    private EmailTokenRepository emailTokenRepository;
+
+    @Resource
+    private Md5Token md5Token;
+
+    @Resource
+    private SendEmail sendEmail;
 
     @PostMapping("/login")
     public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
@@ -100,6 +116,60 @@ public class LoginController {
             student.setPassword(newPassword);
             studentRepository.save(student);
             return "success";
+        }
+    }
+
+    @GetMapping("/openApi/send_email")
+    public String sendForgetPasswordMail(String email) throws MessagingException {
+        return sendEmail.sendForgetPasswordMail(email);
+    }
+
+    @GetMapping("/public/reset_password")
+    public ModelAndView resetPassword(ModelAndView modelAndView, String email, String token) {
+        EmailToken emailToken;
+        if (email != null && token != null) {
+            emailToken = emailTokenRepository.findEmailTokenByEmail(email);
+            if (emailToken == null) {
+                modelAndView.setViewName("public/reset_password_invalid");
+                return modelAndView;
+            }
+            Date thisTime = new Date();
+            Long timeDifference = 108000000L;
+            if (thisTime.getTime() - Long.parseLong(emailToken.getSendTime()) > timeDifference) {
+                emailTokenRepository.delete(emailToken);
+                modelAndView.setViewName("public/reset_password_invalid");
+                return modelAndView;
+            }
+            String getToken = md5Token
+                    .getMD5(emailToken.getUserId() + emailToken.getEmail() + emailToken.getSendTime());
+            if (token.equals(getToken)) {
+                modelAndView.setViewName("public/reset_password");
+                modelAndView.addObject("userName", studentRepository
+                        .findBystudentId(emailToken.getUserId()).getStudentName());
+                modelAndView.addObject("userId", studentRepository
+                        .findBystudentId(emailToken.getUserId()).getStudentId());
+            } else {
+                modelAndView.setViewName("public/reset_password_invalid");
+                return modelAndView;
+            }
+        } else {
+            modelAndView.setViewName("public/reset_password_invalid");
+            return modelAndView;
+        }
+        return modelAndView;
+    }
+
+    @GetMapping("/openApi/reset_password")
+    public String resetPassword(String userId, String password) {
+        Student student = studentRepository.findBystudentId(userId);
+        EmailToken emailToken = emailTokenRepository.findEmailTokenByEmail(student.getEmail());
+        if (emailToken != null) {
+            student.setPassword(password);
+            studentRepository.save(student);
+            emailTokenRepository.delete(emailToken);
+            return "success";
+        } else {
+            return "error";
         }
     }
 

@@ -24,6 +24,9 @@ public class Student {
     @Column(length = 11)
     private String phone;
 
+    @Column(unique = true)
+    private String email;
+
     public String getStudentId() {
         return studentId;
     }
@@ -54,5 +57,13 @@ public class Student {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

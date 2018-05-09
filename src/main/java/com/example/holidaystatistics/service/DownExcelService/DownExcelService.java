@@ -1,4 +1,4 @@
-package com.example.holidaystatistics.service.DownExcel;
+package com.example.holidaystatistics.service.DownExcelService;
 
 import com.example.holidaystatistics.entity.HolidayInfo;
 import com.example.holidaystatistics.entity.HolidayPlan;

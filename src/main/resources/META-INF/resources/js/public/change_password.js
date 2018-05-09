@@ -27,7 +27,7 @@ function changePassword() {
                             oldPassWordSpawn.html("原密码错误！")
                         } else {
                             alert("密码修改成功！");
-                            window.location.href = "/student_home";
+                            window.location.href = "/";
                         }
                     }
                 );
