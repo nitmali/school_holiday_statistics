@@ -158,7 +158,7 @@ class ForgetPasswordEmailTemplate {
             "                                        box-sizing: border-box; font-size: 14px; vertical-align: top; \n" +
             "                                        margin: 0; padding: 0 0 20px;\"\n" +
             "                                        valign=\"top\">\n" +
-            "                                        若要开始重置密码,请点击以下链接 (此链接将在半小时后或重置密码后将失效.)\n" +
+            "                                        若要开始重置密码,请点击以下链接 (此链接将在10分钟后或重置密码后失效.)\n" +
             "                                    </td>\n" +
             "                                </tr>\n" +
             "                                <tr style=\"font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; \n" +

@@ -1,11 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
       layout:decorator="public/home_layout">
 <head>
   <link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>
 </head>
 <body>
 
-<div layout:fragment="content">
+<div layout:fragment="content" id="userLoginApp">
+  <div class="container" v-show="message.display">
+    <div v-bind:class="message.messageCss">
+      <span v-html="message.messageHtml"></span>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-md-offset-3 col-md-6">
@@ -14,11 +20,14 @@
             管理员登录
           </span>
           <div class="form-group">
-            <input type="text" class="form-control" id="inputUsername" onclick="again()" placeholder="用户名" />
+            <input type="text" class="form-control" id="inputUsername" placeholder="用户名"
+                   v-model="userFromModel.userId" v-on:click="rest_pages('userId')"/>
             <i class="fa fa-user"></i>
           </div>
           <div class="form-group help">
-            <input type="password" class="form-control" id="inputPassword" onclick="again()" placeholder="密　码" />
+            <input type="password" class="form-control" id="inputPassword"  placeholder="密　码"
+                   v-model="userFromModel.password" v-on:click="rest_pages('password')"
+                   v-on:keyup.13="key('manager')"/>
             <i class="fa fa-lock"></i>
             <a href="#" class="fa fa-question-circle"></a>
           </div>
@@ -27,11 +36,11 @@
           </div>
           <div class="form-group">
             <div class="main-checkbox">
-              <input type="checkbox" value="None" id="checkbox1" name="check"/>
-              <label for="checkbox1"></label>
+              <input type="checkbox" value="None" id="remember" name="check"/>
+              <label for="remember"></label>
             </div>
             <span class="text">Remember me</span>
-            <button id="login" class="btn btn-primary"  style="width: 120px" onclick="loginIn('manager')">登录</button>
+            <a id="login" class="btn btn-primary"  style="width: 40%" v-on:click="login_in('manager')">登录</a>
           </div>
         </div>
       </div>
@@ -39,5 +48,8 @@
   </div>
 </div>
 </body>
+<th:block layout:fragment="scripts">
+  <script src="/js/public/login_app.js" th:src="@{/js/public/login_app.js}"></script>
+</th:block>
 
 </html>

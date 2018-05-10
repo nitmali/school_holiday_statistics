@@ -10,10 +10,7 @@ import com.example.holidaystatistics.repository.StudentRepository;
 import com.example.holidaystatistics.service.EmailService.Md5Token;
 import com.example.holidaystatistics.service.EmailService.SendEmail;
 import org.apache.commons.codec.digest.Md5Crypt;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -45,7 +42,7 @@ public class UserController {
     private SendEmail sendEmail;
 
     @PostMapping("/login")
-    public UserFromModel login(UserFromModel userFromModel, HttpServletRequest request) {
+    public UserFromModel login(@RequestBody UserFromModel userFromModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String studentType = "student";
         String managerType = "manager";
@@ -83,7 +80,7 @@ public class UserController {
         return userFromModel;
     }
 
-    @GetMapping("/get_login")
+    @GetMapping("/openAPi/get_login")
     public String login(HttpServletRequest request) {
         String student = "student";
         String manager = "manager";
@@ -134,7 +131,7 @@ public class UserController {
                 return modelAndView;
             }
             Date thisTime = new Date();
-            Long timeDifference = 108000000L;
+            Long timeDifference = 600000L;
             if (thisTime.getTime() - Long.parseLong(emailToken.getSendTime()) > timeDifference) {
                 emailTokenRepository.delete(emailToken);
                 modelAndView.setViewName("public/reset_password_invalid");

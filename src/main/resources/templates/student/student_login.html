@@ -1,17 +1,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml"
       layout:decorator="public/home_layout">
 <head>
     <!--<link href="/css/student/login.css" th:href="@{/css/student/login.css}" rel="stylesheet"/>-->
 </head>
 <body>
 
-<div layout:fragment="content">
-    <div class="container" style="display: none">
-        <div class="alert alert-danger fade in">
-            <button type="button" data-dismiss="alert" class="close">
-                <span class="ion-close-circled"></span>
-            </button>
-            <div>Email is not valid</div>
+<div layout:fragment="content" id="userLoginApp">
+    <div class="container" v-show="message.display">
+        <div v-bind:class="message.messageCss">
+            <span v-html="message.messageHtml"></span>
         </div>
     </div>
     <div class="container">
@@ -21,19 +19,20 @@
                 <input type="hidden"/>
                 <div class="form-group"><label for="inputUsername" class="col-sm-3 control-label">用户名</label>
                     <div class="col-sm-7">
-                        <input type="text" id="inputUsername" placeholder="学号" autofocus=""
-                               class="form-control"/>
+                        <input type="text" id="inputUsername" placeholder="学号"  class="form-control"
+                               v-model="userFromModel.userId" v-on:click="rest_pages('userId')"/>
                     </div>
                 </div>
                 <div class="form-group"><label for="inputPassword" class="col-sm-3 control-label">密码</label>
                     <div class="col-sm-7">
-                        <input type="password" id="inputPassword" placeholder="密码"
-                               class="form-control"/>
+                        <input type="password" id="inputPassword" placeholder="密码" class="form-control"
+                               v-model="userFromModel.password" v-on:click="rest_pages('password')"
+                               v-on:keyup.13="key('student')"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-7">
-                        <a class="btn col-sm-3 btn btn-primary" id="login" onclick="loginIn('student')">
+                        <a class="btn col-sm-3 btn btn-primary" id="login" v-on:click="login_in('student')">
                             <i class="glyphicon glyphicon-user"></i>&emsp;登陆
                         </a>
                         <a href="/public/forget_password" th:href="@{/public/forget_password}" class="btn btn-link">忘记密码?</a>
@@ -48,7 +47,10 @@
         </div>
     </div>
 </div>
-<script th:src="@{//cdn.bootcss.com/canvas-nest.js/1.0.1/canvas-nest.min.js}"></script>
+
 </body>
+<th:block layout:fragment="scripts">
+    <script src="/js/public/login_app.js" th:src="@{/js/public/login_app.js}"></script>
+</th:block>
 
 </html>
