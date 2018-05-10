@@ -9,7 +9,7 @@ import com.example.holidaystatistics.repository.ManagerRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
 import com.example.holidaystatistics.service.EmailService.Md5Token;
 import com.example.holidaystatistics.service.EmailService.SendEmail;
-import org.apache.commons.codec.digest.Md5Crypt;
+import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -69,7 +69,7 @@ public class UserController {
             if (userFromModel.getPassword().equals(manager.getPassword())) {
                 userFromModel.setUserType("manager");
                 session.setAttribute("userType", "manager");
-                session.setAttribute("studentId", userFromModel.getUserId());
+                session.setAttribute("managerId", userFromModel.getUserId());
                 userFromModel.setUserName(manager.getManagerName());
                 return userFromModel;
             } else {
@@ -117,8 +117,28 @@ public class UserController {
     }
 
     @GetMapping("/openApi/send_email")
-    public String sendForgetPasswordMail(String email) throws MessagingException {
-        return sendEmail.sendForgetPasswordMail(email);
+    public String sendForgetPasswordMail(HttpServletRequest request,String email, String emailType)
+            throws MessagingException {
+        String restPassword = "restPassword";
+        String bindEmail = "bindEmail";
+        if (restPassword.equals(emailType)) {
+            return sendEmail.sendRestPasswordEmail(email, EmailToken.EmailType.REST_PASSWORD);
+        } else if (bindEmail.equals(emailType)) {
+            if (studentRepository.findStudentByEmail(email) != null) {
+                return "emil is being use";
+            } else {
+                HttpSession session = request.getSession();
+                String studentId = (String) session.getAttribute("studentId");
+                if (studentId != null){
+                    return sendEmail.sendBindEmail(studentId,email, EmailToken.EmailType.BIND_EMAIL);
+                }else {
+                    return "please login again";
+                }
+
+            }
+        } else {
+            return "error";
+        }
     }
 
     @GetMapping("/public/reset_password")
@@ -127,12 +147,14 @@ public class UserController {
         if (email != null && token != null) {
             emailToken = emailTokenRepository.findEmailTokenByEmail(email);
             if (emailToken == null) {
+                System.err.println("令牌未找到");
                 modelAndView.setViewName("public/reset_password_invalid");
                 return modelAndView;
             }
             Date thisTime = new Date();
             Long timeDifference = 600000L;
             if (thisTime.getTime() - Long.parseLong(emailToken.getSendTime()) > timeDifference) {
+                System.err.println("连接超时");
                 emailTokenRepository.delete(emailToken);
                 modelAndView.setViewName("public/reset_password_invalid");
                 return modelAndView;
@@ -146,6 +168,7 @@ public class UserController {
                 modelAndView.addObject("userId", studentRepository
                         .findBystudentId(emailToken.getUserId()).getStudentId());
             } else {
+                System.err.println("令牌错误");
                 modelAndView.setViewName("public/reset_password_invalid");
                 return modelAndView;
             }
@@ -169,5 +192,39 @@ public class UserController {
             return "error";
         }
     }
+
+    @GetMapping("/openApi/bind_email")
+    public String bindEmail( HttpServletRequest request,String email, String token) {
+        HttpSession session = request.getSession();
+        Student student = studentRepository.findBystudentId((String) session.getAttribute("studentId"));
+        EmailToken emailToken = emailTokenRepository.findEmailTokenByEmail(email);
+        if (emailToken == null){
+            return "time out";
+        }else if(!emailToken.getUserId().equals(student.getStudentId())){
+            return "email error";
+        }
+        Date thisTime = new Date();
+        Long timeDifference = 600000L;
+        if (thisTime.getTime() - Long.parseLong(emailToken.getSendTime()) > timeDifference) {
+            System.err.println("验证码超时");
+            emailTokenRepository.delete(emailToken);
+            return "time out";
+        }
+        String getToken =
+                md5Token.getMD5(student.getStudentId() + emailToken.getSendTime()).substring(14, 20);
+
+        token = token.toUpperCase();
+        getToken = getToken.toUpperCase();
+        if (getToken.equals(token)){
+            student.setEmail(email);
+            studentRepository.save(student);
+            return "success";
+        }else {
+            System.err.println("error token:"+token);
+            System.err.println("success token:"+getToken);
+            return "error";
+        }
+    }
+
 
 }

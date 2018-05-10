@@ -16,7 +16,8 @@ var forgetPassword = new Vue({
             forgetPassword.message = "邮件发送中...请稍等...";
             $.get("/openApi/send_email",
                 {
-                    email: forgetPassword.email
+                    email: forgetPassword.email,
+                    emailType:'restPassword'
                 },
                 function (data) {
                     forgetPassword.display = true;

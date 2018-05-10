@@ -1,5 +1,6 @@
 package com.example.holidaystatistics.service.EmailService;
 
+import com.example.holidaystatistics.entity.EmailToken;
 import com.example.holidaystatistics.entity.Student;
 import com.example.holidaystatistics.repository.StudentRepository;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -25,14 +26,16 @@ public class SendEmail {
     private StudentRepository studentRepository;
 
     @Resource
-    private ForgetPasswordEmailTemplate forgetPasswordEmailTemplate;
+    private EmailTemplate emailTemplate;
 
     @Resource
     private AddEmailToken addEmailToken;
 
     @Resource
     private Md5Token md5Token;
-    public String sendForgetPasswordMail(String email) throws MessagingException {
+
+
+    public String sendRestPasswordEmail(String email, EmailToken.EmailType emailType) throws MessagingException {
         Student student = studentRepository.findStudentByEmail(email);
         if (student != null) {
             try {
@@ -41,7 +44,7 @@ public class SendEmail {
 
                 String messageText;
 
-                String url = "http://holiday.nitmali.com/public/reset_password?email="+email+"&token=";
+                String url = "http://holiday.nitmali.com/public/reset_password?email=" + email + "&token=";
 
                 Date thisTime = new Date();
 
@@ -50,18 +53,18 @@ public class SendEmail {
                 String address = url
                         + md5Token.getMD5(student.getStudentId() + email + getTime);
 
-                messageText = forgetPasswordEmailTemplate.getEmailTemplate(address);
+                messageText = emailTemplate.getEmailTemplate(address);
 
                 helper.setFrom("holiday@nitmali.com");
                 helper.setTo(email);
                 helper.setSubject("Holiday System重置密码");
 
-                helper.setText(messageText,true);
+                helper.setText(messageText, true);
                 mailSender.send(message);
 
-                addEmailToken.addEmailToke(email,student.getStudentId(),getTime);
+                addEmailToken.addEmailToke(email, student.getStudentId(), getTime, emailType);
 
-            }catch (Exception exception){
+            } catch (Exception exception) {
                 System.err.println(exception.getMessage());
                 return "error";
             }
@@ -69,5 +72,42 @@ public class SendEmail {
         } else {
             return "not find email";
         }
+    }
+
+
+    /***
+     *token 为账号+时间MD5加密后14到20位。
+     */
+    public String sendBindEmail(String studentId, String email, EmailToken.EmailType emailType) throws MessagingException {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message);
+
+            String messageText;
+
+            String token;
+
+            Date thisTime = new Date();
+
+            String getTime = String.valueOf(thisTime.getTime());
+
+            token = md5Token.getMD5(studentId + getTime).toUpperCase().substring(14, 20);
+
+            messageText = emailTemplate.getBindEmailTemplate(token);
+
+            helper.setFrom("holiday@nitmali.com");
+            helper.setTo(email);
+            helper.setSubject("Holiday System邮箱绑定");
+
+            helper.setText(messageText, true);
+            mailSender.send(message);
+
+            addEmailToken.addEmailToke(email, studentId, getTime, emailType);
+
+        } catch (Exception exception) {
+            System.err.println("异常："+exception.getMessage());
+            return "error";
+        }
+        return "success";
     }
 }

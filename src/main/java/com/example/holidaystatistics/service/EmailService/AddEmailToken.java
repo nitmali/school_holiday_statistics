@@ -16,12 +16,12 @@ public class AddEmailToken {
     @Resource
     private EmailTokenRepository emailTokenRepository;
 
-    void addEmailToke(String email,String userId,String sendTime){
+    void addEmailToke(String email,String userId,String sendTime,EmailToken.EmailType emailType){
         EmailToken emailToken = emailTokenRepository.findEmailTokenByEmail(email);
-        if (emailToken != null){
+        if (emailToken != null && emailToken.getEmailType() == emailType){
             emailTokenRepository.delete(emailToken);
         }
-        emailToken = new EmailToken(email,userId,sendTime);
+        emailToken = new EmailToken(email,userId,sendTime, emailType);
         emailTokenRepository.save(emailToken);
     }
 
