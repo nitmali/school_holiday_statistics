@@ -1,6 +1,6 @@
 package com.example.holidaystatistics.entity;
 
-import com.example.holidaystatistics.model.HolidayPlanFormModel;
+import com.example.holidaystatistics.model.HolidayPlanModel;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -42,16 +42,16 @@ public class HolidayPlan {
 
     }
 
-    public HolidayPlan(HolidayPlanFormModel holidayPlanFormModel) {
-        whereToGo = holidayPlanFormModel.getWhereToGo();
-        leaveTime = holidayPlanFormModel.getLeaveTime();
-        backTime = holidayPlanFormModel.getBackTime();
+    public HolidayPlan(HolidayPlanModel holidayPlanModel) {
+        whereToGo = holidayPlanModel.getWhereToGo();
+        leaveTime = holidayPlanModel.getLeaveTime();
+        backTime = holidayPlanModel.getBackTime();
     }
 
-    public void setHolidayPlanFormModel(HolidayPlanFormModel holidayPlanFormModel) {
-        whereToGo = holidayPlanFormModel.getWhereToGo();
-        leaveTime = holidayPlanFormModel.getLeaveTime();
-        backTime = holidayPlanFormModel.getBackTime();
+    public void setHolidayPlanFormModel(HolidayPlanModel holidayPlanModel) {
+        whereToGo = holidayPlanModel.getWhereToGo();
+        leaveTime = holidayPlanModel.getLeaveTime();
+        backTime = holidayPlanModel.getBackTime();
     }
 
     public Long getId() {

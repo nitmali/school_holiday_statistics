@@ -1,6 +1,6 @@
 package com.example.holidaystatistics.entity;
 
-import com.example.holidaystatistics.model.HolidayAdditionFromModel;
+import com.example.holidaystatistics.model.HolidayAdditionModel;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -30,11 +30,11 @@ public class HolidayAddition {
     public HolidayAddition() {
     }
 
-    public void setHolidayAdditionFromModel(HolidayAdditionFromModel holidayAdditionFromModel) {
-        holidayPlan = holidayAdditionFromModel.getHolidayPlan();
-        whereNow= holidayAdditionFromModel.getWhereNow();
-        addition = holidayAdditionFromModel.getAddition();
-        expectedBackTime = holidayAdditionFromModel.getExpectedBackTime();
+    public void setHolidayAdditionFromModel(HolidayAdditionModel holidayAdditionModel) {
+        holidayPlan = holidayAdditionModel.getHolidayPlan();
+        whereNow= holidayAdditionModel.getWhereNow();
+        addition = holidayAdditionModel.getAddition();
+        expectedBackTime = holidayAdditionModel.getExpectedBackTime();
     }
 
     public Long getId() {

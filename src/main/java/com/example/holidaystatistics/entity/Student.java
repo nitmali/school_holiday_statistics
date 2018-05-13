@@ -1,7 +1,5 @@
 package com.example.holidaystatistics.entity;
 
-import com.example.holidaystatistics.model.UserFromModel;
-
 import javax.persistence.*;
 
 /**

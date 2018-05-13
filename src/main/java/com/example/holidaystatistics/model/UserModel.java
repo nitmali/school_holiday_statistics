@@ -1,5 +1,6 @@
 package com.example.holidaystatistics.model;
 
+import com.example.holidaystatistics.entity.Student;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -8,7 +9,7 @@ import javax.validation.constraints.NotNull;
  * @author 马小生
  */
 @Component
-public class UserFromModel {
+public class UserModel {
 
     @NotNull
     private String userId;
@@ -18,7 +19,23 @@ public class UserFromModel {
 
     private String userName;
 
+    private String email;
+
+    private String phone;
+
     private String userType;
+
+    public UserModel() {
+    }
+
+    public UserModel(Student student) {
+        this.userId = student.getStudentId();
+        this.password = student.getPassword();
+        this.userName = student.getStudentName();
+        this.email = student.getEmail();
+        this.phone = student.getPhone();
+        this.userType = null;
+    }
 
     public String getUserId() {
         return userId;
@@ -42,6 +59,22 @@ public class UserFromModel {
 
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getUserType() {

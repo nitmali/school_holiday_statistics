@@ -3,7 +3,7 @@ package com.example.holidaystatistics.service.DownExcelService;
 import com.example.holidaystatistics.entity.HolidayInfo;
 import com.example.holidaystatistics.entity.HolidayPlan;
 import com.example.holidaystatistics.entity.Student;
-import com.example.holidaystatistics.model.HolidayPlanOfStudentFromModel;
+import com.example.holidaystatistics.model.HolidayPlanOfStudentModel;
 import com.example.holidaystatistics.repository.HolidayInfoRepository;
 import com.example.holidaystatistics.repository.HolidayPlanRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
@@ -42,7 +42,7 @@ public class DownExcelService {
     public void getExcel(HttpServletResponse response, Long holidayId) {
         try {
             HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
-            List<HolidayPlanOfStudentFromModel> holidayPlanOfStudentFromModelList = new ArrayList<>();
+            List<HolidayPlanOfStudentModel> holidayPlanOfStudentModelList = new ArrayList<>();
             List<Student> studentList = (List<Student>) studentRepository.findAll();
             studentList = studentList
                     .stream()
@@ -51,9 +51,9 @@ public class DownExcelService {
             for (int i = 0; i <= studentList.size() - 1; i++) {
                 HolidayPlan holidayPlan = holidayPlanRepository
                         .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
-                HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-                        = new HolidayPlanOfStudentFromModel(holidayPlan, studentList.get(i));
-                holidayPlanOfStudentFromModelList.add(holidayPlanOfStudentFromModel);
+                HolidayPlanOfStudentModel holidayPlanOfStudentModel
+                        = new HolidayPlanOfStudentModel(holidayPlan, studentList.get(i));
+                holidayPlanOfStudentModelList.add(holidayPlanOfStudentModel);
             }
 
             String fileName = excelConfig.getClassName() + "_"
@@ -75,8 +75,8 @@ public class DownExcelService {
             int other = 0;
 
             for (int i = 0; i <= studentList.size() - 1; i++) {
-                HolidayPlanOfStudentFromModel holidayPlanOfStudentFromModel
-                        = holidayPlanOfStudentFromModelList.get(i);
+                HolidayPlanOfStudentModel holidayPlanOfStudentModel
+                        = holidayPlanOfStudentModelList.get(i);
 
                 HSSFRow row = sheet.createRow(i + 4);
 
@@ -89,28 +89,28 @@ public class DownExcelService {
                 HSSFCell cell6 = row.createCell(6);
                 HSSFCell cell7 = row.createCell(7);
 
-                cell0.setCellValue(holidayPlanOfStudentFromModel.getStudentId());
-                cell1.setCellValue(holidayPlanOfStudentFromModel.getStudentName());
-                if (holidayPlanOfStudentFromModel.getLeaveTime() != null
-                        && holidayPlanOfStudentFromModel.getBackTime() != null) {
-                    cell2.setCellValue(holidayPlanOfStudentFromModel
+                cell0.setCellValue(holidayPlanOfStudentModel.getStudentId());
+                cell1.setCellValue(holidayPlanOfStudentModel.getStudentName());
+                if (holidayPlanOfStudentModel.getLeaveTime() != null
+                        && holidayPlanOfStudentModel.getBackTime() != null) {
+                    cell2.setCellValue(holidayPlanOfStudentModel
                             .getLeaveTime().toString().substring(5, 10)
-                            + " - " + holidayPlanOfStudentFromModel
+                            + " - " + holidayPlanOfStudentModel
                             .getBackTime().toString().substring(5, 10));
                 }
-                if (holidayPlanOfStudentFromModel.getWhereToGo() != null) {
-                    if ("留校".equals(holidayPlanOfStudentFromModel.getWhereToGo())) {
+                if (holidayPlanOfStudentModel.getWhereToGo() != null) {
+                    if ("留校".equals(holidayPlanOfStudentModel.getWhereToGo())) {
                         cell3.setCellValue("√");
                         atSchool++;
-                    } else if (holidayPlanOfStudentFromModel.getWhereToGo().contains("回家")) {
+                    } else if (holidayPlanOfStudentModel.getWhereToGo().contains("回家")) {
                         cell4.setCellValue("√");
                         goHome++;
                     } else {
-                        cell5.setCellValue(holidayPlanOfStudentFromModel.getWhereToGo());
+                        cell5.setCellValue(holidayPlanOfStudentModel.getWhereToGo());
                         other++;
                     }
                 }
-                cell6.setCellValue(holidayPlanOfStudentFromModel.getPhone());
+                cell6.setCellValue(holidayPlanOfStudentModel.getPhone());
 
                 cell0.setCellStyle(cellStyle);
                 cell1.setCellStyle(cellStyle);

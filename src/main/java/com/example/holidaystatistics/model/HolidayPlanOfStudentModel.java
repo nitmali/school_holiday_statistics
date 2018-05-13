@@ -11,7 +11,7 @@ import java.util.Date;
  * @author 马小生
  */
 @Component
-public class HolidayPlanOfStudentFromModel {
+public class HolidayPlanOfStudentModel {
     @NotNull
     private String studentName;
 
@@ -27,10 +27,10 @@ public class HolidayPlanOfStudentFromModel {
 
     private Date backTime;
 
-    public HolidayPlanOfStudentFromModel() {
+    public HolidayPlanOfStudentModel() {
     }
 
-    public HolidayPlanOfStudentFromModel(HolidayPlan holidayPlan, Student student) {
+    public HolidayPlanOfStudentModel(HolidayPlan holidayPlan, Student student) {
         if (holidayPlan != null)
         {
             studentName = holidayPlan.getStudent().getStudentName();

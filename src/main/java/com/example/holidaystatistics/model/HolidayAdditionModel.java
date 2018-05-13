@@ -10,7 +10,7 @@ import java.util.Date;
  * @author 马小生
  */
 @Component
-public class HolidayAdditionFromModel {
+public class HolidayAdditionModel {
     @NotNull
     private HolidayPlan holidayPlan;
 

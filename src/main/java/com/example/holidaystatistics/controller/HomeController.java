@@ -1,7 +1,7 @@
 package com.example.holidaystatistics.controller;
 
 
-import com.example.holidaystatistics.model.HolidayInfoFromModel;
+import com.example.holidaystatistics.model.HolidayInfoModel;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -80,9 +80,9 @@ public class HomeController {
     }
 
     @GetMapping("/manager/holiday_info")
-    public ModelAndView holidayInfo(ModelAndView modelAndView, HolidayInfoFromModel holidayInfoFromModel) {
+    public ModelAndView holidayInfo(ModelAndView modelAndView, HolidayInfoModel holidayInfoModel) {
         modelAndView.setViewName("manager/holiday_info");
-        modelAndView.addObject("nationalDayInfoFormModel",holidayInfoFromModel);
+        modelAndView.addObject("nationalDayInfoFormModel", holidayInfoModel);
         return modelAndView;
     }
 
@@ -95,6 +95,12 @@ public class HomeController {
     @GetMapping("/public/forget_password")
     public ModelAndView forgetPassword(ModelAndView modelAndView) {
         modelAndView.setViewName("public/forget_password");
+        return modelAndView;
+    }
+
+    @GetMapping("/student/student_personal")
+    public ModelAndView studnetPersonal(ModelAndView modelAndView){
+        modelAndView.setViewName("student/student_personal");
         return modelAndView;
     }
 }

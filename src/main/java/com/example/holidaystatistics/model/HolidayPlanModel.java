@@ -1,6 +1,7 @@
 package com.example.holidaystatistics.model;
 
 import com.example.holidaystatistics.entity.HolidayInfo;
+import com.example.holidaystatistics.entity.HolidayPlan;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.NotNull;
@@ -10,12 +11,10 @@ import java.sql.Date;
  * @author 马小生
  */
 @Component
-public class HolidayInfoFromModel {
-
-    private Long holidayId;
+public class HolidayPlanModel {
 
     @NotNull
-    private String holidayName;
+    private  String holidayName;
 
     @NotNull
     private Date holidayStartTime;
@@ -23,29 +22,25 @@ public class HolidayInfoFromModel {
     @NotNull
     private Date holidayEndTime;
 
-    private String moreInfo;
+    private Date leaveTime;
+
+    private Date backTime;
 
     @NotNull
-    private HolidayInfo.holidayStatus holidayStatus;
+    private String whereToGo;
 
-    public HolidayInfoFromModel(){}
+    public HolidayPlanModel(){}
 
-    public HolidayInfoFromModel(HolidayInfo holidayInfo)
-    {
-        holidayId = holidayInfo.getHolidayId();
+    public HolidayPlanModel(HolidayInfo holidayInfo){
         holidayName = holidayInfo.getHolidayName();
         holidayStartTime = holidayInfo.getHolidayStartTime();
         holidayEndTime = holidayInfo.getHolidayEndTime();
-        moreInfo = holidayInfo.getMoreInfo();
-        holidayStatus = holidayInfo.getHolidayStatus();
     }
 
-    public Long getHolidayId() {
-        return holidayId;
-    }
-
-    public void setHolidayId(Long holidayId) {
-        this.holidayId = holidayId;
+    public void setHolidayPlan (HolidayPlan holidayPlan){
+        leaveTime = holidayPlan.getLeaveTime();
+        backTime = holidayPlan.getBackTime();
+        whereToGo = holidayPlan.getWhereToGo();
     }
 
     public String getHolidayName() {
@@ -60,8 +55,8 @@ public class HolidayInfoFromModel {
         return holidayStartTime;
     }
 
-    public void setHolidayStartTime(Date holidayStartTime) {
-        this.holidayStartTime = holidayStartTime;
+    public void setHolidayStartTime(Date holidaystartTime) {
+        this.holidayStartTime = holidaystartTime;
     }
 
     public Date getHolidayEndTime() {
@@ -72,19 +67,27 @@ public class HolidayInfoFromModel {
         this.holidayEndTime = holidayEndTime;
     }
 
-    public String getMoreInfo() {
-        return moreInfo;
+    public String getWhereToGo() {
+        return whereToGo;
     }
 
-    public void setMoreInfo(String moreInfo) {
-        this.moreInfo = moreInfo;
+    public void setWhereToGo(String whereToGo) {
+        this.whereToGo = whereToGo;
     }
 
-    public HolidayInfo.holidayStatus getHolidayStatus() {
-        return holidayStatus;
+    public Date getLeaveTime() {
+        return leaveTime;
     }
 
-    public void setHolidayStatus(HolidayInfo.holidayStatus holidayStatus) {
-        this.holidayStatus = holidayStatus;
+    public void setLeaveTime(Date leaveTime) {
+        this.leaveTime = leaveTime;
+    }
+
+    public Date getBackTime() {
+        return backTime;
+    }
+
+    public void setBackTime(Date backTime) {
+        this.backTime = backTime;
     }
 }

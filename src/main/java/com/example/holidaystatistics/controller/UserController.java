@@ -3,13 +3,12 @@ package com.example.holidaystatistics.controller;
 import com.example.holidaystatistics.entity.EmailToken;
 import com.example.holidaystatistics.entity.Manager;
 import com.example.holidaystatistics.entity.Student;
-import com.example.holidaystatistics.model.UserFromModel;
+import com.example.holidaystatistics.model.UserModel;
 import com.example.holidaystatistics.repository.EmailTokenRepository;
 import com.example.holidaystatistics.repository.ManagerRepository;
 import com.example.holidaystatistics.repository.StudentRepository;
 import com.example.holidaystatistics.service.EmailService.Md5Token;
 import com.example.holidaystatistics.service.EmailService.SendEmail;
-import org.springframework.web.HttpRequestHandler;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -42,42 +41,42 @@ public class UserController {
     private SendEmail sendEmail;
 
     @PostMapping("/login")
-    public UserFromModel login(@RequestBody UserFromModel userFromModel, HttpServletRequest request) {
+    public UserModel login(@RequestBody UserModel userModel, HttpServletRequest request) {
         HttpSession session = request.getSession();
         String studentType = "student";
         String managerType = "manager";
-        if (studentType.equals(userFromModel.getUserType())) {
-            Student student = studentRepository.findBystudentId(userFromModel.getUserId());
+        if (studentType.equals(userModel.getUserType())) {
+            Student student = studentRepository.findBystudentId(userModel.getUserId());
             if (student == null) {
-                return userFromModel;
+                return userModel;
             }
-            if (userFromModel.getPassword().equals(student.getPassword())) {
-                userFromModel.setUserType("student");
+            if (userModel.getPassword().equals(student.getPassword())) {
+                userModel.setUserType("student");
                 session.setAttribute("userType", "student");
-                session.setAttribute("studentId", userFromModel.getUserId());
-                userFromModel.setUserName(student.getStudentName());
-                return userFromModel;
+                session.setAttribute("studentId", userModel.getUserId());
+                userModel.setUserName(student.getStudentName());
+                return userModel;
             } else {
-                return userFromModel;
+                return userModel;
             }
         }
-        if (managerType.equals(userFromModel.getUserType())) {
-            Manager manager = managerRepository.findManagerByManagerId(userFromModel.getUserId());
+        if (managerType.equals(userModel.getUserType())) {
+            Manager manager = managerRepository.findManagerByManagerId(userModel.getUserId());
             if (manager == null) {
-                return userFromModel;
+                return userModel;
             }
-            if (userFromModel.getPassword().equals(manager.getPassword())) {
-                userFromModel.setUserType("manager");
+            if (userModel.getPassword().equals(manager.getPassword())) {
+                userModel.setUserType("manager");
                 session.setAttribute("userType", "manager");
-                session.setAttribute("managerId", userFromModel.getUserId());
-                userFromModel.setUserName(manager.getManagerName());
-                return userFromModel;
+                session.setAttribute("managerId", userModel.getUserId());
+                userModel.setUserName(manager.getManagerName());
+                return userModel;
             } else {
-                return userFromModel;
+                return userModel;
             }
         }
-        userFromModel.setUserType(null);
-        return userFromModel;
+        userModel.setUserType(null);
+        return userModel;
     }
 
     @GetMapping("/openAPi/get_login")
@@ -113,6 +112,20 @@ public class UserController {
             student.setPassword(newPassword);
             studentRepository.save(student);
             return "success";
+        }
+    }
+
+    @GetMapping("/student/get_student_personal")
+    public UserModel getStudentPersonal(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        Student student = studentRepository.findBystudentId((String) session.getAttribute("studentId"));
+
+        if(student != null){
+            UserModel userModel = new UserModel(student);
+            userModel.setPassword(null);
+            return userModel;
+        }else {
+            return null;
         }
     }
 

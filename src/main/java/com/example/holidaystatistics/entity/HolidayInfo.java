@@ -1,6 +1,6 @@
 package com.example.holidaystatistics.entity;
 
-import com.example.holidaystatistics.model.HolidayInfoFromModel;
+import com.example.holidaystatistics.model.HolidayInfoModel;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -35,22 +35,22 @@ public class HolidayInfo {
     public HolidayInfo() {
     }
 
-    public HolidayInfo(HolidayInfoFromModel holidayInfoFromModel)
+    public HolidayInfo(HolidayInfoModel holidayInfoModel)
     {
-        holidayName = holidayInfoFromModel.getHolidayName();
-        holidayStartTime = holidayInfoFromModel.getHolidayStartTime();
-        holidayEndTime = holidayInfoFromModel.getHolidayEndTime();
-        moreInfo = holidayInfoFromModel.getMoreInfo();
-        holidayStatus = holidayInfoFromModel.getHolidayStatus();
+        holidayName = holidayInfoModel.getHolidayName();
+        holidayStartTime = holidayInfoModel.getHolidayStartTime();
+        holidayEndTime = holidayInfoModel.getHolidayEndTime();
+        moreInfo = holidayInfoModel.getMoreInfo();
+        holidayStatus = holidayInfoModel.getHolidayStatus();
     }
 
-    public void setholidayInfoFromModel(HolidayInfoFromModel holidayInfoFromModel)
+    public void setholidayInfoFromModel(HolidayInfoModel holidayInfoModel)
     {
-        holidayName = holidayInfoFromModel.getHolidayName();
-        holidayStartTime = holidayInfoFromModel.getHolidayStartTime();
-        holidayEndTime = holidayInfoFromModel.getHolidayEndTime();
-        moreInfo = holidayInfoFromModel.getMoreInfo();
-        holidayStatus = holidayInfoFromModel.getHolidayStatus();
+        holidayName = holidayInfoModel.getHolidayName();
+        holidayStartTime = holidayInfoModel.getHolidayStartTime();
+        holidayEndTime = holidayInfoModel.getHolidayEndTime();
+        moreInfo = holidayInfoModel.getMoreInfo();
+        holidayStatus = holidayInfoModel.getHolidayStatus();
     }
 
     public Long getHolidayId() {
