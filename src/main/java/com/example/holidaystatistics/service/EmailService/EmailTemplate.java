@@ -459,7 +459,7 @@ class EmailTemplate {
                 "    </tr>\n" +
                 "    </tbody>\n" +
                 "</table>\n" +
-                "<div style=\"background:#eee; border:1px solid #ccc; padding:5px 10px\"><strong>请不要回复此电子邮件.&nbsp;If\n" +
+                "<div style=\"background:#eee; border:1px solid #ccc; padding:5px 10px\"><strong>请不要回复此电子邮件.&nbsp;\n" +
                 "    如果你需要一些帮助或给我们建议，请联系&nbsp;<a href=\"mailto:me@nitmali.com\">me@nitmali.com</a>&nbsp;.</strong>\n" +
                 "</div>\n" +
                 "\n" +

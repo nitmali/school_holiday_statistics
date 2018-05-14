@@ -60,12 +60,13 @@ public class SendEmail {
                 helper.setSubject("Holiday System重置密码");
 
                 helper.setText(messageText, true);
-                mailSender.send(message);
 
-                addEmailToken.addEmailToke(email, student.getStudentId(), getTime, emailType);
+                if (addEmailToken.addEmailToke(email, student.getStudentId(), getTime, emailType)){
+                    mailSender.send(message);
+                }
 
             } catch (Exception exception) {
-                System.err.println(exception.getMessage());
+                System.err.println("异常(SendEmail 69)："+exception.getMessage());
                 return "error";
             }
             return "success";
@@ -100,12 +101,13 @@ public class SendEmail {
             helper.setSubject("Holiday System邮箱绑定");
 
             helper.setText(messageText, true);
-            mailSender.send(message);
 
-            addEmailToken.addEmailToke(email, studentId, getTime, emailType);
+            if (addEmailToken.addEmailToke(email, studentId, getTime, emailType)){
+                mailSender.send(message);
+            }
 
         } catch (Exception exception) {
-            System.err.println("异常："+exception.getMessage());
+            System.err.println("异常(SendEmail 110)："+exception.getMessage());
             return "error";
         }
         return "success";

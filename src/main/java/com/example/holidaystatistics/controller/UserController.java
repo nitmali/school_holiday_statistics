@@ -79,7 +79,7 @@ public class UserController {
         return userModel;
     }
 
-    @GetMapping("/openAPi/get_login")
+    @GetMapping("/openApi/get_login")
     public String login(HttpServletRequest request) {
         String student = "student";
         String manager = "manager";
@@ -129,6 +129,17 @@ public class UserController {
         }
     }
 
+    @GetMapping("/student/set_student_phone")
+    public String setStudentPersonal(String phone,HttpServletRequest request){
+        HttpSession session = request.getSession();
+        String userId = (String) session.getAttribute("studentId");
+        Student student = studentRepository.findBystudentId(userId);
+        student.setPhone(phone);
+        studentRepository.save(student);
+        return "success";
+    }
+
+    //restPassword：重置密码邮件；bindEmail：绑定邮箱邮件
     @GetMapping("/openApi/send_email")
     public String sendForgetPasswordMail(HttpServletRequest request,String email, String emailType)
             throws MessagingException {
@@ -214,7 +225,7 @@ public class UserController {
         if (emailToken == null){
             return "time out";
         }else if(!emailToken.getUserId().equals(student.getStudentId())){
-            return "email error";
+            return "error";
         }
         Date thisTime = new Date();
         Long timeDifference = 600000L;
@@ -233,9 +244,9 @@ public class UserController {
             studentRepository.save(student);
             return "success";
         }else {
-            System.err.println("error token:"+token);
-            System.err.println("success token:"+getToken);
-            return "error";
+            System.err.println("error token:"+getToken);
+            System.err.println("success token:"+token);
+            return "token error";
         }
     }
 

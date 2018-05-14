@@ -1,4 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml"
       layout:decorator="public/home_layout">
 <head>
 
@@ -6,42 +7,56 @@
 <body>
 
 <div layout:fragment="content" id="studentPersonal">
-    <!--<div class="container" v-show="display">-->
-        <!--<div v-bind:class="messageCss">-->
-            <!--<span>{{message}}</span>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="container" v-show="message.display">
+        <div v-bind:class="message.messageCss">
+            <span v-html="message.messageHtml"></span>
+        </div>
+    </div>
     <div class="container">
         <div class="col-sm-8 col-sm-offset-2">
-            <form>
-                <legend>个人信息,用户：{{studentInfo.userName}}</legend>
+            <div>
+                <legend>个人信息&emsp;用户：{{studentInfo.userName}}</legend>
                 <div class="form-group">
                     <label class="control-label">账号</label>
-                    <h4  class="form-control" >{{studentInfo.userId}}</h4>
+                    <h4>{{studentInfo.userId}}</h4>
                 </div>
                 <div class="form-group">
                     <label for="email" class="control-label">邮箱</label>
-                    <input type="email" name="email" id="email" placeholder="账号" autofocus="" class="form-control"
-                           v-model="studentInfo.email"/>
+                    <input type="email" name="email" id="email" placeholder="邮箱" autofocus="" class="form-control"
+                           v-model="studentInfo.email" v-on:click="rest_message()"/>
+
                 </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" v-on:click="send_email()" v-show="flag.getToken">
+                        获取邮箱验证码
+                    </button>
+                </div>
+
+                <div class="form-group "  v-show="flag.inputToken">
+                    <label for="emailToken" class="control-label">邮箱验证码</label>
+                    <input type="text" name="emailToken" id="emailToken" placeholder="邮箱验证码" autofocus="" class="form-control"
+                           style="width: 60%" v-model="emailInfo.emailToken" v-on:click="rest_message()"/>
+                </div>
+
                 <div class="form-group">
                     <label for="phone" class="control-label">手机号码</label>
-                    <input type="text"  id="phone" placeholder="手机号码" autofocus="" class="form-control"
-                           v-model="studentInfo.phone"/>
+                    <input type="text" id="phone" placeholder="手机号码" autofocus="" class="form-control"
+                           v-model="studentInfo.phone" v-on:click="rest_message()"/>
                 </div>
                 <div class="form-group">
-                    <a class="btn btn-primary">
-                        &emsp;确认修改
+                    <a class="btn btn-primary" v-on:click="set_student_personal()">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                              &emsp;确认修改
                     </a>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
 </body>
 
 <th:block layout:fragment="scripts">
-    <script src="/js/student/student_personal.js"
-            th:src="@{/js/student/student_personal.js}"></script>
+    <script src="/js/student/student_personal_app.js"
+            th:src="@{/js/student/student_personal_app.js}"></script>
 </th:block>
 </html>

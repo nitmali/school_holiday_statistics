@@ -5,6 +5,7 @@ import com.example.holidaystatistics.repository.EmailTokenRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author nitmali@126.com
@@ -16,13 +17,25 @@ public class AddEmailToken {
     @Resource
     private EmailTokenRepository emailTokenRepository;
 
-    void addEmailToke(String email,String userId,String sendTime,EmailToken.EmailType emailType){
-        EmailToken emailToken = emailTokenRepository.findEmailTokenByEmail(email);
-        if (emailToken != null && emailToken.getEmailType() == emailType){
-            emailTokenRepository.delete(emailToken);
+    Boolean addEmailToke(String email, String userId, String sendTime, EmailToken.EmailType emailType) {
+
+        EmailToken emailToken;
+
+        try {
+            emailToken = emailTokenRepository.findEmailTokenByEmailAndAndEmailType(email, emailType);
+            if (emailToken != null && emailToken.getEmailType() == emailType) {
+                emailTokenRepository.delete(emailToken);
+            }
+        } catch (Exception e) {
+            List<EmailToken> emailTokenList =
+                    emailTokenRepository.findAllByEmailAndAndEmailType(email, emailType);
+            emailTokenRepository.delete(emailTokenList);
         }
-        emailToken = new EmailToken(email,userId,sendTime, emailType);
+
+        emailToken = new EmailToken(email, userId, sendTime, emailType);
         emailTokenRepository.save(emailToken);
+
+        return true;
     }
 
 }
