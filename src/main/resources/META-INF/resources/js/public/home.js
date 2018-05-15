@@ -54,5 +54,6 @@ function init_nav() {
 function logout() {
     $.cookie("UserType", "", {expires: -1,path: '/'});
     $.cookie("Token", "", {expires: -1,path: '/'});
+    $.cookie("UserName","",{expires:-1,path:'/'});
     init_nav();
 }

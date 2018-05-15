@@ -197,6 +197,6 @@ public class HolidayController {
 
     @GetMapping("/manager/download_excel")
     public void downloadExcelOfholidayPlan(HttpServletResponse response, Long holidayId) throws IOException {
-        downExcelService.getExcel(response,holidayId);
+        downExcelService.getHolidayExcel(response,holidayId);
     }
 }

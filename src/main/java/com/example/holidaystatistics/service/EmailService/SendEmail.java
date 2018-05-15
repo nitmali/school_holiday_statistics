@@ -35,7 +35,7 @@ public class SendEmail {
     private Md5Token md5Token;
 
 
-    public String sendRestPasswordEmail(String email, EmailToken.EmailType emailType) throws MessagingException {
+    public String sendRestPasswordEmail(String email, EmailToken.EmailType emailType){
         Student student = studentRepository.findStudentByEmail(email);
         if (student != null) {
             try {
@@ -79,7 +79,7 @@ public class SendEmail {
     /***
      *token 为账号+时间MD5加密后14到20位。
      */
-    public String sendBindEmail(String studentId, String email, EmailToken.EmailType emailType) throws MessagingException {
+    public String sendBindEmail(String studentId, String email, EmailToken.EmailType emailType){
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message);

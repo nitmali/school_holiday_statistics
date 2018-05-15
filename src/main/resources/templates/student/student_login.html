@@ -20,20 +20,20 @@
                 <div class="form-group"><label for="inputUsername" class="col-sm-3 control-label">用户名</label>
                     <div class="col-sm-7">
                         <input type="text" id="inputUsername" placeholder="学号"  class="form-control"
-                               v-model="userFromModel.userId" v-on:click="rest_pages('userId')"/>
+                               v-model="userFromModel.userId" v-on:click="rest_input('userId')"/>
                     </div>
                 </div>
                 <div class="form-group"><label for="inputPassword" class="col-sm-3 control-label">密码</label>
                     <div class="col-sm-7">
                         <input type="password" id="inputPassword" placeholder="密码" class="form-control"
-                               v-model="userFromModel.password" v-on:click="rest_pages('password')"
+                               v-model="userFromModel.password" v-on:click="rest_input('password')"
                                v-on:keyup.13="key('student')"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-7">
                         <a class="btn col-sm-3 btn btn-primary" id="login" v-on:click="login_in('student')">
-                            <i class="glyphicon glyphicon-user"></i>&emsp;登陆
+                            <i class="glyphicon glyphicon-user"></i>&emsp;登录
                         </a>
                         <a href="/public/forget_password" th:href="@{/public/forget_password}" class="btn btn-link">忘记密码?</a>
                     </div>

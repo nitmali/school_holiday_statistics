@@ -56,15 +56,17 @@ var userLogin = new Vue({
             $.cookie("Token", userInfo.userId, {expires: 7, path: '/'});
             $.cookie("UserName", userInfo.userName, {expires: 7, path: '/'});
             if (userInfo.userType === "student") {
-                $.cookie("userId", userLogin.userFromModel.userId, {expires: 7, path: '/student/login'});
+                $.cookie("userId", userLogin.userFromModel.userId, {expires: 7});
+                $.cookie("userId", userLogin.userFromModel.userId, {expires: 7, path: '/'});
+                // $.cookie("userId", userLogin.userFromModel.userId, {expires: 7, path: '/student/login'});
+                $.cookie("userId", userLogin.userFromModel.userId, {expires: 7, path: '/public/logout'});
                 $.cookie("UserType", "student", {expires: 7, path: '/'});
                 window.location.href = "/student/home";
             } else {
                 if ($('#remember').get(0).checked) {
-                    $.cookie("userId", userLogin.userFromModel.userId, {expires: 7, path: '/manager/login'});
-                    $.cookie("password", userLogin.userFromModel.password, {expires: 7, path: '/manager/login'});
+                    $.cookie("userId", userLogin.userFromModel.userId, {expires: 7});
+                    $.cookie("password", userLogin.userFromModel.password, {expires: 7});
                 } else {
-
                     $.cookie("userId", "", {expires: -1, path: '/manager/login'});
                     $.cookie("password", "", {expires: -1, path: '/manager/login'});
                 }
@@ -73,11 +75,11 @@ var userLogin = new Vue({
             }
 
         },
-        rest_pages: function (type) {
+        rest_input: function (inputType) {
             userLogin.message.display = false;
-            if (type === "userId") {
+            if (inputType === "userId") {
                 userLogin.userFromModel.userId = "";
-            } else if (type === "password") {
+            } else if (inputType === "password") {
                 userLogin.userFromModel.password = "";
             }
         },
