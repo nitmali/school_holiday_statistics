@@ -3,6 +3,7 @@ package com.example.holidaystatistics.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * @author nitmali@126.com
@@ -20,6 +21,9 @@ public class Manager {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToOne
+    private ProfessionalClass professionalClass;
 
     public String getManagerId() {
         return managerId;
@@ -43,5 +47,13 @@ public class Manager {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ProfessionalClass getProfessionalClass() {
+        return professionalClass;
+    }
+
+    public void setProfessionalClass(ProfessionalClass professionalClass) {
+        this.professionalClass = professionalClass;
     }
 }

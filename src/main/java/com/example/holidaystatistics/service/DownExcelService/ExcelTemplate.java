@@ -91,7 +91,7 @@ public class ExcelTemplate {
         footCellStyle.setFont(font);
 
 
-        HSSFRow atSchoolRow = sheet.createRow(43);
+        HSSFRow atSchoolRow = sheet.createRow(50);
         HSSFCell atSchoolCell0 = atSchoolRow.createCell(0);
         HSSFCell atSchoolCell1 = atSchoolRow.createCell(1);
         HSSFCell atSchoolCell2 = atSchoolRow.createCell(2);
@@ -103,7 +103,7 @@ public class ExcelTemplate {
         atSchoolCell0.setCellValue("在校人数");
         atSchoolCell3.setCellValue(atSchool + "人");
 
-        HSSFRow goHomeRow = sheet.createRow(44);
+        HSSFRow goHomeRow = sheet.createRow(51);
         HSSFCell goHomeCell0 = goHomeRow.createCell(0);
         HSSFCell goHomeCell1 = goHomeRow.createCell(1);
         HSSFCell goHomeCell2 = goHomeRow.createCell(2);
@@ -115,7 +115,7 @@ public class ExcelTemplate {
         goHomeCell0.setCellValue("回家人数");
         goHomeCell3.setCellValue(goHome + "人");
 
-        HSSFRow otherRow = sheet.createRow(46);
+        HSSFRow otherRow = sheet.createRow(53);
         HSSFCell otherCell0 = otherRow.createCell(0);
         HSSFCell otherCell1 = otherRow.createCell(1);
         HSSFCell otherCell2 = otherRow.createCell(2);

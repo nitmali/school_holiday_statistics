@@ -16,7 +16,7 @@ function loginOfEnter() {
 function get_login() {
     $.get("/openApi/get_login",
         function (data) {
-            if (data === "error" && $.cookie("UserType") === "student") {
+            if (data === "error") {
                 logout();
             }
         }

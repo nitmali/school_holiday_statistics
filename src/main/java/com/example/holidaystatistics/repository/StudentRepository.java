@@ -1,5 +1,6 @@
 package com.example.holidaystatistics.repository;
 
+import com.example.holidaystatistics.entity.ProfessionalClass;
 import com.example.holidaystatistics.entity.Student;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -22,5 +23,7 @@ public interface StudentRepository extends CrudRepository<Student,String> {
     Student findBystudentName(String studentName);
 
     Student findStudentByEmail(String email);
+
+    List<Student> findAllByProfessionalClass_Id(Long professionalClassId);
     
 }

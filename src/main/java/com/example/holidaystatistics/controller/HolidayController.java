@@ -1,17 +1,11 @@
 package com.example.holidaystatistics.controller;
 
-import com.example.holidaystatistics.entity.HolidayAddition;
-import com.example.holidaystatistics.entity.HolidayInfo;
-import com.example.holidaystatistics.entity.HolidayPlan;
-import com.example.holidaystatistics.entity.Student;
+import com.example.holidaystatistics.entity.*;
 import com.example.holidaystatistics.model.HolidayAdditionModel;
 import com.example.holidaystatistics.model.HolidayInfoModel;
 import com.example.holidaystatistics.model.HolidayPlanModel;
 import com.example.holidaystatistics.model.HolidayPlanOfStudentModel;
-import com.example.holidaystatistics.repository.HolidayAdditionRepository;
-import com.example.holidaystatistics.repository.HolidayInfoRepository;
-import com.example.holidaystatistics.repository.HolidayPlanRepository;
-import com.example.holidaystatistics.repository.StudentRepository;
+import com.example.holidaystatistics.repository.*;
 import com.example.holidaystatistics.service.DownExcelService.DownExcelService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,13 +15,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * @author 马小生
@@ -36,6 +30,9 @@ import java.util.stream.Collectors;
 public class HolidayController {
     @Resource
     private StudentRepository studentRepository;
+
+    @Resource
+    private ManagerRepository managerRepository;
 
     @Resource
     private HolidayPlanRepository holidayPlanRepository;
@@ -127,7 +124,7 @@ public class HolidayController {
         String studentId = httpServletRequest.getSession().getAttribute("studentId").toString();
         Student student = studentRepository.findBystudentId(studentId);
         HolidayInfo holidayInfo = holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START);
-        return holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo,student);
+        return holidayPlanRepository.findAllByHolidayInfoAndStudent(holidayInfo, student);
     }
 
     @GetMapping("/public/get_holidayInfo_of_Status")
@@ -173,14 +170,20 @@ public class HolidayController {
     }
 
     @GetMapping("/manager/get_holiday_plan_of_student")
-    public ModelAndView getHolidayPlanOfStudent(Long holidayId, ModelAndView modelAndView) {
+    public ModelAndView getHolidayPlanOfStudent(Long holidayId, ModelAndView modelAndView, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        Manager manager = managerRepository.findOne((String) session.getAttribute("managerId"));
+
         HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
         List<HolidayPlanOfStudentModel> holidayPlanOfStudentModelList = new ArrayList<>();
-        List<Student> studentList = (List<Student>) studentRepository.findAll();
-        studentList = studentList
-                .stream()
-                .filter(student -> student.getStudentId().charAt(0) == '3')
-                .collect(Collectors.toList());
+        List<Student> studentList = studentRepository
+                .findAllByProfessionalClass_Id(manager.getProfessionalClass().getId());
+
+//        studentList = studentList
+//                .stream()
+//                .filter(student -> student.getStudentId().charAt(0) == '3')
+//                .collect(Collectors.toList());
+
         for (int i = 0; i <= studentList.size() - 1; i++) {
             HolidayPlan holidayPlan = holidayPlanRepository
                     .findAllByHolidayInfoAndStudent(holidayInfo, studentList.get(i));
@@ -196,7 +199,12 @@ public class HolidayController {
     }
 
     @GetMapping("/manager/download_excel")
-    public void downloadExcelOfholidayPlan(HttpServletResponse response, Long holidayId) throws IOException {
-        downExcelService.getHolidayExcel(response,holidayId);
+    public void downloadExcelOfholidayPlan(HttpServletRequest request,HttpServletResponse response, Long holidayId) {
+
+        HttpSession session = request.getSession();
+
+        Manager manager = managerRepository.findOne((String) session.getAttribute("managerId"));
+
+        downExcelService.getHolidayExcel(response, holidayId,manager);
     }
 }

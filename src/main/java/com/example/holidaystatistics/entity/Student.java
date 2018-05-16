@@ -13,6 +13,9 @@ public class Student {
     @Column(nullable = false, length = 10)
     private String studentId;
 
+    @ManyToOne
+    private ProfessionalClass professionalClass;
+
     @Column(nullable = false)
     private String studentName;
 
@@ -31,6 +34,14 @@ public class Student {
 
     public void setStudentId(String studentId) {
         this.studentId = studentId;
+    }
+
+    public ProfessionalClass getProfessionalClass() {
+        return professionalClass;
+    }
+
+    public void setProfessionalClass(ProfessionalClass professionalClass) {
+        this.professionalClass = professionalClass;
     }
 
     public String getStudentName() {
