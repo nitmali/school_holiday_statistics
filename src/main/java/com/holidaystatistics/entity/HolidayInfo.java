@@ -4,6 +4,8 @@ import com.holidaystatistics.model.HolidayInfoModel;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 假期信息表
@@ -31,6 +33,9 @@ public class HolidayInfo {
     @Column(nullable = false, length = 32)
     @Enumerated(EnumType.STRING)
     private holidayStatus holidayStatus;
+
+    @OneToMany(cascade={CascadeType.REMOVE},mappedBy="holidayInfo")
+    private Set<HolidayPlan> holidayPlanSet = new HashSet<HolidayPlan>();
 
     public HolidayInfo() {
     }

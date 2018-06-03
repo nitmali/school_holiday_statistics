@@ -41,18 +41,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(holidayInfo_list,index) in holidayInfo_list"
-                    >
+                    <tr v-for="(holidayInfo_list,index) in holidayInfo_list">
                         <td>{{holidayInfo_list.holidayId}}</td>
                         <td>{{holidayInfo_list.holidayName}}</td>
                         <td>{{holidayInfo_list.holidayStartTime}}</td>
                         <td>{{holidayInfo_list.holidayEndTime}}</td>
                         <td>{{holidayInfo_list.holidayStatus}}</td>
                         <td>
-                            <button class=" btn-success small"
+                            <button class=" btn-success small" style="background-color:#333;border-color:#333"
                                     v-on:click="show_holiday_plan_of_student(holidayInfo_list.holidayId)">查看
                             </button>
-                            <button class=" btn-danger small" :id="holidayInfo_list.holidayId">销毁</button>
+                            <button class=" btn-danger small"
+                                    v-on:click="delete_holiday(holidayInfo_list.holidayId)">销毁</button>
                         </td>
                     </tr>
                     </tbody>

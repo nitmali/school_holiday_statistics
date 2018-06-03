@@ -62,10 +62,13 @@ public class HolidayController {
     @Transactional
     @GetMapping("/manager/delete_holiday_info")
     public String deleteHoliday(Long holidayId){
-//        HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
-//        holidayPlanRepository.deleteByHolidayInfo(holidayInfo);
-//        holidayInfoRepository.delete(holidayId);
-        return "success";
+        try {
+            holidayInfoRepository.delete(holidayId);
+            return "success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "error";
+        }
     }
 
     @GetMapping("/student/get_holiday_plan")

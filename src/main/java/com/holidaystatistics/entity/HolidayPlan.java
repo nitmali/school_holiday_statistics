@@ -5,6 +5,8 @@ import com.holidaystatistics.model.HolidayPlanModel;
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 学生提交的离校表
@@ -37,6 +39,9 @@ public class HolidayPlan {
 
     @ManyToOne
     private HolidayInfo holidayInfo;
+
+    @OneToMany(cascade={CascadeType.REMOVE},mappedBy="holidayPlan")
+    private Set<HolidayAddition> holidayAdditionSet = new HashSet<HolidayAddition>();
 
     public HolidayPlan() {
 

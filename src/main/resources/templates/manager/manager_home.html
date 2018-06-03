@@ -17,7 +17,7 @@
       </div>
       <p v-show="holidayInfo.holidayStatus == 'START'">
         <a class="btn btn-primary" v-on:click="updated_holiday_status_ACTIVATION()">&emsp;激&nbsp;活&nbsp;假&nbsp;期&emsp;</a>
-        <a class="btn btn-primary" v-on:click="updated_holiday_status_DELETE()">&emsp;销&nbsp;毁&nbsp;假&nbsp;期&emsp;</a>
+        <a class="btn btn-primary" v-on:click="delete_holiday(holidayInfo.holidayId)">&emsp;销&nbsp;毁&nbsp;假&nbsp;期&emsp;</a>
       </p>
       <p v-show="!(holidayInfo.holidayStatus == 'START')">
         <a class="btn btn-primary" v-on:click="updated_holiday_status_OVER()">&emsp;结&nbsp;束&nbsp;假&nbsp;期&emsp;</a>
