@@ -8,103 +8,112 @@
 
 <div layout:fragment="content">
 
-  <div id="managerHolidayInfoAll">
-    <div class="col-lg-12">
-      <div class="table-responsive" style="min-height: 200px">
-        <table class="table table-hover">
-          <thead>
-          <tr>
-            <th>假期编号</th>
-            <th>假期名称</th>
-            <th>假期开始时间</th>
-            <th>假期结束时间</th>
-            <th class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                 aria-expanded="false">假期状态<span class="glyphicon glyphicon-menu-down"></span></a>
-              <ul class="dropdown-menu" style="left: 0">
-                <li>
-                  <a href="#" v-on:click="set_stat('')"> ALL</a>
-                </li>
-                <li>
-                  <a href="#" v-on:click="set_stat('START')"> START</a>
-                </li>
-                <li>
-                  <a href="#" v-on:click="set_stat('ACTIVATION')"> ACTIVATION</a>
-                </li>
-                <li>
-                  <a href="#" v-on:click="set_stat('OVER')"> OVER</a>
-                </li>
-              </ul>
-            </th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(holidayInfo_list,index) in holidayInfo_list" v-on:click="show_holiday_plan_of_student(holidayInfo_list.holidayId)">
-            <td>{{holidayInfo_list.holidayId}}</td>
-            <td>{{holidayInfo_list.holidayName}}</td>
-            <td>{{holidayInfo_list.holidayStartTime}}</td>
-            <td>{{holidayInfo_list.holidayEndTime}}</td>
-            <td>{{holidayInfo_list.holidayStatus}}</td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
+    <div id="managerHolidayInfoAll">
+        <div class="col-lg-12">
+            <div class="table-responsive" style="min-height: 200px">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>假期编号</th>
+                        <th>假期名称</th>
+                        <th>假期开始时间</th>
+                        <th>假期结束时间</th>
+                        <th class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-haspopup="true"
+                               aria-expanded="false">假期状态<span class="glyphicon glyphicon-menu-down"></span></a>
+                            <ul class="dropdown-menu" style="left: 0">
+                                <li>
+                                    <a href="#" v-on:click="set_stat('')"> ALL</a>
+                                </li>
+                                <li>
+                                    <a href="#" v-on:click="set_stat('START')"> START</a>
+                                </li>
+                                <li>
+                                    <a href="#" v-on:click="set_stat('ACTIVATION')"> ACTIVATION</a>
+                                </li>
+                                <li>
+                                    <a href="#" v-on:click="set_stat('OVER')"> OVER</a>
+                                </li>
+                            </ul>
+                        </th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr v-for="(holidayInfo_list,index) in holidayInfo_list"
+                    >
+                        <td>{{holidayInfo_list.holidayId}}</td>
+                        <td>{{holidayInfo_list.holidayName}}</td>
+                        <td>{{holidayInfo_list.holidayStartTime}}</td>
+                        <td>{{holidayInfo_list.holidayEndTime}}</td>
+                        <td>{{holidayInfo_list.holidayStatus}}</td>
+                        <td>
+                            <button class=" btn-success small"
+                                    v-on:click="show_holiday_plan_of_student(holidayInfo_list.holidayId)">查看
+                            </button>
+                            <button class=" btn-danger small" :id="holidayInfo_list.holidayId">销毁</button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div id="managerHolidayPlanOfStudent">
-    <div class="modal fade" id="HolidayPlanOfStudentModal">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <!-- 模态框头部 -->
-          <div class="modal-header">
-            <h4 class="modal-title">学生假期去向</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
+    <div id="managerHolidayPlanOfStudent">
+        <div class="modal fade" id="HolidayPlanOfStudentModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <!-- 模态框头部 -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">学生假期去向</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
-          <!-- 模态框主体 -->
-          <div class="modal-body">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                <th>序号</th>
-                <th>学生学号</th>
-                <th>学生姓名</th>
-                <th>学生手机号码</th>
-                <th>假期去向</th>
-                <th>离校时间</th>
-                <th>返校时间</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(holidayPlan,index) in holidayPlan_list">
-                <td>{{index+1}}</td>
-                <td>{{holidayPlan.studentId}}</td>
-                <td>{{holidayPlan.studentName}}</td>
-                <td>{{holidayPlan.phone}}</td>
-                <td>{{holidayPlan.whereToGo}}</td>
-                <td>{{holidayPlan.leaveTime}}</td>
-                <td>{{holidayPlan.backTime}}</td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+                    <!-- 模态框主体 -->
+                    <div class="modal-body">
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>学生学号</th>
+                                <th>学生姓名</th>
+                                <th>学生手机号码</th>
+                                <th>假期去向</th>
+                                <th>离校时间</th>
+                                <th>返校时间</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(holidayPlan,index) in holidayPlan_list">
+                                <td>{{index+1}}</td>
+                                <td>{{holidayPlan.studentId}}</td>
+                                <td>{{holidayPlan.studentName}}</td>
+                                <td>{{holidayPlan.phone}}</td>
+                                <td>{{holidayPlan.whereToGo}}</td>
+                                <td>{{holidayPlan.leaveTime}}</td>
+                                <td>{{holidayPlan.backTime}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
-          <!-- 模态框底部 -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-          </div>
+                    <!-- 模态框底部 -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    </div>
 
+                </div>
+            </div>
         </div>
-        </div>
-      </div>
     </div>
 
 </div>
 
 <th:block layout:fragment="scripts">
-  <script src="/js/manager/manager_holidayInfo_all.js"
-          th:src="@{/js/manager/manager_holidayInfo_all.js}"></script>
+    <script src="/js/manager/manager_holidayInfo_all.js"
+            th:src="@{/js/manager/manager_holidayInfo_all.js}"></script>
 </th:block>
 </body>
 </html>

@@ -1,8 +1,8 @@
-var managerHolidayInfoApp =new Vue({
+var managerHolidayInfoApp = new Vue({
     el: '#managerHolidayInfo',
     data: {
         holidayInfo: '',
-        getIt:false
+        getIt: false
     },
     created: function () {
         this.get_holiday_info_of_status(this, "START");
@@ -24,7 +24,19 @@ var managerHolidayInfoApp =new Vue({
             alert("更新假期状态成功");
         },
         updated_holiday_status_DELETE: function () {
-            alert("暂不支持销毁假期");
+            $.get("/manager/delete_holiday_info",
+                {
+                    holidayId: managerHolidayInfoApp.holidayInfo.holidayId
+                },
+                function (message) {
+                    if (message === "success") {
+                        alert(message);
+                    } else {
+                        alert("error");
+                    }
+                }
+            );
+
         },
         updated_holiday_status_START: function () {
             this.holidayInfo.holidayStatus = "START";

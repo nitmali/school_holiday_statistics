@@ -11,8 +11,7 @@
             <div class="table-responsive" style="min-height: 200px">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4><span th:text="${holidayName}"></span>学生去向统计</h4>
-                    </div>
+                        <h4><span th:text="${holidayName}"></span>学生去向统计</h4></div>
                     <div class="col-md-12">
                         <a th:href="@{/manager/download_excel?holidayId=}+${holidayId}" target="_blank"><h5>导出Excel表格</h5></a>
                     </div>
