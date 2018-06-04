@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="9f2dcbe4-c9d7-4d92-a881-71d4ab8b2d98" name="m_root" url="http://nitmali.com">
+        <fileTransfer host="nitmali.com" port="22" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+      <webServer id="86b17806-ecd2-49be-984b-02b352c46efa" name="m_user" url="http://nitmali.com">
+        <fileTransfer host="nitmali.com" port="22" rootFolder="/hom/m" accessType="SFTP">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="22" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
