@@ -28,6 +28,6 @@
 * 项目部署
     * 项目打包使用 Maven Projects package (mvn package)
     * 运行：java -jar XXXX.jar
-    * 部署地址： [holiday.nitmali.com](holiday.nitmali.com)
+    * 部署地址： [holiday.nitmali.com](https://holiday.nitmali.com)
     
 
