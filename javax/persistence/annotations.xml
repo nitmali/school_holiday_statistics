@@ -1,0 +1,5 @@
+<root>
+    <item name='javax.persistence.JoinColumn'>
+        <annotation name='java.lang.Deprecated'/>
+    </item>
+</root>
