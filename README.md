@@ -1,7 +1,11 @@
 # school_holiday_statistics
-一个简单的假期管理系统
+一个简单的假期管理系统,统计学生假期去向信息
 
 ## 简单介绍
+* 基础篇
+    * java
+    * mysql
+    * HTML5
 * 框架篇
     * Spring boot
     * bootstrap
@@ -17,3 +21,7 @@
 * 需要配置导出excel信息，将HolidayTemplate.xls拷贝到硬盘目录并在配置中写明路径。
 * 若要自定义表格请自行修改service/DownExcelServive/ExcelTemplate
 * 初始数据（学生信息、管理员信息）需手动导入数据库。
+
+## 关于作者
+* [邮件:me@nitmali.com](me@nitmali.com)
+
