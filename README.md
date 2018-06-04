@@ -13,10 +13,12 @@
     * 管理员可查看所有提交记录并导出Excel表格
 
 ### 如何配置？
-* 需要在配置文件中配置数据库，新建数据库表自动生成。
+* 需要在[配置文件](src/main/resources/config/application.properties)中配置数据库，新建数据库表自动生成。
 * 需要配置导出excel信息，将HolidayTemplate.xls拷贝到硬盘目录并在配置中写明路径。
 * 若要自定义表格请自行修改[service/DownExcelServive/ExcelTemplate](src/main/java/com/holidaystatistics/service/DownExcelService/ExcelTemplate.java)
-* 初始数据（学生信息、管理员信息）需手动导入数据库(密码为Md5加密)。
+* 初始数据需手动导入数据库。
+    * 必有数据为：学生信息、班级信息、管理员信息，其余可以在系统业务中添加。
+    * 密码为Md5加密，e10adc3949ba59abbe56e057f20f883e = 123456
 
 
 ### 其他
@@ -24,6 +26,8 @@
     * nitmali
     * [邮件:me@nitmali.com](me@nitmali.com)
 * 项目部署
+    * 项目打包使用 Maven Projects package (mvn package)
+    * 运行：java -jar XXXX.jar
     * 部署地址： [holiday.nitmali.com](holiday.nitmali.com)
     
 
