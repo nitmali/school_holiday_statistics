@@ -49,13 +49,17 @@ public class HolidayController {
     @PostMapping("/manager/holiday_info")
     public ModelAndView setHolidayInfo(ModelAndView modelAndView, @Valid HolidayInfoModel holidayInfoModel) {
         HolidayInfo holidayInfo = holidayInfoRepository.findByHolidayName(holidayInfoModel.getHolidayName());
-        if (holidayInfo == null) {
-            holidayInfo = new HolidayInfo(holidayInfoModel);
-        } else {
-            holidayInfo.setholidayInfoFromModel(holidayInfoModel);
+        if(holidayInfoRepository.findAllByholidayStatus(HolidayInfo.holidayStatus.START) == null){
+            if (holidayInfo == null) {
+                holidayInfo = new HolidayInfo(holidayInfoModel);
+            } else {
+                holidayInfo.setholidayInfoFromModel(holidayInfoModel);
+            }
+            holidayInfoRepository.save(holidayInfo);
+            modelAndView.setViewName("manager/success");
+        }else {
+            modelAndView.setViewName("manager/error");
         }
-        holidayInfoRepository.save(holidayInfo);
-        modelAndView.setViewName("manager/success");
         return modelAndView;
     }
 
