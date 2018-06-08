@@ -1,7 +1,11 @@
 package com.holidaystatistics.service.DownExcelService;
 
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
+
+import java.io.*;
 
 /**
  * @author nitmali@126.com
@@ -41,6 +45,20 @@ public class ExcelConfig {
 
         public void setTemplatePath(String templatePath) {
             this.templatePath = templatePath;
+        }
+
+        public InputStream getTemplate() throws IOException {
+            Connection.Response txtSecretCodeResponse = Jsoup
+                    .connect(templatePath)
+                    .method(Connection.Method.GET)
+                    .ignoreContentType(true)
+                    .execute();
+
+            byte[] templateByte = txtSecretCodeResponse.bodyAsBytes();
+
+            return new ByteArrayInputStream(templateByte);
+
+
         }
     }
 

@@ -39,6 +39,8 @@ public class Filter implements javax.servlet.Filter {
         String publicUri = "public";
         String openApiUri = "openApi";
 
+        String staticResources = "static";
+
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
@@ -60,7 +62,7 @@ public class Filter implements javax.servlet.Filter {
 
         if (uri.contains(loginUri) || Objects.equals(uri, rootUri) || uri.contains(webjarsUri)
                 || uri.contains(cssUri) || uri.contains(jsUri) || uri.contains(openApiUri)
-                || uri.contains(publicUri)) {
+                || uri.contains(publicUri) || uri.contains(staticResources)) {
             flag = false;
         }
         if (flag) {

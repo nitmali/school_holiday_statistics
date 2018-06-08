@@ -214,13 +214,13 @@ public class HolidayController {
     }
 
     @GetMapping("/manager/download_excel")
-    public void downloadExcelOfholidayPlan(HttpServletRequest request,HttpServletResponse response, Long holidayId) {
+    public String  downloadExcelOfholidayPlan(HttpServletRequest request,HttpServletResponse response, Long holidayId) {
 
         HttpSession session = request.getSession();
 
         Manager manager = managerRepository.findOne((String) session.getAttribute("managerId"));
 
-        downExcelService.getHolidayExcel(response, holidayId,manager);
+        return downExcelService.getHolidayExcel(response, holidayId,manager);
     }
 
 }

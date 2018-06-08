@@ -40,7 +40,7 @@ public class DownExcelService {
     private ExcelTemplate excelTemplate;
 
 
-    public void getHolidayExcel(HttpServletResponse response, Long holidayId, Manager manager) {
+    public String getHolidayExcel(HttpServletResponse response, Long holidayId, Manager manager) {
         try {
             HolidayInfo holidayInfo = holidayInfoRepository.findOne(holidayId);
             List<HolidayPlanOfStudentModel> holidayPlanOfStudentModelList = new ArrayList<>();
@@ -57,19 +57,27 @@ public class DownExcelService {
             String fileName = manager.getProfessionalClass().getName() + "_"
                     + holidayInfo.getHolidayName() + "_" + holidayExcelConfig.getExcelName();
 
-            HSSFWorkbook workbook = new HSSFWorkbook(new FileInputStream(holidayExcelConfig.getTemplatePath()));
+            HSSFWorkbook workbook = null;
+            try {
+                workbook = new HSSFWorkbook(holidayExcelConfig.getTemplate());
+            } catch (Exception e) {
+                return "getTemplate error";
+            }
 
             excelTemplate.getHolidayExcelTemplate(workbook, holidayPlanOfStudentModelList);
 
             response.setContentType("application/octet-stream");
 
-            response.setHeader("Content-disposition", "attachment;filename="
-                    + java.net.URLEncoder.encode(fileName, "UTF-8"));
+            response.setHeader("Content-disposition",
+                            "attachment;filename="
+                                    + java.net.URLEncoder.encode(fileName, "UTF-8"));
             response.flushBuffer();
 
             workbook.write(response.getOutputStream());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return "get excel";
     }
 }
