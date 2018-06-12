@@ -2,7 +2,13 @@ $(document).ready(function () {
     get_login();
     loginOfEnter();
     focus();
+    getNowYear();
 });
+
+function getNowYear() {
+    var nowTime = new Date();
+    $("#nowYear").html(nowTime.getFullYear());
+}
 
 function loginOfEnter() {
     $(document).keydown(function (event) {
